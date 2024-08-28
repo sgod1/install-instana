@@ -1,0 +1,9 @@
+License.
+
+This software is delivered as is, without warranty.
+
+You are granted non-exclusive right to use this software in your environment
+for the purpose of installing Instana Custom Edition.
+
+No other use is permitted.
+
