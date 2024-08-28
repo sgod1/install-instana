@@ -7,7 +7,7 @@ It adds support for image mirror and makes it easy to deploy components one at a
 
 ## Steps 
 
-Copy instana-env-template.env file to the parent directory as `instana.env`:<br/>
+Copy `instana-env-template.env` file to the parent directory as `instana.env`:<br/>
 `cp instana-env-template.env ../instana.env` 
 
 Update ../instana.env file with your values. 
