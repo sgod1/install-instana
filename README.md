@@ -48,3 +48,9 @@ backend-tag-images.sh
 backend-push-images.sh
 ```
 
+### Datastore operator charts
+Run:<br/>
+```
+3-pull-datastore-charts.sh
+```
+Charts are installed in `gen/charts` directory<br/>
