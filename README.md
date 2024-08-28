@@ -31,3 +31,11 @@ cert-manager-pull-images.sh
 cert-manager-tag-images.sh
 cert-manager-push-images.sh
 ```
+### Datastore images.
+Change to `gen/mirror` directory.<br/>
+Run:<br/>
+```
+datastore-pull-images.sh
+datastore-tag-images.sh
+datastore-push-images.sh
+```
