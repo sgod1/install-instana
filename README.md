@@ -26,8 +26,8 @@ Mirror scripts are generated in `gen/mirror` subdirectory<br/>
 #### Certificate Manager images.
 Change to `gen/mirror` directory.<br/>
 Run:<br/>
-`
+```
 cert-manager-pull-images.sh
 cert-manager-tag-images.sh
 cert-manager-push-images.sh
-`
+```
