@@ -7,7 +7,7 @@ It adds support for image mirror and makes it easy to deploy components one at a
 
 ## Steps 
 
-Copy instana-env-template.env file to the parent directory as instana.env: 
+Copy instana-env-template.env file to the parent directory as `instana.env`:<br/>
 `cp instana-env-template.env ../instana.env` 
 
 Update ../instana.env file with your values. 
@@ -15,4 +15,9 @@ Update ../instana.env file with your values.
 ### Install instana plugin.
 `Run: 0-wget-instana-plugin.sh` 
 
-Plugin is installed into `gen/bin` subdirectory. 
+Plugin is installed into `gen/bin` subdirectory.<br/>
+
+### Generate image mirror scripts
+`Run: 1-generate-mirror-scripts.sh`<br/>
+
+Mirror scripts are generated in `gen/mirror` subdirectory<br/>
