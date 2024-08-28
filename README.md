@@ -15,4 +15,4 @@ Update ../instana.env file with your values.
 ### Install instana plugin.
 `Run: 0-wget-instana-plugin.sh` 
 
-Plugin is installed into `gen/mirror` subdirectory. 
+Plugin is installed into `gen/bin` subdirectory. 
