@@ -94,5 +94,27 @@ Run:<br/>
 ```
 install-zookeeper-apply-cr.sh
 ```
+#### Kafka.
+Install Kafka operator chart.<br/>
+Run:<br/>
+```
+install-kafka-operator.sh
+```
+Appy Zookeeper custom resource.<br/>
+Run:<br/>
+```
+install-kafka-apply-cr.sh
+```
+#### Elasticsearch.
+Install Elasticsearch operator chart.<br/>
+Run:<br/>
+```
+install-elasticsearch-operator.sh
+```
+Appy elasticsearch custom resource.<br/>
+Run:<br/>
+```
+install-elasticsearch-apply-cr.sh
+```
 
 
