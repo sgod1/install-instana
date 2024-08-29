@@ -64,8 +64,8 @@ Charts are installed in `gen/charts` directory<br/>
 Install Certificate Manager.<br/>
 ```
 ```
-### Datastores
-Install datastore operator charts and apply datastore operands.<br/>
+### Datastores.
+Install 3rd party datastore operator charts and apply custom resources.<br/>
 
 
 
