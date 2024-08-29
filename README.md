@@ -15,7 +15,7 @@ cp instana-env-template.env ../instana.env
 Update `../instana.env` file with your values.<br/>
 
 ### Install instana plugin.
-Install Instana plugin and download Instana license.
+Install Instana plugin and download Instana license.<br/>
 Run:<br/> 
 ```
 0-wget-instana-plugin.sh
