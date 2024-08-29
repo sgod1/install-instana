@@ -53,6 +53,14 @@ backend-tag-images.sh
 backend-push-images.sh
 ```
 
+### Manifests
+Generate all manifests.<br/>
+Run:<br/>
+```
+2-generate-manifests.sh
+```
+Manifests are generated in `gen` directory.<br/>
+
 ### Datastore operator charts
 Run:<br/>
 ```
