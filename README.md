@@ -59,3 +59,14 @@ Run:<br/>
 3-pull-datastore-charts.sh
 ```
 Charts are installed in `gen/charts` directory<br/>
+
+### Certificate Manager
+Install Certificate Manager.<br/>
+```
+update steps
+```
+### Datastores
+Install datastore operator charts and apply datastore operands.<br/>
+
+
+
