@@ -77,5 +77,22 @@ Install Certificate Manager.<br/>
 ### Datastores.
 Install 3rd party datastore operator charts and apply custom resources.<br/>
 
+#### Initialize Namespaces.
+Run:<br/>
+```
+init-namespaces.sh
+````
+
+#### Zookeeper.
+Install Zookeeper operator chart.<br/>
+Run:<br/>
+```
+install-zookeeper-operator.sh
+```
+Appy Zookeeper custom resource.<br/>
+Run:<br/>
+```
+install-zookeeper-apply-cr.sh
+```
 
 
