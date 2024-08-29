@@ -116,5 +116,49 @@ Run:<br/>
 ```
 install-elasticsearch-apply-cr.sh
 ```
+#### Postgres.
+Install postgres operator chart.<br/>
+Run:<br/>
+```
+install-postrges-operator.sh
+```
+Appy postgres custom resource.<br/>
+Run:<br/>
+```
+install-postgres-apply-cr.sh
+```
+#### Cassandra.
+Install cassandra operator chart.<br/>
+Run:<br/>
+```
+install-cassandra-operator.sh
+```
+Appy cassandra custom resource.<br/>
+Run:<br/>
+```
+install-cassandra-apply-cr.sh
+```
+#### Clickhouse.
+Install clickhouse operator chart.<br/>
+Run:<br/>
+```
+install-clickhouse-operator.sh
+```
+Appy clickhouse custom resource.<br/>
+Run:<br/>
+```
+install-clickhouse-apply-cr.sh
+```
+#### Beeinstana.
+Install beeinstana operator chart.<br/>
+Run:<br/>
+```
+install-beeinstana-operator.sh
+```
+Appy beeinstana custom resource.<br/>
+Run:<br/>
+```
+install-beeinstana-apply-cr.sh
+```
 
 
