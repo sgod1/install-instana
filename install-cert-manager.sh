@@ -3,17 +3,21 @@
 source ../instana.env
 source ./help-functions.sh
 
-# create instana-registry image pool secret
+CHART_HOME=$(get_chart_home)
 
+CHART=$CHART_HOME/cert-manager-v1.13.2.tgz
 
 # install cert manager helm chart
 echo
-echo "installing cert manager helm chart"
+echo "installing cert manager helm chart $CHART"
 echo 
 
-CHART_HOME=$(get_chart_home)
+if test ! -f $CHART; then
+   echo cert manager helm chart $CHART not found
+   exit 1
+fi
 
-helm install cert-manager $CHART_HOME/cert-manager-v1.13.2.tgz \
+helm install cert-manager $CHART
    --namespace cert-manager \
    --create-namespace \
    --version v1.13.2 \
