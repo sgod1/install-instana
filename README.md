@@ -161,4 +161,21 @@ Run:<br/>
 install-beeinstana-apply-cr.sh
 ```
 
+### Instana Backend.
+
+#### Instana Operator.
+Install Instana operator.<br/>
+```
+./install-instana-operator.sh
+```
+### Instana Core.
+Apply Instana Core custom resource.<br/>
+```
+install-core-apply-cr.sh
+```
+### Instana Unit.
+Apply Instana Unit custom resource.<br/>
+```
+install-unit-apply-cr.sh
+```
 
