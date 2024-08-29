@@ -1,6 +1,6 @@
 License.
 
-This software is delivered as is, without warranty.
+This software is offered as is, without warranty.
 
 You are granted non-exclusive right to use this software in your environment
 for the purpose of installing Instana Custom Edition.
