@@ -15,11 +15,13 @@ cp instana-env-template.env ../instana.env
 Update `../instana.env` file with your values.<br/>
 
 ### Install instana plugin.
+Install Instana plugin and download Instana license.
 Run:<br/> 
 ```
 0-wget-instana-plugin.sh
+download-instana-license.sh
 ```
-Plugin is installed into `gen/bin` subdirectory.<br/>
+Plugin and license are installed into `gen/bin` subdirectory.<br/>
 
 ### Generate image mirror scripts
 Run:<br/> 
