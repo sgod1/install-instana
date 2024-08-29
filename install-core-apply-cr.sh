@@ -58,8 +58,8 @@ storageConfigs:
 #    # Credentials should be configured.
 #    # Not required if IRSA on EKS is used.
 #    s3Config:
-#      accessKeyId: ...
-#      secretAccessKey: ...
+#      accessKeyId: $AWS_IAM_ACCESS_KEY_ID
+#      secretAccessKey: $AWS_IAM_SECRET_KEY
 #    # Required if using Google Cloud Storage.
 #    # Credentials should be configured.
 #    # Not required if GKE with workload identity is used.
