@@ -2,6 +2,10 @@
 
 source ../instana.env
 
+compare_values() {
+   test ${1:-"novalue1"} == ${2:-"novalue2"}
+}
+
 function get_install_home() {
    echo ${INSTANA_INSTALL_HOME:-"gen"}
 }
