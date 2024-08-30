@@ -6,6 +6,10 @@ compare_values() {
    test ${1:-"novalue1"} == ${2:-"novalue2"}
 }
 
+check_return_code() {
+   if [ $1 -gt 0 ]; then echo "exit on script error, rc $1"; exit $1; fi
+}
+
 function get_install_home() {
    echo ${INSTANA_INSTALL_HOME:-"gen"}
 }
