@@ -19,7 +19,7 @@ NSUID="1000860000"
 
 # image pull secret?
 
-if test $PLATFORM == $PLATFORM_OPENSHIFT
+if compare_values "$PLATFORM" "$PLATFORM_OCP"
 then
    # openshift
    helm install postgres-operator -n instana-postgres $CHART \
