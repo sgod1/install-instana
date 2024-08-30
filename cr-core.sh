@@ -6,51 +6,41 @@ source ./help-functions.sh
 MANIFEST_HOME=$(get_manifest_home)
 MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_CORE
 
+overwrite_manifest=${1:-"no_overwrite"}
+
+# write core manifest
+if test -f $MANIFEST && test $overwrite_manifest == "overwrite"; then
+   echo overwriting core manifest file $MANIFEST
+   echo ""
+   cp "$MANIFEST" "${MANIFEST}.bak"
+
+elif test -f $MANIFEST; then
+   echo core manifest file $MANIFEST exists, no overwrite
+   echo ""
+   exit 1
+fi
+
 echo writing core manifest to $MANIFEST
 
-function write_api_header() {
-manifest=$1
-cat << EOF > $manifest
+cat << EOF > $MANIFEST
 apiVersion: instana.io/v1beta2
 kind: Core
 metadata:
   namespace: instana-core
   name: instana-core
+
 spec:
-EOF
-}
-
-function write_base_domain() {
-manifest=$1
-cat << EOF >> $manifest
   # The domain under which Instana is reachable
-  baseDomain: $INSTANA_BASE_DOMAIN
+  baseDomain: ${INSTANA_BASE_DOMAIN:-"instana.base.domain"}
 
-EOF
-}
-
-function write_image_pull_secrets() {
-manifest=$1
-cat << EOF >> $manifest
-  # Depending on your cluster setup, you may need to specify an image pull secret.
+  # image pull secrets
   imagePullSecrets:
     - name: instana-registry
 
-EOF
-}
-
-function write_image_config() {
-manifest=$1
-cat << EOF >> $manifest
   imageConfig:
-    registry: $PRIVATE_REGISTRY
+    registry: ${PRIVATE_REGISTRY:-"private.registry.com"}
 
-EOF
-}
-
-function write_feature_flags() {
-manifest=$1
-cat << EOF >> $manifest
+  # optional features
   featureFlags:
     - name: beeinstana
       enabled: true
@@ -73,121 +63,77 @@ cat << EOF >> $manifest
     #- feature: feature.vsphere.enabled
     #  enabled: true
 
-EOF
-}
-
-function write_operational_modes() {
-manifest=$1
-cat << EOF >> $manifest
   # operational modes
   operationMode: normal
 
-EOF
-}
-
-function write_operation_scopes() {
-manifest=$1
-
-# applies to saas type install
-
-if test $CUSTOM_EDITION_SAAS_INSTALL; then
-cat << EOF >> $manifest
+  # operational scopes apply in saas environment
   #operationScopes:
   #- core
   #- global
 
-EOF
-fi
-}
-
-function write_email_config() {
-manifest=$1
-cat << EOF >> $manifest
   # This configures an SMTP server for sending e-mails.
   # Alternatively, Amazon SES is supported. Please see API reference for details.
   emailConfig:
     smtpConfig:
-      from: smtp@example.com
-      host: smtp.example.com
-      port: 465
-      useSSL: false
-      startTLS: false
+      from: ${SMTP_FROM:-"from@example.com"}
+      host: ${SMTP_HOST:-"smtp.example.com"}
+      port: ${SMTP_PORT:-465}
+      useSSL: ${SMTP_USE_SSL:-false}
+      startTLS: ${SMTP_START_TLS:-false}
 
-EOF
-}
-
-function write_image_acceptor_config() {
-manifest=$1
-cat << EOF >> $manifest
   agentAcceptorConfig:
-    host: $INSTANA_AGENT_ACCEPTOR
+    host: ${INSTANA_AGENT_ACCEPTOR:- "instana-agent-acceptor.example.com"}
     port: 443
 
-EOF
-}
-
-function write_storage_configs_header() {
-manifest=$1
-cat << EOF >> $manifest
   storageConfigs:
+    rawSpans:
 EOF
-}
 
-function _write_raw_spans_s3() {
-manifest=$1
-cat << EOF >> $manifest
-      s3Config:
-        # S3 Endpoint Ref: https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_region (optional)
-        endpoint: "$RAW_SPANS_S3_ENDPOINT"
-        region: "$RAW_SPANS_S3_REGION"
-        bucket: "$RAW_SPANS_S3_BUCKET"
-        prefix: "$RAW_SPANS_S3_PREFIX"
-        storageClass: "$RAW_SPANS_S3_STORAGE_CLASS"
-        bucketLongTerm: "$RAW_SPANS_S3_BUCKET_LONG_TERM"
-        prefixLongTerm: "$RAW_SPANS_S3_PREFIX_LONG_TERM"
-        storageClassLongTerm: "$RAW_SPANS_S3_STORAGE_CLASS_LONG_TERM"
-
-EOF
-}
-
-function _write_raw_spans_pvc() {
-manifest=$1
-cat << EOF >> $manifest
+# raw spans
+if compare_values "$RAW_SPANS_TYPE" "$RAW_SPANS_TYPE_PVC" || test -z "$RAW_SPANS_TYPE"; then
+cat << EOF >> $MANIFEST
       pvcConfig:
         accessModes: 
           - ReadWriteMany
         resources:
           requests:
             storage: 100Gi
-        storageClassName: $RWX_STORAGECLASS
+        storageClassName: ${RWX_STORAGECLASS:-"Standard"}
 
 EOF
-}
-
-function write_storage_config_raw_spans() {
-manifest=$1
-
-cat << EOF >> $manifest
-    rawSpans:
-
-EOF
-
-if test $RAW_SPANS_TYPE == $RAW_SPANS_TYPE_S3; then
-   _write_raw_spans_s3 $manifest
-
-elif test $RAW_SPANS_TYPE == $RAW_SPANS_TYPE_PVC; then
-   _write_raw_spans_pvc $manifest
-
-else
-   echo unexpected raw span storage type $RAW_SPAN_TYPE
-   exit 1
 fi
 
-}
+if compare_values "$RAW_SPANS_TYPE" "$RAW_SPANS_TYPE_S3"; then
+cat << EOF >> $MANIFEST
+      s3Config:
+        endpoint: ${RAW_SPANS_S3_ENDPOINT:-""}
+        region: ${RAW_SPANS_S3_REGION:-"raw-spans-region"}
+        bucket: ${RAW_SPANS_S3_BUCKET:-"raw-spans-bucket"}
+        prefix: ${RAW_SPANS_S3_PREFIX:-"raw-spans-prefix"}
+        storageClass: ${RAW_SPANS_S3_STORAGE_CLASS:-"Standard"}
+        bucketLongTerm: ${RAW_SPANS_S3_BUCKET_LONG_TERM:-"raw-spans-bucket-long-term"}
+        prefixLongTerm: ${RAW_SPANS_S3_PREFIX_LONG_TERM:-"raw-spans-prefix-long-term"}
+        storageClassLongTerm: ${RAW_SPANS_S3_STORAGE_CLASS_LONG_TERM:-"Standard"}
 
-function write_storage_config_synthetics() {
-manifest=$1
-cat << EOF >> $manifest
+EOF
+fi
+
+if compare_values "$RAW_SPANS_TYPE" "$RAW_SPANS_TYPE_GCP"; then
+cat << EOF >> $MANIFEST
+      gcloudConfig:
+        endpoint: ${RAW_SPANS_S3_ENDPOINT:-""}
+        region: ${RAW_SPANS_S3_REGION:-"raw-spans-region"}
+        bucket: ${RAW_SPANS_S3_BUCKET:-"raw-spans-bucket"}
+        prefix: ${RAW_SPANS_S3_PREFIX:-"raw-spans-prefix"}
+        storageClass: ${RAW_SPANS_S3_STORAGE_CLASS:-"Standard"}
+        bucketLongTerm: ${RAW_SPANS_S3_BUCKET_LONG_TERM:-"raw-spans-bucket-long-term"}
+        prefixLongTerm: ${RAW_SPANS_S3_PREFIX_LONG_TERM:-"raw-spans-prefix-long-term"}
+        storageClassLongTerm: ${RAW_SPANS_S3_STORAGE_CLASS_LONG_TERM:-"Standard"}
+
+EOF
+fi
+
+cat << EOF >> $MANIFEST
     synthetics:
       pvcConfig:
         accessModes:
@@ -195,7 +141,7 @@ cat << EOF >> $manifest
         resources:
           requests:
             storage: 50Gi
-        storageClassName: ${RWX_STORAGECLASS}
+        storageClassName: ${RWX_STORAGECLASS:-"Standard"}
 
     syntheticsKeystore:
       pvcConfig:
@@ -204,14 +150,8 @@ cat << EOF >> $manifest
         resources:
           requests:
             storage: 10Gi
-        storageClassName: ${RWX_STORAGECLASS}
+        storageClassName: ${RWX_STORAGECLASS:-"Standard"}
 
-EOF
-}
-
-function write_datastore_configs() {
-manifest=$1
-cat << EOF >> $manifest
   datastoreConfigs:
     cassandraConfigs:
       - hosts:
@@ -225,7 +165,6 @@ cat << EOF >> $manifest
         - chi-instana-local-0-1.instana-clickhouse.svc
         authEnabled: true
         clusterName: local
-        # ports: [{name:"tcp", port:"9000"},{name:"http", port:"8123"}]
 
     postgresConfigs:
       - hosts:
@@ -235,7 +174,6 @@ cat << EOF >> $manifest
     elasticsearchConfig:
       authEnabled: true
       clusterName: instana
-      # ports: [{name:"tcp", port:"9300"},{name:"http", port:"9200"}]
       hosts:
       - instana-es-http.instana-elasticsearch.svc
 
@@ -255,31 +193,27 @@ cat << EOF >> $manifest
       - instana-kafka-bootstrap.instana-kafka.svc
 
 EOF
-}
 
-function write_service_account_annotations() {
-manifest=$1
-
-if test $PLATFORM == $PLATFORM_EKS; then
-cat << EOF >> $manifest
+# service account annotations
+if compare_values "$PLATFORM" "$PLATFORM_EKS"; then
+cat << EOF >> $MANIFEST
   serviceAccountAnnotations:
-    eks.amazonaws.com/role-arn: "$AWS_EKS_ROLE_ARN"
+    eks.amazonaws.com/role-arn: ${AWS_EKS_ROLE_ARN:-"arn:role:1"}
 
 EOF
 fi
-}
 
-function write_resource_profile() {
-manifest=$1
-cat << EOF >> $manifest
-  resourceProfile: $CORE_RESOURCE_PROFILE
+if compare_values "$PLATFORM" "$PLATFORM_GCP"; then
+cat << EOF >> $MANIFEST
+  serviceAccountAnnotations:
+    iam.gke.io/gcp-service-account: ${GCP_SERVICE_ACCOUNT:-"iam:gcp:service-account"}
 
 EOF
-}
+fi
 
-function write_properties() {
-manifest=$1
-cat << EOF >> $manifest
+cat << EOF >> $MANIFEST
+  resourceProfile: ${CORE_RESOURCE_PROFILE:-"small"}
+
   properties:
     # retention settings
     - name: retention.metrics.rollup5
@@ -294,26 +228,5 @@ cat << EOF >> $manifest
       value: "7"
     - name: config.synthetics.retention.days
       value: "60"
-
 EOF
-}
-
-# write core manifest
-
-write_api_header $MANIFEST
-write_base_domain $MANIFEST
-write_image_pull_secrets $MANIFEST
-write_image_config $MANIFEST
-write_feature_flags $MANIFEST
-write_operational_modes $MANIFEST
-write_operation_scopes $MANIFEST
-write_email_config $MANIFEST
-write_image_acceptor_config $MANIFEST
-write_storage_configs_header $MANIFEST
-write_storage_config_raw_spans $MANIFEST
-write_storage_config_synthetics $MANIFEST
-write_datastore_configs $MANIFEST
-write_service_account_annotations $MANIFEST
-write_resource_profile $MANIFEST
-write_properties $MANIFEST
 
