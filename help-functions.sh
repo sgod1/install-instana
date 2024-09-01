@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ../instana.env
-
 compare_values() {
    test ${1:-"novalue1"} == ${2:-"novalue2"}
 }
