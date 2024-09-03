@@ -14,7 +14,7 @@ if test ! -f $CHART; then
    exit 1
 fi
 
-if compare_values "$PLATFORM" "$PLATFORM_OCP"; then
+if is_platform_ocp "$PLATFORM"; then
    #
    # openshift
    #

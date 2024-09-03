@@ -24,6 +24,20 @@ check_replace_manifest() {
    fi
 }
 
+function check_platform() {
+   platform=$1
+   if test -z $platform; then
+      echo platform value undefined
+      exit 1
+   fi
+}
+
+function is_platform_ocp() {
+   platform=$1
+   check_platform $platform
+   compare_values $platform "ocp"
+}
+
 function get_install_home() {
    echo ${INSTANA_INSTALL_HOME:-"gen"}
 }
