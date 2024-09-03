@@ -8,29 +8,17 @@ MANIFEST_HOME=$(get_manifest_home)
 
 CHART=$CHART_HOME/cass-operator-0.45.2.tgz
 
-#oc get sa
-#NAME                               SECRETS   AGE
-#builder                            0         59m
-#cass-operator                      0         58m
-#cassandra-operator-cass-operator   1         119s
-#default                            0         59m
-#deployer                           0         59m
+SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CASSANDRA_SCC
 
-#oc create sa cass-operator
-#oc create sa cassandra-operator-cass-operator
-#oc adm policy add-scc-to-user privileged -z default
-#oc adm policy add-scc-to-user privileged -z cass-operator
-#oc adm policy add-scc-to-user privileged -z cassandra-operator-cass-operator
+if is_platform_scc $PLATFORM && test ! -f $SCC; then
+   echo cassandra scc $SCC not found
+   exit 1
+fi
 
-#SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CASSANDRA_SCC
-#echo applying cassandra scc $SCC
-#
-#if test ! -f $SCC; then
-#   echo cassandra scc $SCC not found
-#   exit 1
-#fi
-#
-#$KUBECTL apply -f $SCC -n instana-cassandra
+if is_platform_scc $PLATFORM; then
+   echo applying cassandra scc $SCC
+   $KUBECTL apply -f $SCC -n instana-cassandra
+fi
 
 echo installing cassandra operator helm chart $CHART
 
@@ -38,15 +26,6 @@ if test ! -f $CHART; then
    echo helm chart $CHART not found
    exit 1
 fi
-
-#| podSecurityContext | object | `{}` | PodSecurityContext for the cass-operator pod. See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
-#| securityContext.runAsNonRoot | bool | `true` | Run cass-operator container as non-root user |
-#| securityContext.runAsGroup | int | `65534` | Group for the user running the cass-operator container / process |
-#| securityContext.runAsUser | int | `65534` | User for running the cass-operator container / process |
-#| securityContext.readOnlyRootFilesystem | bool | `true` | Run cass-operator container having read-only root file system permissions. |
-
-#   --set securityContext.runAsGroup=999 \
-#   --set securityContext.runAsUser=999 \
 
 helm install cassandra-operator -n instana-cassandra $CHART \
    --set securityContext.runAsNonRoot=true \
