@@ -4,10 +4,15 @@ source ../instana.env
 source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
+MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_POSTGRES
 
-echo writing postgres to $OUT_DIR/$MANIFEST_FILENAME_POSTGRES
+replace_manifest=${1:-"noreplace"}
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_POSTGRES
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing postgres manifest to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:

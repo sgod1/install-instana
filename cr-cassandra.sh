@@ -5,9 +5,15 @@ source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
 
-echo writing cassandra to $OUT_DIR/$MANIFEST_FILENAME_CASSANDRA
+MANIFEST="$OUT_DIR/$MANIFEST_FILENAME_CASSANDRA"
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_CASSANDRA
+replace_manifest=${1:-"noreplace"}
+
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing cassandra to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: cassandra.datastax.com/v1beta1
 kind: CassandraDatacenter
 metadata:

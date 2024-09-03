@@ -5,9 +5,15 @@ source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
 
-echo writing beeinstana to $OUT_DIR/$MANIFEST_FILENAME_BEEINSTANA
+MANIFEST="$OUT_DIR/$MANIFEST_FILENAME_BEEINSTANA"
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_BEEINSTANA
+replace_manifest=${1:-"no_replace"}
+
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing beeinstana to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: beeinstana.instana.com/v1beta1
 kind: BeeInstana
 metadata:

@@ -6,19 +6,9 @@ source ./help-functions.sh
 MANIFEST_HOME=$(get_manifest_home)
 MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_CORE
 
-overwrite_manifest=${1:-"no_overwrite"}
+replace_manifest=${1:-"noreplace"}
 
-# write core manifest
-if test -f $MANIFEST && test $overwrite_manifest == "overwrite"; then
-   echo overwriting core manifest file $MANIFEST
-   echo ""
-   cp "$MANIFEST" "${MANIFEST}.bak"
-
-elif test -f $MANIFEST; then
-   echo core manifest file $MANIFEST exists, no overwrite
-   echo ""
-   exit 1
-fi
+check_replace_manifest $MANIFEST $replace_manifest
 
 echo writing core manifest to $MANIFEST
 

@@ -5,9 +5,15 @@ source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
 
-echo writing clickhouse to $OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE
+MANIFEST="$OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE"
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE
+replace_manifest=${1:-"noreplace"}
+
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing clickhouse to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: "clickhouse.altinity.com/v1"
 kind: "ClickHouseInstallation"
 metadata:
@@ -106,9 +112,9 @@ spec:
      max_partition_size_to_drop: 0
 
     users:
-      $CLICKOUSE_DEFAUL/password: "$CLICKHOUSE_DEFAULT_PASS"
-      $CLICKHOUSE_USER/networks/ip: "::/0"
-      $CLICKHOUSE_USER/password: "$CLICKHOUSE_USER_PASS"
+      ${CLICKOUSE_DEFAULT:-"default"}/password: "${CLICKHOUSE_DEFAULT_PASS:-"clickhouse-default-pass"}"
+      ${CLICKHOUSE_USER:-"clickhouse-user"}/networks/ip: "::/0"
+      ${CLICKHOUSE_USER:-"clickhouse-user"}/password: "${CLICKHOUSE_USER_PASS:-"clickhouse-default-pass"}"
 
     zookeeper:
       nodes:
@@ -161,7 +167,7 @@ spec:
           resources:
             requests:
               storage: 1Gi
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName: $RWO_STORAGECLASS
 
       - name: instana-clickhouse-cold-volume
         reclaimPolicy: Retain
@@ -171,7 +177,7 @@ spec:
           resources:
             requests:
               storage: 1Gi
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName: $RWO_STORAGECLASS
 
       - name: instana-clickhouse-log-volume
         reclaimPolicy: Retain
@@ -181,7 +187,7 @@ spec:
           resources:
             requests:
               storage: 1Gi
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName: $RWO_STORAGECLASS
 
     serviceTemplates:
     - name: service-template

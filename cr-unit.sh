@@ -7,6 +7,10 @@ MANIFEST_HOME=$(get_manifest_home)
 
 MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_UNIT
 
+replace_manifest=${1:-"noreplace"}
+
+check_replace_manifest $MANIFEST $replace_manifest
+
 echo writing core manifest to $MANIFEST
 
 CORE_NAME="instana-core"

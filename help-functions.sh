@@ -8,6 +8,22 @@ check_return_code() {
    if [ $1 -gt 0 ]; then echo "exit on script error, rc $1"; exit $1; fi
 }
 
+check_replace_manifest() {
+   manifest=${1:-"missingvalue"}
+   replace_manifest=${2:-"missingvalue"}
+
+   if test -f $manifest; then
+      if compare_values "$replace_manifest" "replace"; then
+         echo backup "$manifest" to "${manifest}.bak"
+         cp "$manifest" "${manifest}.bak"
+      else
+         echo manifest $manifest already exists, use \"replace\" argument to replace manifest
+         echo
+         exit 1
+      fi
+   fi
+}
+
 function get_install_home() {
    echo ${INSTANA_INSTALL_HOME:-"gen"}
 }

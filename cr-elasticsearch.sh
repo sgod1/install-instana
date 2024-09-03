@@ -4,10 +4,15 @@ source ../instana.env
 source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
+MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_ELASTICSEARCH
 
-echo writing elasticsearch to $OUT_DIR/$MANIFEST_FILENAME_ELASTICSEARCH
+replace_manifest=${1:-"noreplace"}
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_ELASTICSEARCH
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing elasticsearch to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:

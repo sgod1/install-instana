@@ -4,10 +4,15 @@ source ../instana.env
 source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
+MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_KAFKA
 
-echo writing kafka to $OUT_DIR/$MANIFEST_FILENAME_KAFKA
+replace_manifest=${1:-"noreplace"}
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_KAFKA
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing kafka to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
