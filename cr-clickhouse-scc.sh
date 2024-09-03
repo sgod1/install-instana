@@ -4,10 +4,21 @@ source ../instana.env
 source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
+MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE_SCC
 
-echo writing clickhouse-scc to $OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE_SCC
+if ! is_platform_ocp $PLATFORM; then
+   echo clickhouse scc is openshift specific, does not apply to $PLATFORM
+   echo
+   exit 1
+fi
 
-cat << EOF > $OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE_SCC
+replace_manifest=${1:-"noreplace"}
+
+check_replace_manifest $MANIFEST $replace_manifest
+
+echo writing clickhouse-scc manifest to $MANIFEST
+
+cat << EOF > $MANIFEST
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:

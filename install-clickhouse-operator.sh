@@ -10,12 +10,14 @@ MANIFEST_HOME=$(get_manifest_home)
 SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CLICKHOUSE_SCC
 echo applying clickhouse scc $SCC
 
-if test ! -f $SCC; then
+if is_platform_scc "$PLATFORM" && test ! -f $SCC; then
    echo clickhouse scc $SCC not found
    exit 1
 fi
 
-$KUBECTL apply -f $SCC -n instana-clickhouse
+if is_platform_scc "$PLATFORM"; then
+   $KUBECTL apply -f $SCC -n instana-clickhouse
+fi
 
 # install clickhouse operator chart
 CHART=$CHART_HOME/ibm-clickhouse-operator-v0.1.2.tgz

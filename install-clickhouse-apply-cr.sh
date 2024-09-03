@@ -7,7 +7,7 @@ MANIFEST_HOME=$(get_manifest_home)
 
 MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_CLICKHOUSE
 
-echo applying clickhouse cr $MANIFEST, namespace instana-clickhouse
+echo applying clickhouse manifest $MANIFEST, namespace instana-clickhouse
 
 if test ! -f $MANIFEST; then
    echo manifest $MANIFEST not found
