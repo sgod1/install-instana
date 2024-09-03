@@ -32,12 +32,21 @@ spec:
         spec:
           imagePullSecrets:
             - name: instana-registry
+
+EOF
+
+if ! is_platform_ocp $PLATFORM; then
+cat << EOF >> $MANIFEST
           # Add the following securityContext snippet for Kubernetes offerings other than OCP.
-          # securityContext:
-          #   fsGroup: 1000
-          #   runAsGroup: 1000
-          #   runAsUser: 1000
-          $ELASTICSEARCH_SECURITY_CONTEXT
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
+EOF
+fi
+
+cat << EOF >> $MANIFEST
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
