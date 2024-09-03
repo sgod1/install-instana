@@ -14,25 +14,26 @@ if test ! -f $CHART; then
    exit 1
 fi
 
-# write a function
-RUNAS_USER=`${KUBECTL} get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
-RUNAS_GROUP=`${KUBECTL} get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
-
-# image pull secret?
-
-if compare_values "$PLATFORM" "$PLATFORM_OCP"
-then
+if compare_values "$PLATFORM" "$PLATFORM_OCP"; then
+   #
    # openshift
+   #
+
+   # uid range
+   uid_range_start=`$KUBECTL get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
+
    helm install postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/cloudnative-pg \
      --set image.tag=v1.21.1_v0.5.0 \
-     --set containerSecurityContext.runAsUser=$RUNAS_USER \
-     --set containerSecurityContext.runAsGroup=$RUNAS_GROUP
+     --set imagePullSecrets[0]="instana-registry" \
+     --set containerSecurityContext.runAsUser=$uid_range_start \
+     --set containerSecurityContext.runAsGroup=$uid_range_start
 
 else
    # k8s
    helm install postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/cloudnative-pg \
-     --set image.tag=v1.21.1_v0.5.0 
+     --set image.tag=v1.21.1_v0.5.0 \
+     --set imagePullSecrets[0]="instana-registry"
 fi
 
