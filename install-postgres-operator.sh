@@ -15,7 +15,8 @@ if test ! -f $CHART; then
 fi
 
 # write a function
-NSUID="1000860000"
+RUNAS_USER=`${KUBECTL} get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
+RUNAS_GROUP=`${KUBECTL} get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
 
 # image pull secret?
 
@@ -25,8 +26,8 @@ then
    helm install postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/cloudnative-pg \
      --set image.tag=v1.21.1_v0.5.0 \
-     --set containerSecurityContext.runAsUser=$NSUID \
-     --set containerSecurityContext.runAsGroup=$NSUID 
+     --set containerSecurityContext.runAsUser=$RUNAS_USER \
+     --set containerSecurityContext.runAsGroup=$RUNAS_GROUP
 
 else
    # k8s
