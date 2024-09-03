@@ -55,11 +55,20 @@ spec:
     template:
       pod:
         tmpDirSizeLimit: 100Mi
+
+EOF
+
+if ! is_platform_ocp $PLATFORM; then
+cat << EOF >> $MANIFEST
         # Add the following securityContext snippet for Kubernetes offerings other than OCP.
-        # securityContext:
-        #   runAsUser: 1000
-        #   fsGroup: 1000
-        $KAFKA_SECURITY_CONTEXT
+        securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+
+EOF
+fi
+
+cat << EOF >> $MANIFEST
     userOperator:
       image: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/strimzi:0.41.0_v0.9.0
 ---
