@@ -4,14 +4,16 @@ echo ""
 echo generating manifests...
 echo ""
 
-./cr-beeinstana.sh
-./cr-cassandra-scc.sh
-./cr-cassandra.sh
-./cr-clickhouse-scc.sh
-./cr-clickhouse.sh
-./cr-elasticsearch.sh
-./cr-kafka.sh
-./cr-postgres.sh
-./cr-zookeeper.sh
-./cr-core.sh
-./cr-unit.sh
+replace_manifest=${1:-"noreplace"}
+
+./cr-beeinstana.sh $replace_manifest
+./cr-cassandra-scc.sh $replace_manifest
+./cr-cassandra.sh $replace_manifest
+./cr-clickhouse-scc.sh $replace_manifest
+./cr-clickhouse.sh $replace_manifest
+./cr-elasticsearch.sh $replace_manifest
+./cr-kafka.sh $replace_manifest
+./cr-postgres.sh $replace_manifest
+./cr-zookeeper.sh $replace_manifest
+./cr-core.sh $replace_manifest
+./cr-unit.sh $replace_manifest
