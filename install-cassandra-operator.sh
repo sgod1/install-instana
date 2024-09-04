@@ -10,12 +10,12 @@ CHART=$CHART_HOME/cass-operator-0.45.2.tgz
 
 SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CASSANDRA_SCC
 
-if is_platform_scc $PLATFORM && test ! -f $SCC; then
+if is_platform_ocp $PLATFORM && test ! -f $SCC; then
    echo cassandra scc $SCC not found
    exit 1
 fi
 
-if is_platform_scc $PLATFORM; then
+if is_platform_ocp $PLATFORM; then
    echo applying cassandra scc $SCC
    $KUBECTL apply -f $SCC -n instana-cassandra
 fi
