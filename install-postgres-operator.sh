@@ -25,7 +25,7 @@ if is_platform_ocp "$PLATFORM"; then
    helm install postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/cloudnative-pg \
      --set image.tag=v1.21.1_v0.5.0 \
-     --set imagePullSecrets[0]="instana-registry" \
+     --set imagePullSecrets[0].name="instana-registry" \
      --set containerSecurityContext.runAsUser=$uid_range_start \
      --set containerSecurityContext.runAsGroup=$uid_range_start
 
@@ -34,6 +34,6 @@ else
    helm install postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/cloudnative-pg \
      --set image.tag=v1.21.1_v0.5.0 \
-     --set imagePullSecrets[0]="instana-registry"
+     --set imagePullSecrets[0].name="instana-registry"
 fi
 
