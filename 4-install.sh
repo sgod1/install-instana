@@ -42,4 +42,7 @@ echo installing instana core
 echo installing instana unit
 ./install-unit-apply-cr.sh
 
+echo creating routes
+./install-create-routes.sh
+
 echo instana install end
