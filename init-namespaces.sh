@@ -110,7 +110,7 @@ echo
 echo initializing namespaces...
 echo
 
-init_namespace "instana-zookeeper" "privileged"
+init_namespace "instana-zookeeper" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-clickhouse"
 init_namespace "instana-kafka"
 init_namespace "instana-elasticsearch"
