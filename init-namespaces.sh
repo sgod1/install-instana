@@ -5,13 +5,51 @@ source ./help-functions.sh
 
 INSTALL_HOME=$(get_install_home)
 
+function create_psa_labeled_namespace() {
+  ns=$1
+  label=$2
+
+  NS_YAML="$INSTALL_HOME/ns-$ns.yaml"
+
+  if ! is_platform_ocp "$PLATFORM"; then
+     echo creating namespace $ns, label "pod-security.kubernetes.io/enforce:" $label
+  else
+     echo creating namespace $ns
+  fi
+
+  # write out namespace
+cat << EOF > $NS_YAML
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: $ns
+
+EOF
+
+  # write out psa label
+  if ! is_platform_ocp "$PLATFORM"; then
+cat << EOF >> $NS_YAML
+  labels:
+    #
+    # set admission-control mode (enforce) and pss level (privileged/baseline/restricted) for pod security
+    # psa will check pod request for conformance with pss level
+    #
+    pod-security.kubernetes.io/enforce: $label
+    pod-security.kubernetes.io/enforce-version: latest
+EOF
+  fi
+
+  $KUBECTL apply -f $NS_YAML
+  rm $NS_YAML
+}
+
 function create_labeled_namespace() {
   ns=$1
   label=$2
 
   echo creating namespace $ns, label "app.kubernetes.io/name:" $label
 
-  NS_YAML=$INSTALL_HOME/$ns.yaml
+  NS_YAML="$INSTALL_HOME/ns-$ns.yaml"
 
 cat << EOF > $NS_YAML
 apiVersion: v1
@@ -30,7 +68,16 @@ function create_namespace() {
   ns=$1
   label=$2
 
-  if test ! -z $label; then
+  if compare_values "$label" "privileged"; then
+    create_psa_labeled_namespace $ns $label
+
+  elif compare_values "$label" "baseline"; then
+    create_psa_labeled_namespace $ns $label
+
+  elif compare_values "$label" "restricted"; then
+    create_psa_labeled_namespace $ns $label
+
+  elif test ! -z "$label"; then
     create_labeled_namespace $ns $label
 
   else
@@ -63,7 +110,7 @@ echo
 echo initializing namespaces...
 echo
 
-init_namespace "instana-zookeeper"
+init_namespace "instana-zookeeper" "privileged"
 init_namespace "instana-clickhouse"
 init_namespace "instana-kafka"
 init_namespace "instana-elasticsearch"
