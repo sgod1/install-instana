@@ -15,15 +15,14 @@ if test ! -f $CHART; then
    exit 1
 fi
 
-helm install beeinstana-operator -n beeinstana $CHART \
-   --set operator.securityContext.seccompProfile.type=RuntimeDefault \
-   --set image.registry=$PRIVATE_REGISTRY \
-   --set imagePullSecrets[0].name="instana-registry"
-
-# openshift
-#helm install beeinstana-operator ./beeinstana-operator-v1.50.0.tgz --namespace=beeinstana \
-
-# k8s
-#helm install beeinstana-operator ./beeinstana-operator-v1.50.0.tgz --namespace=beeinstana 
-#--set image.registry=<internal-image-registry>
+if is_platform_ocp "$PLATFORM"; then
+   helm install beeinstana-operator -n beeinstana $CHART \
+      --set operator.securityContext.seccompProfile.type=RuntimeDefault \
+      --set image.registry=$PRIVATE_REGISTRY \
+      --set imagePullSecrets[0].name="instana-registry"
+else
+   helm install beeinstana-operator -n beeinstana $CHART \
+      --set image.registry=$PRIVATE_REGISTRY \
+      --set imagePullSecrets[0].name="instana-registry"
+fi
 
