@@ -111,11 +111,11 @@ echo initializing namespaces...
 echo
 
 init_namespace "instana-zookeeper" ${K8S_PSA_LABEL:-"privileged"}
-init_namespace "instana-clickhouse"
-init_namespace "instana-kafka"
-init_namespace "instana-elasticsearch"
+init_namespace "instana-kafka" ${K8S_PSA_LABEL:-"privileged"}
+init_namespace "instana-elasticsearch" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-postgres"
 init_namespace "instana-cassandra"
+init_namespace "instana-clickhouse"
 init_namespace "beeinstana"
 init_namespace "instana-operator"
 init_namespace "instana-core" "instana-core"
