@@ -10,9 +10,9 @@ CORE_CONFIG="$MANIFEST_HOME/core-config.yaml"
 
 replace_manifest=${1:-"noreplace"}
 
-# create core-config.yaml
 check_replace_manifest $CORE_CONFIG $replace_manifest
 
+# create core-config.yaml
 echo writing core config to $CORE_CONFIG
 echo
 
