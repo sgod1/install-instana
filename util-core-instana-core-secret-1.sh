@@ -6,21 +6,12 @@ source ./help-functions.sh
 INSTALL_HOME=$(get_install_home)
 MANIFEST_HOME=$(get_manifest_home)
 
-CORE_CONFIG=$MANIFEST_HOME/core-config.yaml
+CORE_CONFIG="$MANIFEST_HOME/core-config.yaml"
 
-replace_manifest=${1:-"no_replace"}
+replace_manifest=${1:-"noreplace"}
 
 # create core-config.yaml
-if test -f $CORE_CONFIG && compare_values "$replace_manifest" "replace"; then
-   echo backup core config file $CORE_CONFIG to "${CORE_CONFIG}.bak"
-   echo ""
-   cp "$CORE_CONFIG" "${CORE_CONFIG}.bak"
-
-elif test -f $CORE_CONFIG; then
-   echo core config file $CORE_CONFIG exists, no replace argument
-   echo ""
-   exit 1
-fi
+check_replace_manifest $CORE_CONFIG $replace_manifest
 
 echo writing core config to $CORE_CONFIG
 echo
