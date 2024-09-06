@@ -23,7 +23,7 @@ Plugin and license are installed into `gen/bin` subdirectory.<br/>
 
 ### Generate image mirror scripts
 ```
-1-generate-mirror-scripts.sh`<br/>
+1-generate-mirror-scripts.sh
 ```
 Mirror scripts are generated in `gen/mirror` subdirectory<br/>
 
