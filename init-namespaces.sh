@@ -96,7 +96,7 @@ function create_image_pull_secret() {
       --namespace $ns \
       --docker-username=$PRIVATE_REGISTRY_USER \
       --docker-password=$PRIVATE_REGISTRY_PASSWORD \
-      --docker-server=$PRIVATE_REGISTRY
+      --docker-server=$PRIVATE_DOCKER_SERVER
 }
 
 function init_namespace() {
