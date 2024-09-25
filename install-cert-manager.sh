@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 source ../instana.env
 source ./help-functions.sh
@@ -17,9 +17,14 @@ if test ! -f $CHART; then
    exit 1
 fi
 
+# startupapicheck.enabled is set to false (trouble on gke and eks)
+#   --set startupapicheck.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-ctl \
+#   --set startupapicheck.image.tag=v1.13.2 \
+
 helm install cert-manager $CHART \
    --namespace cert-manager \
    --version v1.13.2 \
+   --set imagePullSecrets[0]="instana-registry" \
    --set installCRDs=true \
    --set prometeus.enabled=false \
    --set webhook.timeoutSeconds=4 \
@@ -31,6 +36,10 @@ helm install cert-manager $CHART \
    --set cainjector.image.tag=v1.13.2 \
    --set acmesolver.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-acmesolver \
    --set acmesolver.image.tag=v1.13.2 \
-   --set startupapicheck.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-ctl \
-   --set startupapicheck.image.tag=v1.13.2 \
-   --set imagePullSecrets[0]="instana-registry"
+   --set startupapicheck.enabled=false \
+   --set resources.requests.cpu=500m \
+   --set resources.requests.memory=512Mi \
+   --set cainjector.resources.requests.cpu=500m \
+   --set cainjector.resources.requests.memory=512Mi \
+   --set webhook.resources.requests.cpu=500m \
+   --set webhook.resources.requests.memory=512Mi
