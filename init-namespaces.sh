@@ -110,7 +110,7 @@ echo
 echo initializing namespaces...
 echo
 
-init_namespace "cert-manager"
+init_namespace "cert-manager" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-zookeeper" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-kafka" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-elasticsearch" ${K8S_PSA_LABEL:-"privileged"}
