@@ -63,8 +63,6 @@ function write_push_image_script() {
 
 MIRROR_HOME=$(get_make_mirror_home)
 
-#mkdir -p $MIRROR_HOME
-
 #
 # instana backend
 #
