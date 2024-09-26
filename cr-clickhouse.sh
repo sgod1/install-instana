@@ -21,6 +21,9 @@ metadata:
   namespace: "instana-clickhouse"
 
 spec:
+  license:
+    accept: true
+
   defaults:
     templates:
       dataVolumeClaimTemplate: instana-clickhouse-data-volume
