@@ -130,7 +130,7 @@ spec:
         containers:
 
         - name: instana-clickhouse
-          image: docker.szesto.io/clickhouse-openssl:23.8.9.54-1-lts-ibm
+          image: $PRIVATE_REGISTRY/clickhouse-openssl:23.8.9.54-1-lts-ibm
           imagePullPolicy: IfNotPresent
           command:
           - clickhouse-server
@@ -144,7 +144,7 @@ spec:
             mountPath: /var/lib/clickhouse-cold/
 
         - name: clickhouse-log
-          image: docker.szesto.io/clickhouse-openssl:23.8.9.54-1-lts-ibm
+          image: $PRIVATE_REGISTRY/clickhouse-openssl:23.8.9.54-1-lts-ibm
           imagePullPolicy: IfNotPresent
           command:
           - /bin/sh
