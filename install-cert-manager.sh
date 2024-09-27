@@ -4,7 +4,7 @@ source ../instana.env
 source ./help-functions.sh
 
 REGISTRY_OVERWRITE=$1
-EFF_PRIVATE_REGISTRY=${REGISTRY_OVERWRITE:-$PRIVATE_REGISTRY}
+REGISTRY=${REGISTRY_OVERWRITE:-$PRIVATE_REGISTRY}
 
 CHART_HOME=$(get_chart_home)
 
@@ -34,16 +34,16 @@ helm install cert-manager $CHART \
    --set installCRDs=true \
    --set prometeus.enabled=false \
    --set webhook.timeoutSeconds=4 \
-   --set image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-controller \
+   --set image.repository=$REGISTRY/jetstack/cert-manager-controller \
    --set image.tag=v1.13.2 \
-   --set webhook.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-webhook \
+   --set webhook.image.repository=$REGISTRY/jetstack/cert-manager-webhook \
    --set webhook.image.tag=v1.13.2 \
-   --set cainjector.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-cainjector \
+   --set cainjector.image.repository=$REGISTRY/jetstack/cert-manager-cainjector \
    --set cainjector.image.tag=v1.13.2 \
-   --set acmesolver.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-acmesolver \
+   --set acmesolver.image.repository=$REGISTRY/jetstack/cert-manager-acmesolver \
    --set acmesolver.image.tag=v1.13.2 \
    --set startupapicheck.enabled=true \
-   --set startupapicheck.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-ctl \
+   --set startupapicheck.image.repository=$REGISTRY/jetstack/cert-manager-ctl \
    --set startupapicheck.image.tag=v1.13.2 \
    --set resources.requests.cpu=500m \
    --set resources.requests.memory=512Mi \
