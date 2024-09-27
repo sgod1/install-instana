@@ -1,7 +1,10 @@
-#!/bin/bash -x
+#!/bin/bash
 
 source ../instana.env
 source ./help-functions.sh
+
+REGISTRY_OVERWRITE=$1
+EFF_PRIVATE_REGISTRY=${REGISTRY_OVERWRITE:-$PRIVATE_REGISTRY}
 
 CHART_HOME=$(get_chart_home)
 
@@ -17,26 +20,31 @@ if test ! -f $CHART; then
    exit 1
 fi
 
-# startupapicheck.enabled is set to false (trouble on gke and eks)
-#   --set startupapicheck.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-ctl \
-#   --set startupapicheck.image.tag=v1.13.2 \
+# startupapicheck.enabled is set to false
+# gke:
+# --set global.leaderElection.namespace=cert-manager \
+
+set -x
 
 helm install cert-manager $CHART \
    --namespace cert-manager \
    --version v1.13.2 \
    --set imagePullSecrets[0]="instana-registry" \
+   --set global.leaderElection.namespace=cert-manager \
    --set installCRDs=true \
    --set prometeus.enabled=false \
    --set webhook.timeoutSeconds=4 \
-   --set image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-controller \
+   --set image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-controller \
    --set image.tag=v1.13.2 \
-   --set webhook.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-webhook \
+   --set webhook.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-webhook \
    --set webhook.image.tag=v1.13.2 \
-   --set cainjector.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-cainjector \
+   --set cainjector.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-cainjector \
    --set cainjector.image.tag=v1.13.2 \
-   --set acmesolver.image.repository=$PRIVATE_REGISTRY/jetstack/cert-manager-acmesolver \
+   --set acmesolver.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-acmesolver \
    --set acmesolver.image.tag=v1.13.2 \
-   --set startupapicheck.enabled=false \
+   --set startupapicheck.enabled=true \
+   --set startupapicheck.image.repository=$EFF_PRIVATE_REGISTRY/jetstack/cert-manager-ctl \
+   --set startupapicheck.image.tag=v1.13.2 \
    --set resources.requests.cpu=500m \
    --set resources.requests.memory=512Mi \
    --set cainjector.resources.requests.cpu=500m \
