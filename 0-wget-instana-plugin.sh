@@ -8,16 +8,19 @@ source ./help-functions.sh
 INSTALL_HOME=$(get_make_install_home)
 BIN_DIR=$(get_make_bin_home)
 
-if test -f $BIN_DIR/${INSTANA_PLUGIN_TAR}; then
-   rm $BIN_DIR/${INSTANA_PLUGIN_TAR}
-fi
+function cleanup_plugin_tar() {
+   plugin_tar=$1
 
-cp ./release.env $INSTALL_HOME
+   if test -f $BIN_DIR/${plugin_tar}; then
+      rm $BIN_DIR/${plugin_tar}
+   fi
+}
 
-wget --user=_ --password=${DOWNLOAD_KEY} -P ${BIN_DIR}  ${INSTANA_PLUGIN_URL}
+cleanup_plugin_tar ${INSTANA_PLUGIN_TAR_LINUX_AMD64}
+cleanup_plugin_tar ${INSTANA_PLUGIN_TAR_LINUX_ARM64}
+cleanup_plugin_tar ${INSTANA_PLUGIN_TAR_DARWIN_AMD64}
+cleanup_plugin_tar ${INSTANA_PLUGIN_TAR_DARWIN_ARM64}
 
-echo ""
-echo installing kubectl-instana to $BIN_DIR
-echo ""
+set -x
 
-tar xvf $BIN_DIR/${INSTANA_PLUGIN_TAR} -C $BIN_DIR
+wget -w 3 --user=_ --password=${DOWNLOAD_KEY} -P ${BIN_DIR}  ${INSTANA_PLUGIN_URL_LINUX_AMD64} ${INSTANA_PLUGIN_URL_LINUX_ARM64} ${INSTANA_PLUGIN_URL_DARWIN_AMD64} ${INSTANA_PLUGIN_URL_DARWIN_ARM64}
