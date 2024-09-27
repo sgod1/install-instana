@@ -19,4 +19,5 @@ set -x
 helm install zookeeper-operator -n instana-zookeeper $CHART \
    --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/zookeeper \
    --set image.tag=0.2.15_v0.11.0 \
+   --set hooks.image.repository=$PRIVATE_REGISTRY/lachlanevenson/k8s-kubectl \
    --set global.imagePullSecrets={"instana-registry"}
