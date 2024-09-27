@@ -119,6 +119,7 @@ echo ""
 
 ./generate-certmgr-image-list.sh
 
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT anonymous
+#write_pull_image_script $IMAGE_LIST $PULL_SCRIPT anonymous
+write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
 write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
 write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
