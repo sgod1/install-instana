@@ -16,6 +16,7 @@ artifact-public.instana.io/self-hosted-images/3rd-party/operator/cass-operator:1
 artifact-public.instana.io/self-hosted-images/3rd-party/datastore/system-logger:1.18.2_v0.3.0
 artifact-public.instana.io/self-hosted-images/3rd-party/datastore/k8ssandra-client:0.2.2_v0.3.0
 artifact-public.instana.io/self-hosted-images/3rd-party/datastore/cassandra:4.1.4_v0.17.0
+cr.dtsx.io/datastax/cass-config-builder:1.0-ubi7
 
 # clickhouse
 artifact-public.instana.io/clickhouse-operator:v0.1.2
