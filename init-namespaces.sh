@@ -3,6 +3,9 @@
 source ../instana.env
 source ./help-functions.sh
 
+select_namespace=${1:-""}
+select_label=${2:-""}
+
 INSTALL_HOME=$(get_install_home)
 
 function create_psa_labeled_namespace() {
@@ -110,6 +113,9 @@ echo
 echo initializing namespaces...
 echo
 
+if test ! -z $select_namespace; then
+init_namespace $select_namespace $select_label
+else
 init_namespace "cert-manager" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-zookeeper" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-kafka" ${K8S_PSA_LABEL:-"privileged"}
@@ -121,3 +127,5 @@ init_namespace "beeinstana"
 init_namespace "instana-operator"
 init_namespace "instana-core" "instana-core"
 init_namespace "instana-units" "instana-units"
+fi
+
