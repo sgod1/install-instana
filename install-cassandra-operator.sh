@@ -37,4 +37,5 @@ helm install cassandra-operator -n instana-cassandra $CHART \
    --set imagePullSecrets[0].name="instana-registry" \
    --set appVersion="1.18.2" \
    --set imageConfig.systemLogger="$PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/system-logger:1.18.2_v0.3.0" \
-   --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/k8ssandra-client:0.2.2_v0.3.0"
+   --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/k8ssandra-client:0.2.2_v0.3.0" \
+   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/datastax/cass-config-builder:1.0-ubi7"
