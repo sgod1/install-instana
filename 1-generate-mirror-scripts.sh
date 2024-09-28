@@ -36,6 +36,7 @@ function write_tag_image_script() {
    }
    NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) }
    NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { printf("$PODMAN tag %s", $0); sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) } 
+   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { printf("$PODMAN tag %s", $0); sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf(" %s\n", $0) } 
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -56,6 +57,7 @@ function write_push_image_script() {
    }
    NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
    NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
