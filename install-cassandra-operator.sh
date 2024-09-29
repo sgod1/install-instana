@@ -8,6 +8,11 @@ DISABLE_WEBHOOK="disable_webhook"
 ENABLE_WEBHOOK="enable_webhook"
 webhook_startup=${1:-"$ENABLE_WEBHOOK"}
 
+# pass custom_webhook_cert to use custom cert
+CUSTOM_WEBHOOK_CERT="custom_webhook_cert"
+NO_CUSTOM_WEBHOOK_CERT="no_custom_cert"
+custom_webhook_cert=${1:-$NO_CUSTOM_WEBHOOK_CERT}
+
 CHART_HOME=$(get_chart_home)
 MANIFEST_HOME=$(get_manifest_home)
 
@@ -25,7 +30,6 @@ if is_platform_ocp $PLATFORM; then
    $KUBECTL apply -f $SCC -n instana-cassandra
 fi
 
-
 if test ! -f $CHART; then
    echo helm chart $CHART not found
    exit 1
@@ -34,10 +38,17 @@ fi
 # admission webhook, enabled by default
 set_admission_webhook="--set admissionWebhooks.enabled=true"
 
-if compare_values $webhook_startup $DISABLE_WEBHOOK; then
+# custom webhook cert
+set_custom_webhook_cert=""
 
-# admission webhook disabled, create issuer and cert
-echo "cassandra operator admission webhook disabled..."
+if compare_values $webhook_startup $DISABLE_WEBHOOK; then
+echo "admission webhook disabled..."
+set_admission_webhook="--set admissionWebhooks.enabled=false"
+
+elif compare_values $custom_webhook_cert $CUSTOM_WEBHOOK_CERT; then
+
+# use custom webhook cert
+echo "using custom webhook cert..."
 
 # issuer
 echo ""
@@ -54,8 +65,10 @@ spec:
 EOF
 
 # webhook certificate
+WEBHOOK_CERT_NAME=cass-operator-serving-cert
+
 echo ""
-echo "creating webhook certificate cass-operator-serving-cert, namespace instana-cassandra"
+echo "creating webhook certificate $WEBHOOK_CERT_NAME, namespace instana-cassandra"
 
 cat <<EOF | $KUBECTL apply -f -
 apiVersion: v1
@@ -64,7 +77,7 @@ items:
 - apiVersion: cert-manager.io/v1
   kind: Certificate
   metadata:
-    name: cass-operator-serving-cert
+    name: $WEBHOOK_CERT_NAME
     namespace: instana-cassandra
   spec:
     dnsNames:
@@ -76,7 +89,7 @@ items:
     secretName: cass-operator-webhook-server-cert
 EOF
 
-set_admission_webhook="--set admissionWebhooks.enabled=false --set admissionWebhooks.customCertificate=instana-cassandra/cass-operator-serving-cert"
+set_custom_webhook_cert="--set admissionWebhooks.customCertificate=instana-cassandra/$WEBHOOK_CERT_NAME"
 fi
 
 echo ""
@@ -86,7 +99,7 @@ echo ""
 set -x
 
 helm install cassandra-operator -n instana-cassandra $CHART \
-   $set_admission_webhook \
+   $set_admission_webhook $set_custom_webhook_cert \
    --set securityContext.runAsNonRoot=true \
    --set securityContext.runAsUser=999 \
    --set securityContext.runAsGroup=999 \
