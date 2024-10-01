@@ -3,16 +3,18 @@
 source ../instana.env
 source ./help-functions.sh
 
+namespace=${1:-"instana-cassandra"}
+
 # issuer
 echo ""
-echo "creating issuer cass-operator-selfsigned-issuer, namespace instana-cassandra"
+echo "creating issuer cass-operator-selfsigned-issuer, namespace $namespace"
 
 cat <<EOF | $KUBECTL apply -f -
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: cass-operator-selfsigned-issuer
-  namespace: instana-cassandra
+  namespace: $namespace
 spec:
   selfSigned: {}
 EOF
@@ -21,7 +23,7 @@ EOF
 WEBHOOK_CERT_NAME=cass-operator-serving-cert
 
 echo ""
-echo "creating webhook certificate $WEBHOOK_CERT_NAME, namespace instana-cassandra"
+echo "creating webhook certificate $WEBHOOK_CERT_NAME, namespace $namespace"
 
 cat <<EOF | $KUBECTL apply -f -
 apiVersion: v1
@@ -31,11 +33,11 @@ items:
   kind: Certificate
   metadata:
     name: $WEBHOOK_CERT_NAME
-    namespace: instana-cassandra
+    namespace: $namespace
   spec:
     dnsNames:
-    - cass-operator-webhook-service.instana-cassandra.svc
-    - cass-operator-webhook-service.instana-cassandra.svc.cluster.local
+    - cass-operator-webhook-service.$namespace.svc
+    - cass-operator-webhook-service.$namespace.svc.cluster.local
     issuerRef:
       kind: Issuer
       name: cass-operator-selfsigned-issuer
