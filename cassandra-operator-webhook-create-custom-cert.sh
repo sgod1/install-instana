@@ -3,6 +3,9 @@
 source ../instana.env
 source ./help-functions.sh
 
+# this script deploys cassandra operator webhook issuer and certificate
+# to test certificate manager
+
 namespace=${1:-"instana-cassandra"}
 
 # issuer
