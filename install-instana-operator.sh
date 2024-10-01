@@ -21,7 +21,7 @@ EOF
 # install instana operator
 echo Installing instana operator, values file $VALUES_FILE
 
- $INSTANA_KUBECTL operator apply --values $VALUES_FILE --namespace=instana-operator
+$INSTANA_KUBECTL operator apply --values $VALUES_FILE --namespace=instana-operator
 
 # Installing instana operator, values file gen/instana-operator-values.yaml
 # namespaces/instana-operator updated

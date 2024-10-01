@@ -24,6 +24,22 @@ check_replace_manifest() {
    fi
 }
 
+check_replace_manifest_dir() {
+   manifest_dir=${1:-"missingvalue"}
+   replace_manifest_dir=${2:-"missingvalue"}
+
+   if test -d $manifest_dir; then
+      if compare_values "$replace_manifest_dir" "replace"; then
+         echo backup "$manifest_dir" to "${manifest_dir}_bak"
+         cp -r "$manifest_dir" "${manifest_dir}_bak"
+      else
+         echo manifest directory $manifest_dir already exists, use \"replace\" argument to replace manifest dir
+         echo
+         exit 1
+      fi
+   fi
+}
+
 function check_platform() {
    platform=$1
    if test -z $platform; then
