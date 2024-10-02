@@ -49,6 +49,7 @@ else
 check_manifest_dir $replace
 
 # serviceaccounts/instana-operator
+# serviceaccounts/instana-operator created
 echo "writing $MANIFEST_DIR/serviceaccounts-instana-operator.yaml"
 cat << EOF > $MANIFEST_DIR/serviceaccounts-instana-operator.yaml
 apiVersion: v1
@@ -63,6 +64,7 @@ metadata:
 EOF
 
 # serviceaccounts/instana-operator-webhook
+# serviceaccounts/instana-operator-webhook created
 echo "writing $MANIFEST_DIR/serviceaccounts-instana-operator-webhook.yaml"
 cat << EOF > $MANIFEST_DIR/serviceaccounts-instana-operator-webhook.yaml
 apiVersion: v1
@@ -77,6 +79,7 @@ metadata:
 EOF
 
 # clusterroles/instana-operator
+# clusterroles/instana-operator created
 echo "writing $MANIFEST_DIR/clusterroles-instana-operator.yaml"
 cat << EOF > $MANIFEST_DIR/clusterroles-instana-operator.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -502,7 +505,9 @@ rules:
   - watch
 EOF
 
+
 # clusterroles/instana-operator-webhook
+# clusterroles/instana-operator-webhook created
 echo "writing $MANIFEST_DIR/clusterroles-instana-operator-webhook.yaml"
 cat << EOF > $MANIFEST_DIR/clusterroles-instana-operator-webhook.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -541,6 +546,7 @@ rules:
 EOF
 
 # clusterrolebindings/instana-operator
+# clusterrolebindings/instana-operator created
 echo "writing $MANIFEST_DIR/clusterrolebindings-instana-operator.yaml"
 cat << EOF > $MANIFEST_DIR/clusterrolebindings-instana-operator.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -562,29 +568,9 @@ subjects:
 EOF
 
 # clusterrolebindings/instana-operator-webhook
+# clusterrolebindings/instana-operator-webhook created
 echo "writing $MANIFEST_DIR/clusterrolebindings-instana-operator-webhook.yaml"
 cat << EOF > $MANIFEST_DIR/clusterrolebindings-instana-operator-webhook.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  labels:
-    app.kubernetes.io/component: operator
-    app.kubernetes.io/name: instana
-    app.kubernetes.io/version: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
-  name: instana-operator
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: instana-operator
-subjects:
-- kind: ServiceAccount
-  name: instana-operator
-  namespace: instana-operator
-EOF
-
-# roles/instana-operator-leader-election
-echo "writing $MANIFEST_DIR/roles-instana-operator-leader-election.yaml"
-cat << EOF > $MANIFEST_DIR/roles-instana-operator-leader-election.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -603,9 +589,10 @@ subjects:
   namespace: instana-operator
 EOF
 
-# rolebindings/instana-operator-leader-election
-echo "writing $MANIFEST_DIR/rolebindings-instana-operator-leader-election.yaml"
-cat << EOF > $MANIFEST_DIR/rolebindings-instana-operator-leader-election.yaml
+# roles/instana-operator-leader-election
+# roles/instana-operator-leader-election created
+echo "writing $MANIFEST_DIR/roles-instana-operator-leader-election.yaml"
+cat << EOF > $MANIFEST_DIR/roles-instana-operator-leader-election.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -649,21 +636,19 @@ rules:
   - patch
 EOF
 
-# services/instana-operator-webhook
-echo "writing $MANIFEST_DIR/services-instana-operator-webhook.yaml"
-cat << EOF > $MANIFEST_DIR/services-instana-operator-webhook.yaml
+# rolebindings/instana-operator-leader-election
+# rolebindings/instana-operator-leader-election created
+echo "writing $MANIFEST_DIR/rolebindings-instana-operator-leader-election.yaml"
+cat << EOF > $MANIFEST_DIR/rolebindings-instana-operator-leader-election.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: "2024-10-01T23:34:41Z"
   labels:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: instana
-    app.kubernetes.io/version: 277-2
+    app.kubernetes.io/version: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
   name: instana-operator-leader-election
   namespace: instana-operator
-  resourceVersion: "93865"
-  uid: f9c7d62b-e328-4195-87c8-b75323d30bf7
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -674,10 +659,10 @@ subjects:
   namespace: instana-operator
 EOF
 
-
-# deployments/instana-operator updated
-echo "writing $MANIFEST_DIR/deployments-instana-operator.yaml"
-cat << EOF > $MANIFEST_DIR/deployments-instana-operator.yaml
+# services/instana-operator-webhook
+# services/instana-operator-webhook created
+echo "writing $MANIFEST_DIR/services-instana-operator-webhook.yaml"
+cat << EOF > $MANIFEST_DIR/services-instana-operator-webhook.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -688,6 +673,9 @@ metadata:
   name: instana-operator-webhook
   namespace: instana-operator
 spec:
+  clusterIP: 34.118.228.181
+  clusterIPs:
+  - 34.118.228.181
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
@@ -704,9 +692,10 @@ spec:
   type: ClusterIP
 EOF
 
-# deployments/instana-operator-webhook updated
-echo "writing $MANIFEST_DIR/deployments-instana-operator-webhook.yaml"
-cat << EOF > $MANIFEST_DIR/deployments-instana-operator-webhook.yaml
+# deployments/instana-operator updated
+# deployments/instana-operator created
+echo "writing $MANIFEST_DIR/deployments-instana-operator.yaml"
+cat << EOF > $MANIFEST_DIR/deployments-instana-operator.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -731,6 +720,7 @@ spec:
     type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app.kubernetes.io/component: operator
         app.kubernetes.io/name: instana
@@ -751,7 +741,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: artifact-public.instana.io/infrastructure/instana-operator:277-2
+        image: artifact-public.instana.io/infrastructure/instana-operator: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
         imagePullPolicy: IfNotPresent
         name: instana-operator
         ports:
@@ -809,9 +799,10 @@ spec:
         name: tmpdir
 EOF
 
-# certificates/instana-operator-webhook
-echo "writing $MANIFEST_DIR/certificates-instana-operator-webhook.yaml"
-cat << EOF > $MANIFEST_DIR/certificates-instana-operator-webhook.yaml
+# deployments/instana-operator-webhook updated
+# deployments/instana-operator-webhook created
+echo "writing $MANIFEST_DIR/deployments-instana-operator-webhook.yaml"
+cat << EOF > $MANIFEST_DIR/deployments-instana-operator-webhook.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -836,6 +827,7 @@ spec:
     type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app.kubernetes.io/component: webhook
         app.kubernetes.io/name: instana
@@ -850,7 +842,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: $PRIVATE_REGISTRY/infrastructure/instana-operator:${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
+        image: artifact-public.instana.io/infrastructure/instana-operator: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
         imagePullPolicy: IfNotPresent
         name: instana-operator-webhook
         ports:
@@ -915,9 +907,10 @@ spec:
         name: tmpdir
 EOF
 
-# issuers/instana-operator-webhook
-echo "writing $MANIFEST_DIR/issuers-instana-operator-webhook.yaml"
-cat << EOF > $MANIFEST_DIR/issuers-instana-operator-webhook.yaml
+# certificates/instana-operator-webhook
+# certificates/instana-operator-webhook created
+echo "writing $MANIFEST_DIR/certificates-instana-operator-webhook.yaml"
+cat << EOF > $MANIFEST_DIR/certificates-instana-operator-webhook.yaml
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -940,11 +933,12 @@ spec:
     - instana
 EOF
 
-# validatingwebhookconfigurations/instana-operator-webhook-validating updated
-echo "writing $MANIFEST_DIR/validatingwebhookconfigurations-instana-operator-webhook-validating.yaml"
-cat << EOF > $MANIFEST_DIR/validatingwebhookconfigurations-instana-operator-webhook-validating.yaml
+# issuers/instana-operator-webhook
+# issuers/instana-operator-webhook created
+echo "writing $MANIFEST_DIR/issuers-instana-operator-webhook.yaml"
+cat << EOF > $MANIFEST_DIR/issuers-instana-operator-webhook.yaml
 apiVersion: cert-manager.io/v1
-kind: Certificate
+kind: Issuer
 metadata:
   labels:
     app.kubernetes.io/component: webhook
@@ -953,16 +947,76 @@ metadata:
   name: instana-operator-webhook
   namespace: instana-operator
 spec:
-  dnsNames:
-  - instana-operator-webhook.instana-operator
-  - instana-operator-webhook.instana-operator.svc
-  issuerRef:
-    kind: Issuer
-    name: instana-operator-webhook
-  secretName: instana-operator-webhook
-  subject:
-    organizations:
-    - instana
+  selfSigned: {}
+EOF
+
+# validatingwebhookconfigurations/instana-operator-webhook-validating updated
+# validatingwebhookconfigurations/instana-operator-webhook-validating created
+echo "writing $MANIFEST_DIR/validatingwebhookconfigurations-instana-operator-webhook-validating.yaml"
+cat << EOF > $MANIFEST_DIR/validatingwebhookconfigurations-instana-operator-webhook-validating.yaml
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  labels:
+    app.kubernetes.io/component: webhook
+    app.kubernetes.io/name: instana
+    app.kubernetes.io/version: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
+  name: instana-operator-webhook-validating
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUROakNDQWg2Z0F3SUJBZ0lSQUp4TkV0WEZDcjd3YUNpVmZxZnJtUUl3RFFZSktvWklodmNOQVFFTEJRQXcKRWpFUU1BNEdBMVVFQ2hNSGFXNXpkR0Z1WVRBZUZ3MHlOREV3TURFeU16TTBORE5hRncweU5ERXlNekF5TXpNMApORE5hTUJJeEVEQU9CZ05WQkFvVEIybHVjM1JoYm1Fd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3CmdnRUtBb0lCQVFDVjNXdXM1WnA0endiczZTMjFpVWVCSXpmVlFYUXNjTjdoMERDVlhCNWU3a2kzcmNsbWNlNG0KaTVTT09DZUV2bEo3c2Q4WjdKeGw0SSt2elZnVDJQb05sUTVucTIyN05SY29BYkpob1JJNXdlN2I3a0MxS1ZBZwpDMmlDVXdEelJlRm1mS1h5cm9DSVgrM1NEdWZ4d1JScEMzQWRUWW15ekt1TElIeDZ0cFlpaTRjaWVKQUxxRVkwCkhmTEdkTEhkTStTZGZPSnNhZ0twYlhnTEFTQTFtU21IcC9iTGIrY2l6NHlpZStlaXhPa0cvOVdCTy9UN3RCcDAKQzU3NFk0ZzViL0pSeHk4L2EyTkpyMkFQVFJmRUtYMmdrQ2xTNEtYZWl1N0llNkxLU2R1cC9JTjlhWEl6TVJSYgpRazIxc0FDNlM1WWFSTTAwU2hKS21XYmlpZWtoUzFiSkFnTUJBQUdqZ1lZd2dZTXdEZ1lEVlIwUEFRSC9CQVFECkFnV2dNQXdHQTFVZEV3RUIvd1FDTUFBd1l3WURWUjBSQkZ3d1dvSXBhVzV6ZEdGdVlTMXZjR1Z5WVhSdmNpMTMKWldKb2IyOXJMbWx1YzNSaGJtRXRiM0JsY21GMGIzS0NMV2x1YzNSaGJtRXRiM0JsY21GMGIzSXRkMlZpYUc5dgpheTVwYm5OMFlXNWhMVzl3WlhKaGRHOXlMbk4yWXpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQVExRUUrUmFYClptTHNtTThrRzREeExCRlFGMC9rcGtlKzFzTDdxNlBDbjNuaXNXTFhXVnJJTzdVamRROFRia2dFMnFLSUhqOUMKQVZYZ0F1ME9rcmNoMjRDQkFJa0pkTzJHVDI3d3YwakhaVlh4Wld3QXAvV1BhMzZQNkVhTEZSeWpXU2FyYU1KNQo0QWE0dW1yNmV3Tkk3YmV0MkQ1MktUZEJicnFQbEdIeHIyd2o3Qy9WMlZITkZuYVJiTDFGUkYxdEZSei92SDNrCkoxN3dWcFBXczg2d1ZpRmxGc1pvaUlyZi9NdVB4M0JjUGxLMDVTT0pxNFdhb3FKYk9ZR1A2c28wd1JOZzdhWmgKRWRNL3ptQkxrcFFiTmNrbjNMcEM0TFdSRkNNM0p6Qm04ZmdFR1AzeHl2RWtMRnRuMmFra2YwN3RkYnpURUpPYQowSk1EOHpCTHNXbG9ydz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: instana-operator-webhook
+      namespace: instana-operator
+      path: /validate-instana-io-v1beta2-core
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: vcore.kb.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - instana.io
+    apiVersions:
+    - v1beta2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - cores
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUROakNDQWg2Z0F3SUJBZ0lSQUp4TkV0WEZDcjd3YUNpVmZxZnJtUUl3RFFZSktvWklodmNOQVFFTEJRQXcKRWpFUU1BNEdBMVVFQ2hNSGFXNXpkR0Z1WVRBZUZ3MHlOREV3TURFeU16TTBORE5hRncweU5ERXlNekF5TXpNMApORE5hTUJJeEVEQU9CZ05WQkFvVEIybHVjM1JoYm1Fd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3CmdnRUtBb0lCQVFDVjNXdXM1WnA0endiczZTMjFpVWVCSXpmVlFYUXNjTjdoMERDVlhCNWU3a2kzcmNsbWNlNG0KaTVTT09DZUV2bEo3c2Q4WjdKeGw0SSt2elZnVDJQb05sUTVucTIyN05SY29BYkpob1JJNXdlN2I3a0MxS1ZBZwpDMmlDVXdEelJlRm1mS1h5cm9DSVgrM1NEdWZ4d1JScEMzQWRUWW15ekt1TElIeDZ0cFlpaTRjaWVKQUxxRVkwCkhmTEdkTEhkTStTZGZPSnNhZ0twYlhnTEFTQTFtU21IcC9iTGIrY2l6NHlpZStlaXhPa0cvOVdCTy9UN3RCcDAKQzU3NFk0ZzViL0pSeHk4L2EyTkpyMkFQVFJmRUtYMmdrQ2xTNEtYZWl1N0llNkxLU2R1cC9JTjlhWEl6TVJSYgpRazIxc0FDNlM1WWFSTTAwU2hKS21XYmlpZWtoUzFiSkFnTUJBQUdqZ1lZd2dZTXdEZ1lEVlIwUEFRSC9CQVFECkFnV2dNQXdHQTFVZEV3RUIvd1FDTUFBd1l3WURWUjBSQkZ3d1dvSXBhVzV6ZEdGdVlTMXZjR1Z5WVhSdmNpMTMKWldKb2IyOXJMbWx1YzNSaGJtRXRiM0JsY21GMGIzS0NMV2x1YzNSaGJtRXRiM0JsY21GMGIzSXRkMlZpYUc5dgpheTVwYm5OMFlXNWhMVzl3WlhKaGRHOXlMbk4yWXpBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQVExRUUrUmFYClptTHNtTThrRzREeExCRlFGMC9rcGtlKzFzTDdxNlBDbjNuaXNXTFhXVnJJTzdVamRROFRia2dFMnFLSUhqOUMKQVZYZ0F1ME9rcmNoMjRDQkFJa0pkTzJHVDI3d3YwakhaVlh4Wld3QXAvV1BhMzZQNkVhTEZSeWpXU2FyYU1KNQo0QWE0dW1yNmV3Tkk3YmV0MkQ1MktUZEJicnFQbEdIeHIyd2o3Qy9WMlZITkZuYVJiTDFGUkYxdEZSei92SDNrCkoxN3dWcFBXczg2d1ZpRmxGc1pvaUlyZi9NdVB4M0JjUGxLMDVTT0pxNFdhb3FKYk9ZR1A2c28wd1JOZzdhWmgKRWRNL3ptQkxrcFFiTmNrbjNMcEM0TFdSRkNNM0p6Qm04ZmdFR1AzeHl2RWtMRnRuMmFra2YwN3RkYnpURUpPYQowSk1EOHpCTHNXbG9ydz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: instana-operator-webhook
+      namespace: instana-operator
+      path: /validate-instana-io-v1beta2-unit
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: vunit.kb.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - instana.io
+    apiVersions:
+    - v1beta2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - units
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
 EOF
 
 echo "writing $MANIFEST_DIR/cores-instana-io.yaml"
