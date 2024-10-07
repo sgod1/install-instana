@@ -741,7 +741,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: artifact-public.instana.io/infrastructure/instana-operator: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
+        image: ${PRIVATE_REGISTRY}/infrastructure/instana-operator:${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
         imagePullPolicy: IfNotPresent
         name: instana-operator
         ports:
@@ -842,7 +842,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: artifact-public.instana.io/infrastructure/instana-operator: ${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
+        image: ${PRIVATE_REGISTRY}/infrastructure/instana-operator:${INSTANA_RELEASE}-${INSTANA_SUBRELEASE}
         imagePullPolicy: IfNotPresent
         name: instana-operator-webhook
         ports:
