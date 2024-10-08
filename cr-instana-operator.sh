@@ -673,9 +673,6 @@ metadata:
   name: instana-operator-webhook
   namespace: instana-operator
 spec:
-  clusterIP: 34.118.228.181
-  clusterIPs:
-  - 34.118.228.181
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
