@@ -21,6 +21,7 @@ metadata:
 
 spec:
   # The domain under which Instana is reachable
+  # required field
   baseDomain: ${INSTANA_BASE_DOMAIN:-"instana.base.domain"}
 
   # image pull secrets
@@ -63,6 +64,7 @@ spec:
 
   # This configures an SMTP server for sending e-mails.
   # Alternatively, Amazon SES is supported. Please see API reference for details.
+  # required element
   emailConfig:
     smtpConfig:
       from: ${SMTP_FROM:-"from@example.com"}
@@ -142,6 +144,7 @@ cat << EOF >> $MANIFEST
             storage: 10Gi
         storageClassName: ${RWX_STORAGECLASS:-"Standard"}
 
+  # required element
   datastoreConfigs:
     cassandraConfigs:
       - hosts:
@@ -202,6 +205,7 @@ EOF
 fi
 
 cat << EOF >> $MANIFEST
+  # required element
   resourceProfile: ${CORE_RESOURCE_PROFILE:-"small"}
 
   properties:
