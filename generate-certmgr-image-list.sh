@@ -3,14 +3,20 @@
 source ../instana.env
 source ./help-functions.sh
 
+source ./certmgr-images.env
+
+ARTIFACT_PUBLIC="artifact-public.instana.io"
+
 MIRROR_HOME=$(get_make_mirror_home)
 
 echo writing cert manager image list to $MIRROR_HOME/$CERT_MGR_IMAGE_LIST_FILE
 
+echo "# Certmgr images, Instana version: $INSTANA_VERSION" > ${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}
+
 echo "
---platform linux/amd64 artifact-public.instana.io/jetstack/cert-manager-cainjector:v1.13.2
---platform linux/amd64 artifact-public.instana.io/jetstack/cert-manager-controller:v1.13.2
---platform linux/amd64 artifact-public.instana.io/jetstack/cert-manager-webhook:v1.13.2
---platform linux/amd64 artifact-public.instana.io/jetstack/cert-manager-acmesolver:v1.13.2
---platform linux/amd64 artifact-public.instana.io/jetstack/cert-manager-ctl:v1.13.2
-" > $MIRROR_HOME/$CERT_MGR_IMAGE_LIST_FILE
+$CERTMGR_IMG_PLATFORM $ARTIFACT_PUBLIC/$CERTMGR_CAINJECTOR_IMG
+$CERTMGR_IMG_PLATFORM $ARTIFACT_PUBLIC/$CERTMGR_CONTROLLER_IMG
+$CERTMGR_IMG_PLATFORM $ARTIFACT_PUBLIC/$CERTMGR_WEBHOOK_IMG
+$CERTMGR_IMG_PLATFORM $ARTIFACT_PUBLIC/$CERTMGR_ACMESOLVER
+$CERTMGR_IMG_PLATFORM $ARTIFACT_PUBLIC/$CERTMGR_CTL_IMG
+" >> $MIRROR_HOME/$CERT_MGR_IMAGE_LIST_FILE
