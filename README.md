@@ -13,6 +13,8 @@ cp instana-env-template.env ../instana.env
 ```
 Update `../instana.env` file with your values.<br/>
 
+Set `INSTANA_VERSION` value to one of supprted versions.<br/>
+
 ### Install instana plugin and Instana license.
 Install Instana plugin and download Instana license.<br/>
 ```
