@@ -104,10 +104,10 @@ helm install cassandra-operator -n instana-cassandra $CHART \
    --set securityContext.runAsUser=999 \
    --set securityContext.runAsGroup=999 \
    --set image.registry=$PRIVATE_REGISTRY \
-   --set image.repository="self-hosted-images/3rd-party/operator/cass-operator" \
-   --set image.tag="1.18.2_v0.12.0" \
+   --set image.repository="$CASSANDRA_OPERATOR_IMG_REPO" \
+   --set image.tag="$CASSANDRA_OPERATOR_IMG_TAG" \
    --set imagePullSecrets[0].name="instana-registry" \
    --set appVersion="1.18.2" \
-   --set imageConfig.systemLogger="$PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/system-logger:1.18.2_v0.3.0" \
-   --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/k8ssandra-client:0.2.2_v0.3.0" \
-   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/datastax/cass-config-builder:1.0-ubi7" 
+   --set imageConfig.systemLogger="$PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG" \
+   --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG" \
+   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/$CASSANDRA_CONFIG_BUILDER_IMG"

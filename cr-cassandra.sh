@@ -21,9 +21,9 @@ metadata:
 spec:
   clusterName: instana
   serverType: cassandra
-  serverImage: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/cassandra:4.1.4_v0.17.0
-  systemLoggerImage: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/system-logger:1.18.2_v0.3.0
-  k8ssandraClientImage: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/k8ssandra-client:0.2.2_v0.3.0
+  serverImage: $PRIVATE_REGISTRY/$CASSANDRA_IMG
+  systemLoggerImage: $PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG
+  k8ssandraClientImage: $PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG
   serverVersion: "4.1.4"
   imagePullPolicy: Always
   podTemplateSpec:
