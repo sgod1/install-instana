@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 CHART_HOME=$(get_chart_home)
 MANIFEST_HOME=$(get_manifest_home)
@@ -29,7 +30,9 @@ if test ! -f $CHART; then
    exit 1
 fi
 
+clickhouse_operator_image_tag=`echo $CLICKHOUSE_OPERATOR_IMG | cut -d : -f 2 -`
+
 helm install clickhouse-operator -n instana-clickhouse $CHART \
    --set operator.image.repository=$PRIVATE_REGISTRY/clickhouse-operator \
-   --set operator.image.tag=v0.1.2 \
+   --set operator.image.tag=$clickhouse_operator_image_tag \
    --set imagePullSecrets[0].name="instana-registry"

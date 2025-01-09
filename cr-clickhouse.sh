@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 
@@ -130,7 +131,7 @@ spec:
         containers:
 
         - name: instana-clickhouse
-          image: $PRIVATE_REGISTRY/clickhouse-openssl:23.8.9.54-1-lts-ibm
+          image: $PRIVATE_REGISTRY/$CLICKHOUSE_OPENSSL_IMG
           imagePullPolicy: IfNotPresent
           command:
           - clickhouse-server
@@ -144,7 +145,7 @@ spec:
             mountPath: /var/lib/clickhouse-cold/
 
         - name: clickhouse-log
-          image: $PRIVATE_REGISTRY/clickhouse-openssl:23.8.9.54-1-lts-ibm
+          image: $PRIVATE_REGISTRY/$CLICKHOUSE_OPENSSL_IMG
           imagePullPolicy: IfNotPresent
           command:
           - /bin/sh
