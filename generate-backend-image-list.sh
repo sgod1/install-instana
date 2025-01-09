@@ -11,6 +11,8 @@ mkdir -p $MIRROR_HOME
 
 echo writing backend image list to ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
 
+set -x
+
 if test "$INSTANA_VERSION" = "287"
 then
 ${INSTALL_HOME}/bin/kubectl-instana versions list-images --instana-version $INSTANA_VERSION > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
