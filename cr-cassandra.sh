@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 

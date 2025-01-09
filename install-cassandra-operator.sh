@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 # pass "disable_webhook" argument to disable webhook
 DISABLE_WEBHOOK="disable_webhook"
