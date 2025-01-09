@@ -1,14 +1,17 @@
 #!/bin/bash
 
-source ./release.env
 source ../instana.env
+source ./release.env
 
 source ./help-functions.sh
 
 INSTALL_HOME=$(get_make_install_home)
 BIN_DIR=$(get_make_bin_home)
 
-cp ./release.env $INSTALL_HOME
+echo "
+INSTANA_VERSION=$INSTANA_VERSION
+INSTANA_PLUGIN_RELEASE=$INSTANA_PLUGIN_RELEASE
+" > ${INSTALL_HOME}/release.env
 
 machine=`uname -m`
 os=`uname -o`

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ./release.env
 source ../instana.env
+source ./release.env
 
 source ./help-functions.sh
 
