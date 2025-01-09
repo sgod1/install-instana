@@ -131,7 +131,7 @@ spec:
         containers:
 
         - name: instana-clickhouse
-          image: $PRIVATE_REGISTRY/$CLICKHOUSE_OPENSSL_IMG
+          image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
           imagePullPolicy: IfNotPresent
           command:
           - clickhouse-server
@@ -145,7 +145,7 @@ spec:
             mountPath: /var/lib/clickhouse-cold/
 
         - name: clickhouse-log
-          image: $PRIVATE_REGISTRY/$CLICKHOUSE_OPENSSL_IMG
+          image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
           imagePullPolicy: IfNotPresent
           command:
           - /bin/sh
