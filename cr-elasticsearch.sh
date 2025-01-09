@@ -20,7 +20,7 @@ metadata:
   name: instana
 spec:
   version: 7.17.20
-  image: $PRIVATE_REGISTRY/$ELASTICSEARCH_IMG
+  image: ${PRIVATE_REGISTRY}/${ELASTICSEARCH_IMG}
   nodeSets:
     - name: default
       count: 3
