@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_ELASTICSEARCH
@@ -19,7 +20,7 @@ metadata:
   name: instana
 spec:
   version: 7.17.20
-  image: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/elasticsearch:7.17.20_v0.9.0
+  image: $PRIVATE_REGISTRY/$ELASTICSEARCH_IMG
   nodeSets:
     - name: default
       count: 3

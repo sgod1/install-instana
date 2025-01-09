@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 CHART_HOME=$(get_chart_home)
 
@@ -14,6 +15,8 @@ if test ! -f $CHART; then
    exit 1
 fi
 
+elasticsearch_operator_image_tag=`echo $ELASTICSEARCH_OPERATOR_IMG | cut -d : -f 2 -`
+
 helm install elastic-operator -n instana-elasticsearch $CHART \
    --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/elasticsearch \
-   --set image.tag=2.9.0_v0.11.0
+   --set image.tag=$elasticsearch_operator_image_tag
