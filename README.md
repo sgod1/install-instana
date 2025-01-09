@@ -19,6 +19,7 @@ Set `INSTANA_VERSION` value to one of supprted versions.<br/>
 Install Instana plugin and download Instana license.<br/>
 ```
 0-wget-instana-plugin.sh
+0-install-instana-plugin.sh
 download-instana-license.sh
 ```
 Plugin and license are installed into `gen/bin` subdirectory.<br/>
