@@ -17,7 +17,7 @@ if test "$INSTANA_VERSION" = "287"
 then
 ${INSTALL_HOME}/bin/kubectl-instana versions list-images --instana-version $INSTANA_VERSION > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
 
-elif test "$INSTANA_VERSION" = "278"
+elif test "$INSTANA_VERSION" = "277"
 then
 ${INSTALL_HOME}/bin/kubectl-instana images > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
 
