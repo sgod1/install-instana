@@ -20,7 +20,7 @@ set -x
 zookeeper_operator_img_repo=`echo ${ZOOKEEPER_OPERATOR_IMG} | cut -d : -f 1 -`
 zookeeper_operator_img_tag=`echo ${ZOOKEEPER_OPERATOR_IMG} | cut -d : -f 2 -`
 
-zookeeper_hooks_img_repo=`cat ${ZOOKEEPER_KUBECTL_IMG} | cut -d : -f 1 -`
+zookeeper_hooks_img_repo=`echo ${ZOOKEEPER_KUBECTL_IMG} | cut -d : -f 1 -`
 
 helm install zookeeper-operator -n instana-zookeeper $CHART \
    --set image.repository=${PRIVATE_REGISTRY}/${zookeeper_operator_img_repo} \
