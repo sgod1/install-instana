@@ -6,7 +6,7 @@ source ./help-functions.sh
 
 CHART_HOME=$(get_chart_home)
 
-CHART=$CHART_HOME/beeinstana-operator-v1.58.0.tgz
+CHART=$CHART_HOME/beeinstana-operator-${BEEINSTANA_OPERATOR_CHART_VERSION}.tgz
 
 echo installing beeinstana operator helm chart $CHART
 

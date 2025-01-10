@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 
@@ -12,6 +13,15 @@ replace_manifest=${1:-"no_replace"}
 check_replace_manifest $MANIFEST $replace_manifest
 
 echo writing beeinstana to $MANIFEST
+
+beeinstana_monconfig_img_repo=`echo ${BEEINSTANA_MONCONFIG_IMG} | cut -d : -f 1 -`
+beeinstana_monconfig_img_tag=`echo ${BEEINSTANA_MONCONFIG_IMG} | cut -d : -f 2 -`
+
+beeinstana_ingestor_img_repo=`echo ${BEEINSTANA_INGESTOR_IMG} | cut -d : -f 1 -`
+beeinstana_ingestor_img_tag=`echo ${BEEINSTANA_INGESTOR_IMG} | cut -d : -f 2 -`
+
+beeinstana_aggregator_img_repo=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 1 -`
+beeinstana_aggregator_img_tag=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 2 -`
 
 cat << EOF > $MANIFEST
 apiVersion: beeinstana.instana.com/v1beta1
@@ -37,8 +47,8 @@ spec:
     memory: 200Mi
     replicas: 1
     image:
-      name: beeinstana/monconfig
-      tag: v2.19.0
+      name: ${beeinstana_monconfig_img_repo}
+      tag: ${beeinstana_monconfig_img_tag}
   ingestor:
     cpu: 8
     memory: 4Gi
@@ -47,8 +57,8 @@ spec:
     metricsTopic: raw_metrics
     replicas: 1
     image:
-      name: beeinstana/ingestor
-      tag: v1.85.35-release
+      name: ${beeinstana_ingestor_img_repo}
+      tag: ${beeinstana_ingestor_img_tag}
   aggregator:
     cpu: 4
     memory: 16Gi
@@ -60,8 +70,8 @@ spec:
         size: $BEEINSTANA_LIVE_VOLUME_SIZE
         storageClass: $RWO_STORAGECLASS
     image:
-      name: beeinstana/aggregator
-      tag: v1.85.35-release
+      name: ${beeinstana_aggregator_img_repo}
+      tag: ${beeinstana_aggregator_img_tag}
   # Should set useMultiArchImages to true for s390x and ppc64le
   useMultiArchImages: false
 EOF
