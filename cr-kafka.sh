@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_KAFKA
@@ -21,7 +22,7 @@ metadata:
     strimzi.io/cluster: instana
 spec:
   kafka:
-    image: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/kafka:0.41.0-kafka-3.6.2_v0.7.0
+    image: ${PRIVATE_REGISTRY}/{$KAFKA_IMG}
     version: 3.6.2
     replicas: 3
     listeners:
@@ -70,7 +71,7 @@ fi
 
 cat << EOF >> $MANIFEST
     userOperator:
-      image: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/strimzi:0.41.0_v0.9.0
+      image: ${PRIVATE_REGISTRY}/${KAFKA_OPERATOR_IMG}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
