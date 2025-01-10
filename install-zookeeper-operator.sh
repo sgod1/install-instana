@@ -1,10 +1,11 @@
 #!/bin/bash
 
+helm_action=${1:-"install"}
+INSTANA_VERSION_OVERRIDE=$2
+
 source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
-
-helm_action=${1:-"install"}
 
 CHART_HOME=$(get_chart_home)
 
