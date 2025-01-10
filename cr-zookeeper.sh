@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 MANIFEST="$OUT_DIR/$MANIFEST_FILENAME_ZOOKEEPER"
@@ -11,6 +12,9 @@ replace_manifest=${1:-"noreplace"}
 check_replace_manifest $MANIFEST $replace_manifest
 
 echo writing zookeeper to $MANIFEST
+
+zookeeper_img_repo=`echo ${ZOOKEEPER_IMG} | cut -d : -f 1 -`
+zookeeper_img_tag=`echo ${ZOOKEEPER_IMG} | cut -d : -f 2 -`
 
 cat << EOF > $MANIFEST
 apiVersion: "zookeeper.pravega.io/v1beta1"
@@ -22,8 +26,8 @@ spec:
   # For parameters and default values, see https://github.com/pravega/zookeeper-operator/tree/master/charts/zookeeper#configuration
   replicas: 3
   image:
-    repository: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/zookeeper
-    tag: 3.8.3_v0.12.0
+    repository: ${PRIVATE_REGISTRY}/${zookeeper_img_repo}
+    tag: ${zookeeper_img_tag}
 
   pod:
     imagePullSecrets: [name: "instana-registry"]
