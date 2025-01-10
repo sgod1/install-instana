@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
 MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_POSTGRES
@@ -19,7 +20,7 @@ metadata:
   name: postgres
 spec:
   instances: 3
-  imageName: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/datastore/cnpg-containers:15_v0.6.0
+  imageName: ${PRIVATE_REGISTRY}/${POSTRGES_IMG}
   imagePullPolicy: IfNotPresent
   postgresql:
     parameters:
