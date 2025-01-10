@@ -31,7 +31,7 @@ helm pull instana/cass-operator --version=${CASSANDRA_OPERATOR_CHART_VERSION} -d
 helm pull instana/ibm-clickhouse-operator --version=${CLICKHOUSE_OPERATOR_CHART_VERSION} -d $CHART_HOME
 
 # beeinstana
-helm pull instana/beeinstana-operator --version=v1.58.0 -d $CHART_HOME
+helm pull instana/beeinstana-operator --version=${BEEINSTANA_OPERATOR_CHART_VERSION} -d $CHART_HOME
 
 # cert-manager
-helm pull instana/cert-manager --version=v1.13.2 -d $CHART_HOME
+helm pull instana/cert-manager --version=${CERTMGR_OPERATOR_CHART_VERSION} -d $CHART_HOME
