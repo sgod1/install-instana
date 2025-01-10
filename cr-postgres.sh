@@ -20,7 +20,7 @@ metadata:
   name: postgres
 spec:
   instances: 3
-  imageName: ${PRIVATE_REGISTRY}/${POSTRGES_IMG}
+  imageName: ${PRIVATE_REGISTRY}/${POSTGRES_IMG}
   imagePullPolicy: IfNotPresent
   postgresql:
     parameters:
