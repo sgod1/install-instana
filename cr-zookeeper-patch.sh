@@ -24,5 +24,3 @@ spec:
     repository: ${PRIVATE_REGISTRY}/${zookeeper_img_repo}
     tag: ${zookeeper_img_tag}
 EOF
-
-# oc patch ZookeeperCluster/instana-zookeeper --type merge --patch-file ./gen/zookeeper-patch-287.json
