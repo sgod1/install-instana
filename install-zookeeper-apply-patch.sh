@@ -9,6 +9,10 @@ MANIFEST_HOME=$(get_manifest_home)
 
 MANIFEST=$MANIFEST_HOME/zookeeper-patch-${INSTANA_VERSION}.yaml
 
+SNAPSHOT_HOME=$(get_make_snapshot_home)
+
+SNAPSHOT=${SNAPSHOT_HOME}/zookeeper-snapshot-`date +%F-%H-%M-%S`.yaml
+
 echo applying zookeeper patch $MANIFEST, namespace instana-clickhouse
 
 if test ! -f $MANIFEST; then
@@ -17,5 +21,7 @@ if test ! -f $MANIFEST; then
 fi
 
 set -x
+
+$KUBECTL get ZookeeperCluster/instana-zookeeper -o yaml > ${SNAPSHOT}
 
 $KUBECTL patch ZookeeperCluster/instana-zookeeper --type merge --patch-file ${MANIFEST} -n instana-clickhouse

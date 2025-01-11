@@ -107,3 +107,14 @@ function get_make_chart_home() {
    mkdir -p "$chart_home"
    echo "$chart_home"
 }
+
+function get_snapshot_home() {
+   install_home=$(get_install_home)
+   echo "$install_home/snapshots"
+}
+
+function get_make_snapshot_home() {
+   snapshot_home=$(get_snapshot_home)
+   mkdir -p "$snapshot_home"
+   echo "$snapshot_home"
+}
