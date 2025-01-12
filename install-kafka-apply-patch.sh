@@ -7,11 +7,11 @@ source ./help-functions.sh
 
 MANIFEST_HOME=$(get_manifest_home)
 
-MANIFEST=$MANIFEST_HOME/zookeeper-patch-${INSTANA_VERSION}.yaml
+MANIFEST=$MANIFEST_HOME/kafka-patch-${INSTANA_VERSION}.yaml
 
 SNAPSHOT_HOME=$(get_make_snapshot_home)
 
-SNAPSHOT=${SNAPSHOT_HOME}/zookeeper-snapshot-`date +%F-%H-%M-%S`.yaml
+SNAPSHOT=${SNAPSHOT_HOME}/kafka-snapshot-`date +%F-%H-%M-%S`.yaml
 
 echo applying zookeeper patch $MANIFEST, namespace instana-kafka
 
