@@ -22,6 +22,8 @@ spec:
   instances: 3
   imageName: ${PRIVATE_REGISTRY}/${POSTGRES_IMG}
   imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: instana-registry
   postgresql:
     parameters:
       shared_buffers: 32MB
