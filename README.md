@@ -200,3 +200,14 @@ To patch elasticsearch cr:<br/>
 cr-elasticsearch-patch.sh replace instana-version
 install-elasticsearch-apply-patch.sh instana-version
 ```
+
+To upgrade `postgres` operator helm chart:<br/>
+```
+install-postgres-operator.sh upgrade instana-version
+```
+
+To patch postgres cr:<br/>
+```
+cr-postgres-patch.sh replace instana-version
+install-postgres-apply-patch.sh instana-version
+```
