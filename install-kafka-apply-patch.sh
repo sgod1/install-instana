@@ -13,7 +13,7 @@ SNAPSHOT_HOME=$(get_make_snapshot_home)
 
 SNAPSHOT=${SNAPSHOT_HOME}/kafka-snapshot-`date +%F-%H-%M-%S`.yaml
 
-echo applying zookeeper patch $MANIFEST, namespace instana-kafka
+echo applying kafka patch $MANIFEST, namespace instana-kafka
 
 if test ! -f $MANIFEST; then
    echo manifest $MANIFEST not found
