@@ -7,13 +7,13 @@ source ./help-functions.sh
 source ./datastore-images.env
 
 OUT_DIR=$(get_make_manifest_home)
-MANIFEST="$OUT_DIR/zookeeper-patch-${INSTANA_VERSION}.yaml"
+MANIFEST="$OUT_DIR/kafka-patch-${INSTANA_VERSION}.yaml"
 
 replace_manifest=${1:-"noreplace"}
 
 check_replace_manifest $MANIFEST $replace_manifest
 
-echo writing zookeeper patch to $MANIFEST
+echo writing kafka patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
 spec:
