@@ -22,7 +22,7 @@ metadata:
     strimzi.io/cluster: instana
 spec:
   kafka:
-    image: ${PRIVATE_REGISTRY}/{$KAFKA_IMG}
+    image: ${PRIVATE_REGISTRY}/${KAFKA_IMG}
     version: 3.6.2
     replicas: 3
     listeners:
