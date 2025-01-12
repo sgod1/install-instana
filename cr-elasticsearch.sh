@@ -19,7 +19,7 @@ kind: Elasticsearch
 metadata:
   name: instana
 spec:
-  version: 7.17.20
+  version: ${ELASTICSEARCH_VERSION}
   image: ${PRIVATE_REGISTRY}/${ELASTICSEARCH_IMG}
   nodeSets:
     - name: default
