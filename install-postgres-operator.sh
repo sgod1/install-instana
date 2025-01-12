@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# install, upgrade
+helm_action=${1:-"install"}
+INSTANA_VERSION_OVERRIDE=$2
+
 source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
@@ -15,8 +19,10 @@ if test ! -f $CHART; then
    exit 1
 fi
 
-postgres_operator_img_repo=`cat ${POSTGRES_OPERATOR_IMG} | cut -d : -f 1 -`
-postgres_operator_img_tag=`cat ${POSTGRES_OPERATOR_IMG} | cut -d : -f 2 -`
+set -x
+
+postgres_operator_img_repo=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 1 -`
+postgres_operator_img_tag=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 2 -`
 
 if is_platform_ocp "$PLATFORM"; then
    #
@@ -26,7 +32,7 @@ if is_platform_ocp "$PLATFORM"; then
    # uid range
    uid_range_start=`$KUBECTL get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
 
-   helm install postgres-operator -n instana-postgres $CHART \
+   helm ${helm_action} postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/${postgres_operator_img_repo} \
      --set image.tag=${postgres_operator_img_tag} \
      --set imagePullSecrets[0].name="instana-registry" \
@@ -35,7 +41,7 @@ if is_platform_ocp "$PLATFORM"; then
 
 else
    # k8s
-   helm install postgres-operator -n instana-postgres $CHART \
+   helm ${helm_action} postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/${postgres_operator_img_repo} \
      --set image.tag=${postgres_operator_img_tag} \
      --set imagePullSecrets[0].name="instana-registry"
