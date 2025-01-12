@@ -189,3 +189,14 @@ To patch kafka cr:<br/>
 cr-kafka-patch.sh replace instana-version
 install-kafka-apply-patch.sh instana-version
 ```
+
+To upgrade `elasticsearch` operator helm chart:<br/>
+```
+install-elasticsearch-operator.sh upgrade instana-version
+```
+
+To patch kafka cr:<br/>
+```
+cr-elasticsearch-patch.sh replace instana-version
+install-elasticsearch-apply-patch.sh instana-version
+```
