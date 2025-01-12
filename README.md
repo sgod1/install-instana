@@ -163,19 +163,29 @@ install-unit-apply-cr.sh
 ## Instana upgrade.
 
 ### Patching datastore helm charts
-Patch scripts take an optional `instana-version` argument.<br/>
+Patch scripts take `instana-version` argument.<br/>
+
 If you run instana version and want to upgrade to newer version,<br/>
 then you can pass new version as an argument to patch scripts.<br>
 
-If you configured install for new version of instana, then you do not need to pass instana version as an argument to patch scripts.<br/>
-
-To upgrade `zookeeper` helm chart:<br/>
+To upgrade `zookeeper` operator helm chart:<br/>
 ```
-install-zookeeper-operator.sh upgrade [instana-version]
+install-zookeeper-operator.sh upgrade instana-version
 ```
 
 To patch zookeeper cr:<br/>
 ```
-cr-zookeeper-patch.sh replace [instana-version]
-install-zookeeper-apply-patch.sh [instana-version]
+cr-zookeeper-patch.sh replace instana-version
+install-zookeeper-apply-patch.sh instana-version
+```
+
+To upgrade `kafka` operator helm chart:<br/>
+```
+install-kafka-operator.sh upgrade instana-version
+```
+
+To patch kafka cr:<br/>
+```
+cr-kafka-patch.sh replace instana-version
+install-kafka-apply-patch.sh instana-version
 ```
