@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# install, upgrade
+helm_action=${1:-"install"}
+INSTANA_VERSION_OVERRIDE=$2
+
 source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
@@ -21,7 +25,7 @@ if is_platform_ocp "$PLATFORM"; then
 fi
 
 # install clickhouse operator chart
-CHART=$CHART_HOME/ibm-clickhouse-operator-v0.1.2.tgz
+CHART=$CHART_HOME/ibm-clickhouse-operator-${CLICKHOUSE_OPERATOR_CHART_VERSION}.tgz
 
 echo installing clickhouse operator helm chart $CHART
 
@@ -32,7 +36,7 @@ fi
 
 clickhouse_operator_image_tag=`echo $CLICKHOUSE_OPERATOR_IMG | cut -d : -f 2 -`
 
-helm install clickhouse-operator -n instana-clickhouse $CHART \
+helm ${helm_action} clickhouse-operator -n instana-clickhouse $CHART \
    --set operator.image.repository=$PRIVATE_REGISTRY/clickhouse-operator \
    --set operator.image.tag=$clickhouse_operator_image_tag \
    --set imagePullSecrets[0].name="instana-registry"
