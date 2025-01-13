@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# install, upgrade
+helm_action=${1:-"install"}
+INSTANA_VERSION_OVERRIDE=$2
+
 source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
@@ -102,7 +106,7 @@ set -x
 cassandra_operator_img_repo=`echo $CASSANDRA_OPERATOR_IMG | cut -d : -f 1 -`
 cassandra_operator_img_tag=`echo $CASSANDRA_OPERATOR_IMG | cut -d : -f 2 -`
 
-helm install cassandra-operator -n instana-cassandra $CHART \
+helm ${helm_action} cassandra-operator -n instana-cassandra $CHART \
    $set_admission_webhook $set_custom_webhook_cert \
    --set securityContext.runAsNonRoot=true \
    --set securityContext.runAsUser=999 \
