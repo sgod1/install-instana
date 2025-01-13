@@ -54,7 +54,7 @@ then
 $INSTANA_KUBECTL operator template --values $VALUES_FILE --namespace=instana-operator --output-dir=$MANIFEST_DIR
 
 else
-echo Invalid instsana operator action $action, expected values: install, template
+echo Invalid instsana operator action $action, expected values: apply, template
 exit 1
 
 fi
