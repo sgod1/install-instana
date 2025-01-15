@@ -1,4 +1,6 @@
-#!/bin/bash -x
+#!/bin/bash
+
+INSTANA_VERSION_OVERRIDE=$1
 
 source ../instana.env
 
@@ -8,9 +10,14 @@ source ./datastore-images.env
 
 CHART_HOME=$(get_make_chart_home)
 
-helm repo add instana https://helm.instana.io/artifactory/rel-helm-customer-virtual --username _ --password $DOWNLOAD_KEY
+helm_repo=https://helm.instana.io/artifactory/rel-helm-customer-virtual
+helm repo add instana $helm_repo --username _ --password $DOWNLOAD_KEY
 
 helm repo update
+
+echo "... pulling operator charts, INSTANA_VERSION=$INSTANA_VERSION, helm repo $helm_repo"
+
+set -x
 
 # zookeeper operator
 helm pull instana/zookeeper-operator --version=${ZOOKEEPER_OPERATOR_CHART_VERSION} -d $CHART_HOME
