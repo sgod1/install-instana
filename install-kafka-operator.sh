@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# install, upgrade
+# install, upgrade or "upgrade --no-hooks"
 helm_action=${1:-"install"}
 INSTANA_VERSION_OVERRIDE=$2
 
@@ -12,7 +12,7 @@ CHART_HOME=$(get_chart_home)
 
 CHART=$CHART_HOME/strimzi-kafka-operator-helm-3-chart-${KAFKA_OPERATOR_CHART_VERSION}.tgz
 
-echo installing kafka operator helm chart $CHART
+echo installing kafka operator helm chart $CHART, INSTANA_VERSION=$INSTANA_VERSION
 
 if test ! -f $CHART; then
    echo helm chart $CHART not found
