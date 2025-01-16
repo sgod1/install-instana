@@ -210,6 +210,14 @@ kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, 
 
 Instana is upgraded to the versions reported by the `check-version-config.sh` script.<br/>
 
+### Mirroring images
+Generate image mirror scripts in the `gen/mirror/<instana-version>` directory.<br/>
+```
+1-generate-mirror-scripts.sh
+```
+Run `pull`, `tag`, and `push` scripts for backend, datastore, and cert-manager<br/>
+as described in the `Generate image mirror` scripts section.<br/>
+
 ### Patching datastore helm charts
 To upgrade `zookeeper` operator helm chart:<br/>
 ```
