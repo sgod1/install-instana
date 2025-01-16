@@ -1,7 +1,5 @@
 #!/bin/bash
 
-INSTANA_VERSION_OVERRIDE=$2
-
 source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
