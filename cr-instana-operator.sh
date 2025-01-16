@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ../instana.env
-source ./release.env
 source ./help-functions.sh
 
 INSTALL_HOME=$(get_install_home)
@@ -10,6 +9,8 @@ BIN_HOME=$(get_bin_home)
 INSTANA_KUBECTL=$BIN_HOME/kubectl-instana
 
 MANIFEST_DIR=$INSTALL_HOME/instana-operator-manifests
+
+MANIFEST_DIR=$MANIFEST_DIR/"${INSTANA_PLUGIN_VERSION}-${INSTANA_VERSION}"
 
 replace=${1:-"no-replace"}
 

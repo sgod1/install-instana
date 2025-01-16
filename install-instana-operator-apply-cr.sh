@@ -8,6 +8,8 @@ BIN_HOME=$(get_bin_home)
 
 MANIFEST_DIR=$INSTALL_HOME/instana-operator-manifests
 
+MANIFEST_DIR=$MANIFEST_DIR/"${INSTANA_PLUGIN_VERSION}-${INSTANA_PLUGIN}"
+
 if test ! -d $MANIFEST_DIR; then
    echo Instsana operator manifest directory $MANIFEST_DIR not found
    exit 1

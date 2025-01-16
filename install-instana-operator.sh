@@ -15,6 +15,9 @@ VALUES_FILE="$INSTALL_HOME/instana-operator-values.yaml"
 
 MANIFEST_DIR=$INSTALL_HOME/instana-operator-manifests
 
+MANIFEST_DIR=$MANIFEST_DIR/"${INSTANA_PLUGIN_VERSION}-${INSTANA_VERSION}"
+mkdir -p $MANIFEST_DIR
+
 cat << EOF > $VALUES_FILE
 image:
   registry: $PRIVATE_REGISTRY
@@ -24,10 +27,11 @@ imagePullSecrets:
 EOF
 
 # install instana operator
-echo Installing instana operator, values file $VALUES_FILE
 
 if test "$action" = "apply"
 then
+echo Installing instana operator, action apply, values file $VALUES_FILE
+
 $INSTANA_KUBECTL operator apply --values $VALUES_FILE --namespace=instana-operator
 
 # Installing instana operator, values file gen/instana-operator-values.yaml
@@ -51,10 +55,12 @@ $INSTANA_KUBECTL operator apply --values $VALUES_FILE --namespace=instana-operat
 
 elif test "$action" = "template"
 then
+echo Installing instana operator, action template, values file $VALUES_FILE, output-dir $MANIFEST_DIR
+
 $INSTANA_KUBECTL operator template --values $VALUES_FILE --namespace=instana-operator --output-dir=$MANIFEST_DIR
 
 else
-echo Invalid instsana operator action $action, expected values: apply, template
+echo Invalid instsana operator action $action, expected actions: apply, template
 exit 1
 
 fi
