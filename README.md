@@ -262,3 +262,23 @@ To patch postgres cr:<br/>
 cr-postgres-patch.sh replace
 install-postgres-apply-patch.sh
 ```
+
+### Upgrade Instana operator
+Instana operator is managed with the instana plugin.<br/>
+To upgrade instana operator directly, run:<br/>
+```
+install-instana-operator.sh
+```
+If you want to generate Instana operator yaml files and apply them,<br>
+run `cr-instana-operator.sh` scirpt:<br/>
+```
+cr-instana-operator.sh
+```
+Output is written to the `gen/instana-operator-manifests/<plugin>-<instana>` directory.<br/>
+Instana operator `values` file is written to the `gen/instana-operator-values.yaml`<br/>
+
+Apply Instana operator CR files:<br/>
+```
+install-insana-operator-apply-cr.sh
+```
+
