@@ -8,6 +8,7 @@ source ./certmgr-images.env
 ARTIFACT_PUBLIC="artifact-public.instana.io"
 
 MIRROR_HOME=$(get_make_mirror_home)
+MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
 
 echo writing cert manager image list to $MIRROR_HOME/$CERT_MGR_IMAGE_LIST_FILE
 

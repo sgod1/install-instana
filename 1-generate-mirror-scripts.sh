@@ -102,7 +102,7 @@ echo ""
 echo writing datastore mirror scripts...
 echo ""
 
-./generate-datastore-image-list.sh $INSTANA_VERSION
+./generate-datastore-image-list.sh
 
 write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
 write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
@@ -122,9 +122,10 @@ echo ""
 echo writing cert-manager mirror scripts...
 echo ""
 
-#./generate-certmgr-image-list.sh $INSTANA_VERSION
+./generate-certmgr-image-list.sh 
 
 #write_pull_image_script $IMAGE_LIST $PULL_SCRIPT anonymous
-#write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-#write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-#write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
+write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
+write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+
