@@ -13,7 +13,16 @@ cp instana-env-template.env ../instana.env
 ```
 Update `../instana.env` file with your values.<br/>
 
-Set `INSTANA_VERSION` value to one of supprted versions.<br/>
+Run `show-version-combination.sh` script to view supported combinations<br/>
+of instana plugin and instana versions.<br/>
+```
+show-version-combination.sh 
+instana plugin: 1.0.0, instana: 279(3.279.395-0)
+instana plugin: 1.1.0, instana: 281(3.281.446-0) 283(3.283.450-0)
+instana plugin: 1.1.1, instana: 281(3.281.446-0) 283(3.283.450-0) 285(3.285.627-0)
+instana plugin: 1.2.0, instana: 287(3.287.582-0)
+```
+Set `INSTANA_PLUGIN_VERSION` and `INSTANA_VERSION` values to one of supported versions.<br/>
 
 ### Install instana plugin and Instana license.
 Install Instana plugin and download Instana license.<br/>
