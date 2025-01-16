@@ -43,7 +43,7 @@ instana semantic version: 3.283.450-0
 kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, date=2024-11-13T13:51:42Z, defaultInstanaVersion=3.283.457-0)
 ```
 This version check becomes important at upgrade time when plugin version and instana version are changed.<br/>
-If you see mismatch, run `0-install-plugin.sh` script after you made version changes in `..\instana.env` file.<br/>
+If you see mismatch, run `0-install-plugin.sh` script.<br/>
 
 ### Generate image mirror scripts
 ```
