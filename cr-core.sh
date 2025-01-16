@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./release.env
 
 MANIFEST_HOME=$(get_manifest_home)
 MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_CORE
@@ -30,6 +31,7 @@ spec:
 
   imageConfig:
     registry: ${PRIVATE_REGISTRY:-"private.registry.com"}
+    tag: ${__instana_sem_version["${INSTANA_VERSION}"]}
 
   # optional features
   featureFlags:
