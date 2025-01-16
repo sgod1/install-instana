@@ -193,11 +193,11 @@ instana plugin: 1.2.0, instana: 287(3.287.582-0)
 Select new version combination and update `INSTANA_PLUGIN_VERSION` and `INSTANA_VERSION` values in `..\instana.env` file.<br/>
 When upgrading versions follow Instana documentation on version sequence.<br/>
 
-After versions are updated in `../instana.env` file you need to download and install new instana plugin.<br/>
+After versions are updated in the `../instana.env` file you need to download and install new instana plugin.<br/>
 Run:<br/>
 ```
-0-install-kubectl-plugin.sh
 0-wget-instana-plugin.sh
+0-install-kubectl-plugin.sh
 ```
 Check that plugin/version combination agree with the installed plugin.<br/>
 ```
@@ -207,6 +207,9 @@ release.env: compat check pass: plugin: 1.1.1, list: 281 283 285, instana: 283
 instana semantic version: 3.283.450-0
 kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, date=2024-11-13T13:51:42Z, defaultInstanaVersion=3.283.457-0)
 ```
+
+If you see mismatch between configured versions and plugin version, check that plugin version is downloaded<br/>
+and run `0-install-kubectl-plugin.sh`.<br/>
 
 Instana is upgraded to the versions reported by the `check-version-config.sh` script.<br/>
 
