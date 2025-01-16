@@ -282,3 +282,11 @@ Apply Instana operator CR files:<br/>
 install-insana-operator-apply-cr.sh
 ```
 
+### Upgrade Instana Backend
+To upgrade Instana backend, run:<br/>
+```
+upgrade-instana-backend.sh 
+```
+
+Watch `core` and `unit`.<br/>
+
