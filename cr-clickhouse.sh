@@ -98,6 +98,7 @@ spec:
      default/log_query_views: 1
      default/max_threads: 16
      default/allow_experimental_database_replicated: 1
+     default/allow_experimental_analyzer: 0
 
     quotas:
      default/interval/duration: 3600

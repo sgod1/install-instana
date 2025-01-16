@@ -20,9 +20,17 @@ spec:
     - name: clickhouse
       spec:
         containers:
-
         - name: instana-clickhouse
           image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
         - name: clickhouse-log
           image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
 EOF
+
+if test "${INSTANA_PLUGIN_VERSION}" = "1.2.0"; then
+cat <<EOF >> $MANIFEST
+  configuration:
+    profiles:
+     default/allow_experimental_analyzer: 0
+EOF
+fi
+
