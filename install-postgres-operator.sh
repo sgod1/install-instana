@@ -2,7 +2,6 @@
 
 # install, upgrade
 helm_action=${1:-"install"}
-INSTANA_VERSION_OVERRIDE=$2
 
 source ../instana.env
 source ./help-functions.sh
