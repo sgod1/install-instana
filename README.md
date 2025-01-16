@@ -182,7 +182,24 @@ install-unit-apply-cr.sh
 ```
 
 ## Instana upgrade.
-Instana is upgraded to the versions reported by the `check-version-config.sh` script.<br/>
+Run `show-version-combination.sh` script to view supported plugin/instana versions.<br/>
+```
+./show-version-combination.sh 
+instana plugin: 1.0.0, instana: 279(3.279.395-0)
+instana plugin: 1.1.0, instana: 281(3.281.446-0) 283(3.283.450-0)
+instana plugin: 1.1.1, instana: 281(3.281.446-0) 283(3.283.450-0) 285(3.285.627-0)
+instana plugin: 1.2.0, instana: 287(3.287.582-0)
+```
+Select new version combination and update `INSTANA_PLUGIN_VERSION` and `INSTANA_VERSION` values in `..\instana.env` file.<br/>
+When upgrading versions follow Instana documentation on version sequence.<br/>
+
+After versions are updated in `../instana.env` file you need to download and install new instana plugin.<br/>
+Run:<br/>
+```
+0-install-kubectl-plugin.sh
+0-wget-instana-plugin.sh
+```
+Check that plugin/version combination agree with the installed plugin.<br/>
 ```
 ./check-version-config.sh 
 instana plugin: 1.1.1, instana: 281(3.281.446-0) 283(3.283.450-0) 285(3.285.627-0)
@@ -190,6 +207,8 @@ release.env: compat check pass: plugin: 1.1.1, list: 281 283 285, instana: 283
 instana semantic version: 3.283.450-0
 kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, date=2024-11-13T13:51:42Z, defaultInstanaVersion=3.283.457-0)
 ```
+
+Instana is upgraded to the versions reported by the `check-version-config.sh` script.<br/>
 
 ### Patching datastore helm charts
 To upgrade `zookeeper` operator helm chart:<br/>
