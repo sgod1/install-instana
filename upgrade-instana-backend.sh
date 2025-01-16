@@ -8,9 +8,9 @@ source ./help-functions.sh
 INSTALL_HOME=$(get_install_home)
 
 # instana semantic version
-semver=${__instana_sem_version[${INSTANA_VERSION}]}
+semver=${__instana_sem_version["${INSTANA_VERSION}"]}
 
-echo "Upgrading instana backend to instana semantic version $semver, instana plugin $INSTANA_PLUGIN_VERSION"
+echo "Upgrading instana backend to semantic version $semver, instana plugin $INSTANA_PLUGIN_VERSION"
 
 set -x
 
