@@ -182,53 +182,56 @@ install-unit-apply-cr.sh
 ```
 
 ## Instana upgrade.
+Instana is upgraded to the versions reported by the `check-version-config.sh` script.<br/>
+```
+./check-version-config.sh 
+instana plugin: 1.1.1, instana: 281(3.281.446-0) 283(3.283.450-0) 285(3.285.627-0)
+release.env: compat check pass: plugin: 1.1.1, list: 281 283 285, instana: 283
+instana semantic version: 3.283.450-0
+kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, date=2024-11-13T13:51:42Z, defaultInstanaVersion=3.283.457-0)
+```
 
 ### Patching datastore helm charts
-Patch scripts take `instana-version` argument.<br/>
-
-If you run instana version and want to upgrade to newer version,<br/>
-then you can pass new version as an argument to patch scripts.<br>
-
 To upgrade `zookeeper` operator helm chart:<br/>
 ```
-install-zookeeper-operator.sh upgrade instana-version
+install-zookeeper-operator.sh upgrade
 ```
 
 To patch zookeeper cr:<br/>
 ```
-cr-zookeeper-patch.sh replace instana-version
-install-zookeeper-apply-patch.sh instana-version
+cr-zookeeper-patch.sh replace
+install-zookeeper-apply-patch.sh
 ```
 
 To upgrade `kafka` operator helm chart:<br/>
 ```
-install-kafka-operator.sh upgrade instana-version
+install-kafka-operator.sh upgrade
 ```
 
 To patch kafka cr:<br/>
 ```
-cr-kafka-patch.sh replace instana-version
-install-kafka-apply-patch.sh instana-version
+cr-kafka-patch.sh replace
+install-kafka-apply-patch.sh
 ```
 
 To upgrade `elasticsearch` operator helm chart:<br/>
 ```
-install-elasticsearch-operator.sh upgrade instana-version
+install-elasticsearch-operator.sh upgrade
 ```
 
 To patch elasticsearch cr:<br/>
 ```
-cr-elasticsearch-patch.sh replace instana-version
-install-elasticsearch-apply-patch.sh instana-version
+cr-elasticsearch-patch.sh replace
+install-elasticsearch-apply-patch.sh
 ```
 
 To upgrade `postgres` operator helm chart:<br/>
 ```
-install-postgres-operator.sh upgrade instana-version
+install-postgres-operator.sh upgrade
 ```
 
 To patch postgres cr:<br/>
 ```
-cr-postgres-patch.sh replace instana-version
-install-postgres-apply-patch.sh instana-version
+cr-postgres-patch.sh replace
+install-postgres-apply-patch.sh
 ```
