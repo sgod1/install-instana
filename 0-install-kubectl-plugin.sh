@@ -1,7 +1,10 @@
 #!/bin/bash
 
+INSTANA_VERSION_OVERRIDE=$1
+
 source ../instana.env
-source ./release.env
+#source ./release.env
+source ./plugin.env
 
 source ./help-functions.sh
 

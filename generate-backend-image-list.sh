@@ -1,28 +1,22 @@
 #!/bin/bash
 
 source ../instana.env
+source ./release.env
 
 source ./help-functions.sh
 
 INSTALL_HOME=$(get_install_home)
+
 MIRROR_HOME=$(get_mirror_home)
+MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
 
 mkdir -p $MIRROR_HOME
 
-echo writing backend image list to ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
+echo writing backend image list to ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}, Instana version: $INSTANA_VERSION
 
 set -x
 
-if test "$INSTANA_VERSION" = "287"
-then
-${INSTALL_HOME}/bin/kubectl-instana versions list-images --instana-version $INSTANA_VERSION > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
+# instana semantic version
+semver=${__instana_sem_version[${INSTANA_VERSION}]}
 
-elif test "$INSTANA_VERSION" = "277"
-then
-${INSTALL_HOME}/bin/kubectl-instana images > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
-
-else
-echo Set INSTANA_VERSION variable to supported version, current value ${INSTANA_VERSION:"undefined"}
-exit 1
-fi
-
+${INSTALL_HOME}/bin/kubectl-instana versions list-images --download-key="$DOWNLOAD_KEY" --instana-version "$semver" > ${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}

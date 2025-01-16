@@ -1,5 +1,7 @@
 #!/bin/bash
 
+INSTANA_VERSION_OVERRIDE=$1
+
 source ../instana.env
 
 source ./datastore-images.env
@@ -8,6 +10,7 @@ source ./help-functions.sh
 
 MIRROR_HOME=$(get_mirror_home)
 
+MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
 mkdir -p $MIRROR_HOME
 
 ARTIFACT_PUBLIC="artifact-public.instana.io"

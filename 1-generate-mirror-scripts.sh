@@ -13,7 +13,7 @@ function write_pull_image_script() {
    /usr/bin/awk -v ANONYMOUS=$anonymous '
    BEGIN { 
       print "#!/bin/bash" 
-      print "source ../../../instana.env"
+      print "source ../../../../instana.env"
       if (ANONYMOUS=="") print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY";
       print "set -x"
    }
@@ -31,7 +31,7 @@ function write_tag_image_script() {
    /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY -v QUAY_REGISTRY=$QUAY_REGISTRY '
    BEGIN {
       print "#!/bin/bash" 
-      print "source ../../../instana.env"
+      print "source ../../../../instana.env"
       print "set -x"
    }
    NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) }
@@ -51,7 +51,7 @@ function write_push_image_script() {
    /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY -v QUAY_REGISTRY=$QUAY_REGISTRY '
    BEGIN { 
       print "#!/bin/bash" 
-      print "source ../../../instana.env"
+      print "source ../../../../instana.env"
       print "$PODMAN login --tls-verify=$PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_REGISTRY"
       print "set -x"
    }
@@ -64,6 +64,9 @@ function write_push_image_script() {
 }
 
 MIRROR_HOME=$(get_make_mirror_home)
+MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
+
+mkdir -p ${MIRROR_HOME}
 
 #
 # instana backend
@@ -79,7 +82,7 @@ echo ""
 echo writing backend mirror scripts...
 echo ""
 
-./generate-backend-image-list.sh
+./generate-backend-image-list.sh 
 
 write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
 write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
@@ -99,7 +102,7 @@ echo ""
 echo writing datastore mirror scripts...
 echo ""
 
-./generate-datastore-image-list.sh
+./generate-datastore-image-list.sh $INSTANA_VERSION
 
 write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
 write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
@@ -119,9 +122,9 @@ echo ""
 echo writing cert-manager mirror scripts...
 echo ""
 
-./generate-certmgr-image-list.sh
+#./generate-certmgr-image-list.sh $INSTANA_VERSION
 
 #write_pull_image_script $IMAGE_LIST $PULL_SCRIPT anonymous
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+#write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
+#write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
+#write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
