@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# install, upgrade
+helm_action=${1:-"install"}
 
 source ../instana.env
 source ./help-functions.sh
@@ -16,12 +18,12 @@ if test ! -f $CHART; then
 fi
 
 if is_platform_ocp "$PLATFORM"; then
-   helm install beeinstana-operator -n beeinstana $CHART \
+   helm ${helm_action} beeinstana-operator -n beeinstana $CHART \
       --set operator.securityContext.seccompProfile.type=RuntimeDefault \
       --set image.registry=$PRIVATE_REGISTRY \
       --set imagePullSecrets[0].name="instana-registry"
 else
-   helm install beeinstana-operator -n beeinstana $CHART \
+   helm ${helm_action} beeinstana-operator -n beeinstana $CHART \
       --set image.registry=$PRIVATE_REGISTRY \
       --set imagePullSecrets[0].name="instana-registry"
 fi
