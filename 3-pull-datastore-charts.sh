@@ -7,6 +7,9 @@ source ./help-functions.sh
 source ./datastore-images.env
 
 CHART_HOME=$(get_make_chart_home)
+CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
+
+mkdir -p $CHART_HOME
 
 helm_repo=https://helm.instana.io/artifactory/rel-helm-customer-virtual
 helm repo add instana $helm_repo --username _ --password $DOWNLOAD_KEY
