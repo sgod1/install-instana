@@ -8,6 +8,8 @@ source ./help-functions.sh
 source ./datastore-images.env
 
 CHART_HOME=$(get_chart_home)
+CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
+mkdir -p ${CHART_HOME}
 
 CHART=$CHART_HOME/zookeeper-operator-${ZOOKEEPER_OPERATOR_CHART_VERSION}.tgz
 

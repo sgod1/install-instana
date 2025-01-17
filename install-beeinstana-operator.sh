@@ -7,6 +7,8 @@ source ../instana.env
 source ./help-functions.sh
 
 CHART_HOME=$(get_chart_home)
+CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
+mkdir -p ${CHART_HOME}
 
 CHART=$CHART_HOME/beeinstana-operator-${BEEINSTANA_OPERATOR_CHART_VERSION}.tgz
 

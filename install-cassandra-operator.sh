@@ -18,6 +18,8 @@ NO_CUSTOM_WEBHOOK_CERT="no_custom_cert"
 custom_webhook_cert=${1:-$NO_CUSTOM_WEBHOOK_CERT}
 
 CHART_HOME=$(get_chart_home)
+CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
+mkdir -p ${CHART_HOME}
 MANIFEST_HOME=$(get_manifest_home)
 
 CHART=$CHART_HOME/cass-operator-${CASSANDRA_OPERATOR_CHART_VERSION}.tgz
