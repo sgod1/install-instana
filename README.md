@@ -221,6 +221,13 @@ Generate image mirror scripts in the `gen/mirror/<instana-version>` directory.<b
 Run `pull`, `tag`, and `push` scripts for backend, datastore, and cert-manager<br/>
 as described in the `Generate image mirror` scripts section.<br/>
 
+### Pulling helm charts
+To pull helm charts, run:<br/>
+```
+3-pull-datastore-charts.sh
+```
+Charts are written to the `gen/charts/<instana-version>` directory.<br/>
+
 ### Patching datastore helm charts
 To upgrade `zookeeper` operator helm chart:<br/>
 ```
