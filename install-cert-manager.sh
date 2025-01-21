@@ -50,7 +50,7 @@ helm install cert-manager $CHART \
    --set acmesolver.image.tag=${CERTMGR_VERSION} \
    --set acmesolver.image.pullPolicy=Always \
    --set startupapicheck.enabled=false \
-   --set startupapicheck.image.repository=$REGISTRY/jetstack/cert-manager-ctl \
+   --set startupapicheck.image.repository=$REGISTRY/jetstack/cert-manager-startupapicheck \
    --set startupapicheck.image.tag=${CERTMGR_VERSION} \
    --set startupapicheck.image.pullPolicy=Always \
    --set resources.requests.cpu=500m \
