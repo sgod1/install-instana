@@ -5,6 +5,7 @@ source ../instana.env
 source ./help-functions.sh
 
 source ./datastore-images.env
+source ./certmgr-images.env
 
 CHART_HOME=$(get_make_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
