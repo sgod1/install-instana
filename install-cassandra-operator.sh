@@ -119,4 +119,5 @@ helm ${helm_action} cassandra-operator -n instana-cassandra $CHART \
    --set appVersion="$CASSANDRA_OPERATOR_CHART_APP_VERSION" \
    --set imageConfig.systemLogger="$PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG" \
    --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG" \
-   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/$CASSANDRA_CONFIG_BUILDER_IMG"
+   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/$CASSANDRA_CONFIG_BUILDER_IMG" \
+   --wait --timeout 60m0s

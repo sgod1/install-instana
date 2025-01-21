@@ -34,4 +34,5 @@ helm ${helm_action} kafka-operator -n instana-kafka $CHART \
    --set kafka.image.repository=self-hosted-images/3rd-party/datastore \
    --set kafka.image.name=kafka \
    --set kafka.image.tag=${kafka_img_tag} \
-   --set image.imagePullSecrets[0].name="instana-registry"
+   --set image.imagePullSecrets[0].name="instana-registry" \
+   --wait --timeout 60m0s

@@ -33,4 +33,5 @@ helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART \
    --set image.tag=${zookeeper_operator_img_tag} \
    --set hooks.image.repository=${PRIVATE_REGISTRY}/${zookeeper_hooks_img_repo} \
    --set hooks.image.tag=${zookeeper_hooks_img_tag} \
-   --set global.imagePullSecrets={"instana-registry"}
+   --set global.imagePullSecrets={"instana-registry"} \
+   --wait --timeout 60m0s

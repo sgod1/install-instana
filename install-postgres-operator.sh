@@ -38,13 +38,15 @@ if is_platform_ocp "$PLATFORM"; then
      --set image.tag=${postgres_operator_img_tag} \
      --set imagePullSecrets[0].name="instana-registry" \
      --set containerSecurityContext.runAsUser=$uid_range_start \
-     --set containerSecurityContext.runAsGroup=$uid_range_start
+     --set containerSecurityContext.runAsGroup=$uid_range_start \
+     --wait --timeout 60m0s
 
 else
    # k8s
    helm ${helm_action} postgres-operator -n instana-postgres $CHART \
      --set image.repository=$PRIVATE_REGISTRY/${postgres_operator_img_repo} \
      --set image.tag=${postgres_operator_img_tag} \
-     --set imagePullSecrets[0].name="instana-registry"
+     --set imagePullSecrets[0].name="instana-registry" \
+     --wait --timeout 60m0s
 fi
 

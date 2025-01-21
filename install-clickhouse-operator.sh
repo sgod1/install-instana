@@ -40,4 +40,5 @@ clickhouse_operator_image_tag=`echo $CLICKHOUSE_OPERATOR_IMG | cut -d : -f 2 -`
 helm ${helm_action} clickhouse-operator -n instana-clickhouse $CHART \
    --set operator.image.repository=$PRIVATE_REGISTRY/clickhouse-operator \
    --set operator.image.tag=$clickhouse_operator_image_tag \
-   --set imagePullSecrets[0].name="instana-registry"
+   --set imagePullSecrets[0].name="instana-registry" \
+   --wait --timeout 60m0s
