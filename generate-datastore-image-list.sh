@@ -13,55 +13,50 @@ mkdir -p $MIRROR_HOME
 
 ARTIFACT_PUBLIC="artifact-public.instana.io"
 
-echo writing datastore image list to ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}, Instana version: ${INSTANA_VERSION}
+OUTFILE="${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}"
 
-echo "
-# Datastore images, Instana version: $INSTANA_VERSION
-" > ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo writing datastore image list to ${OUTFILE}, Instana version: ${INSTANA_VERSION}
 
-echo "# cassandra
-${ARTIFACT_PUBLIC}/${CASSANDRA_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${CASSANDRA_SYSTEM_LOGGER_IMG}
-${ARTIFACT_PUBLIC}/${CASSANDRA_K8S_CLIENT_IMG}
-${ARTIFACT_PUBLIC}/${CASSANDRA_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# Datastore images, Instana version: $INSTANA_VERSION" > ${OUTFILE}
 
-# cassandra config builder image in datastax container repo
-if test ! -z "${CASSANDRA_CONFIG_BUILDER_IMG}"; then
-echo "${CASSANDRA_DATASTAX_REPO}/${CASSANDRA_CONFIG_BUILDER_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
-fi
+echo "# cassandra" >> ${OUTFILE}
+for img in ${__datastore_image_list_cassandra[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# clickhouse
-${ARTIFACT_PUBLIC}/${CLICKHOUSE_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${CLICKHOUSE_OPENSSL_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# clickhouse" >> ${OUTFILE}
+for img in ${__datastore_image_list_clickhouse[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# elasticsearch
-${ARTIFACT_PUBLIC}/${ELASTICSEARCH_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${ELASTICSEARCH_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# elasticsearch" >> ${OUTFILE}
+for img in ${__datastore_image_list_elasticsearch[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# kafka
-${ARTIFACT_PUBLIC}/${KAFKA_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${KAFKA_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# kafka" >> ${OUTFILE}
+for img in ${__datastore_image_list_kafka[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# postgresql
-${ARTIFACT_PUBLIC}/${POSTGRES_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${POSTGRES_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# postgresql" >> ${OUTFILE}
+for img in ${__datastore_image_list_postgresql[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# zookeeper
-${ARTIFACT_PUBLIC}/${ZOOKEEPER_OPERATOR_IMG}
-${ARTIFACT_PUBLIC}/${ZOOKEEPER_IMG}
-${ARTIFACT_PUBLIC}/${ZOOKEEPER_KUBECTL_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+echo "# zookeeper" >> ${OUTFILE}
+for img in ${__datastore_image_list_zookeeper[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
 
-echo "# beeinstana
-${BEEINSTANA_IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${BEEINSTANA_OPERATOR_IMG}
-${BEEINSTANA_IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${BEEINSTANA_AGGREGATOR_IMG}
-${BEEINSTANA_IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${BEEINSTANA_MONCONFIG_IMG}
-${BEEINSTANA_IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${BEEINSTANA_INGESTOR_IMG}
-" >> ${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
-
+echo "# beeinstana" >> ${OUTFILE}
+for img in ${__datastore_image_list_beeinstana[@]}
+do
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+done
