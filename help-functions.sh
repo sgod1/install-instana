@@ -118,3 +118,8 @@ function get_make_snapshot_home() {
    mkdir -p "$snapshot_home"
    echo "$snapshot_home"
 }
+
+function snapshot_name() {
+   instana_version=$1
+   echo pre-upgrade-${instana_version}-`date +%F-%H-%M-%S`
+}
