@@ -9,7 +9,7 @@ MANIFEST=$MANIFEST_HOME/elasticsearch-patch-${INSTANA_VERSION}.yaml
 
 SNAPSHOT_HOME=$(get_make_snapshot_home)
 
-SNAPSHOT=${SNAPSHOT_HOME}/elasticsearch-snapshot-`date +%F-%H-%M-%S`.yaml
+SNAPSHOT=${SNAPSHOT_HOME}/elasticsearch-$(snapshot_name $INSTANA_VERSION).yaml
 
 echo applying elasticsearch patch $MANIFEST, namespace instana-elasticsearch
 
@@ -20,6 +20,8 @@ fi
 
 set -x
 
-$KUBECTL get Elasticsearch/instana -o yaml > ${SNAPSHOT}
+# take snapshot
+$KUBECTL get Elasticsearch/instana -n instana-elasticsearch -o yaml > ${SNAPSHOT}
 
+# apply patch
 $KUBECTL patch Elasticsearch/instana --type merge --patch-file ${MANIFEST} -n instana-elasticsearch

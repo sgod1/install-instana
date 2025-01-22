@@ -9,7 +9,7 @@ MANIFEST=$MANIFEST_HOME/kafka-patch-${INSTANA_VERSION}.yaml
 
 SNAPSHOT_HOME=$(get_make_snapshot_home)
 
-SNAPSHOT=${SNAPSHOT_HOME}/kafka-snapshot-`date +%F-%H-%M-%S`.yaml
+SNAPSHOT=${SNAPSHOT_HOME}/kafka-$(snapshot_name $INSTANA_VERSION).yaml
 
 echo applying kafka patch $MANIFEST, namespace instana-kafka
 
@@ -20,6 +20,8 @@ fi
 
 set -x
 
-$KUBECTL get Kafka/instana -o yaml > ${SNAPSHOT}
+# take snapshot
+$KUBECTL get Kafka/instana -n instana-kafka -o yaml > ${SNAPSHOT}
 
+# apply patch
 $KUBECTL patch Kafka/instana --type merge --patch-file ${MANIFEST} -n instana-kafka
