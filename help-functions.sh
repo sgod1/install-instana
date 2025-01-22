@@ -1,7 +1,7 @@
 #!/bin/bash
 
 compare_values() {
-   test ${1:-"novalue1"} == ${2:-"novalue2"}
+   test ${1:-"novalue1"} = ${2:-"novalue2"}
 }
 
 check_return_code() {
