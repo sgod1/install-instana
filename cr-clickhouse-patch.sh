@@ -14,6 +14,11 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing clickhouse patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallation"
+metadata:
+  name: "instana"
+  namespace: "instana-clickhouse"
 spec:
   templates:
     podTemplates:

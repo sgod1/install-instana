@@ -14,6 +14,12 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing kafka patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: instana
+  labels:
+    strimzi.io/cluster: instana
 spec:
   kafka:
     image: ${PRIVATE_REGISTRY}/${KAFKA_IMG}

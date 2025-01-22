@@ -14,6 +14,10 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing elasticsearch patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: instana
 spec:
   version: ${ELASTICSEARCH_VERSION}
   image: ${PRIVATE_REGISTRY}/${ELASTICSEARCH_IMG}
