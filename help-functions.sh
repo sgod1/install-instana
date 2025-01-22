@@ -121,5 +121,5 @@ function get_make_snapshot_home() {
 
 function snapshot_name() {
    instana_version=$1
-   echo pre-upgrade-${instana_version}-`date +%F-%H-%M-%S`
+   echo pre-${instana_version}-upgrade-`date +%F-%H-%M-%S`
 }
