@@ -21,7 +21,7 @@ fi
 set -x
 
 # take snapshot
-$KUBECTL get chi/instana -n instana-clickhouse -n instana-clickhouse -o yaml > ${SNAPSHOT}
+$KUBECTL get chi/instana -n instana-clickhouse -o yaml > ${SNAPSHOT}
 
 # apply patch
 $KUBECTL patch chi/instana --type json --patch-file ${MANIFEST} -n instana-clickhouse
