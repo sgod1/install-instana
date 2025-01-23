@@ -24,4 +24,4 @@ set -x
 $KUBECTL get chi/instana -n instana-clickhouse -n instana-clickhouse -o yaml > ${SNAPSHOT}
 
 # apply patch
-$KUBECTL patch chi/instana --type merge --patch-file ${MANIFEST} -n instana-clickhouse
+$KUBECTL patch chi/instana --type json --patch-file ${MANIFEST} -n instana-clickhouse

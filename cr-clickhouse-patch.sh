@@ -14,28 +14,17 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing clickhouse patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
-apiVersion: "clickhouse.altinity.com/v1"
-kind: "ClickHouseInstallation"
-metadata:
-  name: "instana"
-  namespace: "instana-clickhouse"
-spec:
-  templates:
-    podTemplates:
-    - name: clickhouse
-      spec:
-        containers:
-        - name: instana-clickhouse
-          image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
-        - name: clickhouse-log
-          image: ${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}
+[
+   {"op":"replace","path": "/spec/templates/podTemplates/0/spec/containers/0/image", "value":"${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}"},
+   {"op":"replace","path": "/spec/templates/podTemplates/0/spec/containers/1/image", "value":"${PRIVATE_REGISTRY}/${CLICKHOUSE_OPENSSL_IMG}"},
 EOF
 
 if test "${INSTANA_PLUGIN_VERSION}" = "1.2.0"; then
 cat <<EOF >> $MANIFEST
-  configuration:
-    profiles:
-     default/allow_experimental_analyzer: 0
+   {"op":"add", "path":"/spec/configuration/profiles/default~1allow_experimental_analyzer", "value":"0"},
 EOF
 fi
+cat <<EOF >> $MANIFEST
+]
+EOF
 
