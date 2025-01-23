@@ -15,6 +15,6 @@ echo writing postgres patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
 [
-   {"operation":"replace", "path":"/spec/imageName", "value":"${PRIVATE_REGISTRY}/${POSTGRES_IMG}"},
+   {"op":"replace", "path":"/spec/imageName", "value":"${PRIVATE_REGISTRY}/${POSTGRES_IMG}"},
 ]
 EOF

@@ -16,8 +16,8 @@ echo writing cassandra patch to $MANIFEST
 
 cat <<EOF >> $MANIFEST
 [
-   {"operation":"replace", "path":"/spec/serverImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_IMG}"},
-   {"operation":"replace", "path":"/spec/systemLoggerImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_SYSTEM_LOGGER_IMG}"},
-   {"operation":"replace", "path":"/spec/k8ssandraClientImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_K8S_CLIENT_IMG}"},
+   {"op":"replace", "path":"/spec/serverImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_IMG}"},
+   {"op":"replace", "path":"/spec/systemLoggerImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_SYSTEM_LOGGER_IMG}"},
+   {"op":"replace", "path":"/spec/k8ssandraClientImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_K8S_CLIENT_IMG}"},
 ]
 EOF

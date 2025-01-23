@@ -15,7 +15,7 @@ echo writing elasticsearch patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
 [
-   {"operation":"replace", "path":"/spec/version", "value":"${ELASTICSEARCH_VERSION}"},
-   {"operation":"replace", "path":"/spec/image", "value":"${PRIVATE_REGISTRY}/${ELASTICSEARCH_IMG}"},
+   {"op":"replace", "path":"/spec/version", "value":"${ELASTICSEARCH_VERSION}"},
+   {"op":"replace", "path":"/spec/image", "value":"${PRIVATE_REGISTRY}/${ELASTICSEARCH_IMG}"},
 ]
 EOF
