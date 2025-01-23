@@ -52,12 +52,12 @@ function write_push_image_script() {
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../../instana.env"
-      print "$PODMAN login --tls-verify=$PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_REGISTRY"
+      print "$PODMAN $PODMAN_TLS_VERIFY login --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_REGISTRY"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf("$PODMAN push --tls-verify=$PODMAN_TLS_VERIFY %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
