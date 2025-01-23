@@ -17,13 +17,8 @@ zookeeper_img_repo=`echo ${ZOOKEEPER_IMG} | cut -d : -f 1 -`
 zookeeper_img_tag=`echo ${ZOOKEEPER_IMG} | cut -d : -f 2 -`
 
 cat <<EOF > $MANIFEST
-apiVersion: "zookeeper.pravega.io/v1beta1"
-kind: "ZookeeperCluster"
-metadata:
-  name: "instana-zookeeper"
-
-spec:
-  image:
-    repository: ${PRIVATE_REGISTRY}/${zookeeper_img_repo}
-    tag: ${zookeeper_img_tag}
+[
+   {"op":"replace", "path":"/spec/image/repository", "value":"${PRIVATE_REGISTRY}/${zookeeper_img_repo}"},
+   {"op":"replace", "path":"/spec/image/tag", "value":"${zookeeper_img_tag}"},
+]
 EOF

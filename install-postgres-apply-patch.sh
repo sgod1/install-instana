@@ -24,4 +24,4 @@ set -x
 $KUBECTL get cluster/postgres -n instana-postgres -n instana-postgres -o yaml > ${SNAPSHOT}
 
 # apply patch
-$KUBECTL patch cluster/postgres --type merge --patch-file ${MANIFEST} -n instana-postgres
+$KUBECTL patch cluster/postgres --type json --patch-file ${MANIFEST} -n instana-postgres

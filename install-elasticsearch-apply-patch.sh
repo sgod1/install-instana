@@ -24,4 +24,4 @@ set -x
 $KUBECTL get Elasticsearch/instana -n instana-elasticsearch -o yaml > ${SNAPSHOT}
 
 # apply patch
-$KUBECTL patch Elasticsearch/instana --type merge --patch-file ${MANIFEST} -n instana-elasticsearch
+$KUBECTL patch Elasticsearch/instana --type json --patch-file ${MANIFEST} -n instana-elasticsearch

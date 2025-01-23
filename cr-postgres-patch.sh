@@ -14,10 +14,7 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing postgres patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: postgres
-spec:
-  imageName: ${PRIVATE_REGISTRY}/${POSTGRES_IMG}
+[
+   {"operation":"replace", "path":"/spec/imageName", "value":"${PRIVATE_REGISTRY}/${POSTGRES_IMG}"},
+]
 EOF

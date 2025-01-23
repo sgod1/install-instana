@@ -14,13 +14,10 @@ check_replace_manifest $MANIFEST $replace_manifest
 
 echo writing cassandra patch to $MANIFEST
 
-cat << EOF > $MANIFEST
-apiVersion: cassandra.datastax.com/v1beta1
-kind: CassandraDatacenter
-metadata:
-  name: cassandra
-spec:
-  serverImage: $PRIVATE_REGISTRY/$CASSANDRA_IMG
-  systemLoggerImage: $PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG
-  k8ssandraClientImage: $PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG
+cat <<EOF >> $MANIFEST
+[
+   {"operation":"replace", "path":"/spec/serverImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_IMG}"},
+   {"operation":"replace", "path":"/spec/systemLoggerImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_SYSTEM_LOGGER_IMG}"},
+   {"operation":"replace", "path":"/spec/k8ssandraClientImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_K8S_CLIENT_IMG}"},
+]
 EOF

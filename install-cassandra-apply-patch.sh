@@ -23,4 +23,4 @@ fi
 $KUBECTL get CassandraDatacenter/cassandra -n instana-cassandra -o yaml > ${SNAPSHOT}
 
 # apply patch
-$KUBECTL apply -f $MANIFEST -n instana-cassandra
+$KUBECTL patch CassandraDatacenter/cassandra --type json --patch-file ${MANIFEST} -n instana-cassandra

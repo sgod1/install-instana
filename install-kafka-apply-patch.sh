@@ -24,4 +24,4 @@ set -x
 $KUBECTL get Kafka/instana -n instana-kafka -o yaml > ${SNAPSHOT}
 
 # apply patch
-$KUBECTL patch Kafka/instana --type merge --patch-file ${MANIFEST} -n instana-kafka
+$KUBECTL patch Kafka/instana --type json --patch-file ${MANIFEST} -n instana-kafka

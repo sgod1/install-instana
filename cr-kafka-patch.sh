@@ -14,17 +14,8 @@ check_replace_manifest $MANIFEST $replace_manifest
 echo writing kafka patch to $MANIFEST
 
 cat <<EOF > $MANIFEST
-apiVersion: kafka.strimzi.io/v1beta2
-kind: Kafka
-metadata:
-  name: instana
-  labels:
-    strimzi.io/cluster: instana
-spec:
-  kafka:
-    image: ${PRIVATE_REGISTRY}/${KAFKA_IMG}
-
-  entityOperator:
-    userOperator:
-      image: ${PRIVATE_REGISTRY}/${KAFKA_OPERATOR_IMG}
+[
+   {"op":"replace", "path":"/spec/kafka/image", "value":"${PRIVATE_REGISTRY}/${KAFKA_IMG}"},
+   {"op":"replace", "path":"/spec/entityOperator/userOperator/image", "value":"${PRIVATE_REGISTRY}/${KAFKA_OPERATOR_IMG}"},
+]
 EOF
