@@ -24,22 +24,12 @@ beeinstana_aggregator_img_repo=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 
 beeinstana_aggregator_img_tag=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 2 -`
 
 cat << EOF > $MANIFEST
-apiVersion: beeinstana.instana.com/v1beta1
-kind: BeeInstana
-metadata:
-  name: instance
-  namespace: beeinstana
-spec:
-  config:
-    image:
-      name: ${beeinstana_monconfig_img_repo}
-      tag: ${beeinstana_monconfig_img_tag}
-  ingestor:
-    image:
-      name: ${beeinstana_ingestor_img_repo}
-      tag: ${beeinstana_ingestor_img_tag}
-  aggregator:
-    image:
-      name: ${beeinstana_aggregator_img_repo}
-      tag: ${beeinstana_aggregator_img_tag}
+[
+   {"op":"replace", "path":"/spec/config/image/name", "value":"${beeinstana_monconfig_img_repo}"},
+   {"op":"replace", "path":"/spec/config/image/tag", "value":"${beeinstana_monconfig_img_tag}"},
+   {"op":"replace", "path":"/spec/ingestor/image/name", "value":"${beeinstana_ingestor_img_repo}"},
+   {"op":"replace", "path":"/spec/ingestor/image/tag", "value":"${beeinstana_ingestor_img_tag}"},
+   {"op":"replace", "path":"/spec/aggregator/image/name", "value":"${beeinstana_aggregator_img_repo}"},
+   {"op":"replace", "path":"/spec/aggregator/image/tag", "value":"${beeinstana_aggregator_img_tag}"},
+]
 EOF

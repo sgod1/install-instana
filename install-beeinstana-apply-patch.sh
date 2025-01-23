@@ -22,4 +22,4 @@ fi
 $KUBECTL get BeeInstana/instance -n beeinstana -o yaml > ${SNAPSHOT}
 
 # apply patch
-${KUBECTL} -n beeinstana apply -f $MANIFEST
+$KUBECTL patch BeeInstana/instance --type json --patch-file ${MANIFEST} -n beeinstana
