@@ -31,6 +31,7 @@ zookeeper_hooks_img_tag=`echo ${ZOOKEEPER_KUBECTL_IMG} | cut -d : -f 2 -`
 helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART \
    --set image.repository=${PRIVATE_REGISTRY}/${zookeeper_operator_img_repo} \
    --set image.tag=${zookeeper_operator_img_tag} \
+   --set image.pullPolicy=Always \
    --set hooks.image.repository=${PRIVATE_REGISTRY}/${zookeeper_hooks_img_repo} \
    --set hooks.image.tag=${zookeeper_hooks_img_tag} \
    --set global.imagePullSecrets={"instana-registry"} \
