@@ -12,11 +12,13 @@ mkdir -p ${MIRROR_HOME}
 
 OUTFILE="${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}"
 
+IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
+
 echo writing cert manager image list to ${OUTFILE}
 
 echo "# Certmgr images, Instana version: $INSTANA_VERSION" > ${OUTFILE}
 
 for img in ${__certmgr_image_list[@]}
 do
-   echo "${CERTMGR_IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+   echo "${IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
 done
