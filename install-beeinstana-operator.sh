@@ -5,6 +5,7 @@ helm_action=${1:-"install"}
 
 source ../instana.env
 source ./help-functions.sh
+source ./datastore-images.env
 
 CHART_HOME=$(get_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
