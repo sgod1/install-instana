@@ -14,7 +14,7 @@ check_replace_manifest $MANIFEST $replace_manifest
 
 echo writing cassandra patch to $MANIFEST
 
-cat <<EOF >> $MANIFEST
+cat <<EOF > $MANIFEST
 [
    {"op":"replace", "path":"/spec/serverImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_IMG}"},
    {"op":"replace", "path":"/spec/systemLoggerImage", "value":"${PRIVATE_REGISTRY}/${CASSANDRA_SYSTEM_LOGGER_IMG}"},
