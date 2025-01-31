@@ -35,10 +35,9 @@ set -x
 helm ${helm_action} cert-manager $CHART \
    --namespace cert-manager \
    --version ${CERTMGR_VERSION} \
-   --set imagePullSecrets[0]="instana-registry" \
+   --set global.imagePullSecrets[0].name="instana-registry" \
    --set global.leaderElection.namespace=cert-manager \
    --set installCRDs=true \
-   --set prometeus.enabled=false \
    --set webhook.timeoutSeconds=4 \
    --set image.repository=$REGISTRY/jetstack/cert-manager-controller \
    --set image.tag=${CERTMGR_VERSION} \
