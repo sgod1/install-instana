@@ -295,8 +295,15 @@ install-insana-operator-apply-cr.sh
 ### Upgrade Instana Backend
 To upgrade Instana backend, run:<br/>
 ```
-upgrade-instana-backend.sh 
+cr-core-patch.sh
+install-core-apply-patch.sh
 ```
 
 Watch `core` and `unit`.<br/>
 
+### Upgrade cert manager
+Cert manager version is defined in `certmgr-images.env`<br/>
+To upgrade certmgr, run:<br/>
+```
+install-cert-manager.sh upgrade
+```
