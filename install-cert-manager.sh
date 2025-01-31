@@ -4,7 +4,10 @@ source ../instana.env
 source ./help-functions.sh
 source ./certmgr-images.env
 
-REGISTRY_OVERWRITE=$1
+# install, upgrade
+helm_action=${1:-"install"}
+
+REGISTRY_OVERWRITE=$2
 REGISTRY=${REGISTRY_OVERWRITE:-$PRIVATE_REGISTRY}
 
 CHART_HOME=$(get_chart_home)
@@ -15,7 +18,7 @@ CHART=$CHART_HOME/cert-manager-${CERTMGR_OPERATOR_CHART_VERSION}.tgz
 
 # install cert manager helm chart
 echo
-echo "installing cert manager helm chart $CHART"
+echo "${helm_action}ing cert manager helm chart $CHART"
 echo 
 
 if test ! -f $CHART; then
@@ -29,7 +32,7 @@ fi
 
 set -x
 
-helm install cert-manager $CHART \
+helm ${helm_action} cert-manager $CHART \
    --namespace cert-manager \
    --version ${CERTMGR_VERSION} \
    --set imagePullSecrets[0]="instana-registry" \
