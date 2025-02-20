@@ -25,6 +25,7 @@ beeinstana_aggregator_img_tag=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 2
 
 cat << EOF > $MANIFEST
 [
+   {"op":"replace", "path":"/spec/version", "value":"${BEEINSTANA_VERSION}"},
    {"op":"replace", "path":"/spec/config/image/name", "value":"${beeinstana_monconfig_img_repo}"},
    {"op":"replace", "path":"/spec/config/image/tag", "value":"${beeinstana_monconfig_img_tag}"},
    {"op":"replace", "path":"/spec/ingestor/image/name", "value":"${beeinstana_ingestor_img_repo}"},
