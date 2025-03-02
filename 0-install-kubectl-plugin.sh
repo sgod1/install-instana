@@ -9,11 +9,6 @@ source ./help-functions.sh
 INSTALL_HOME=$(get_make_install_home)
 BIN_DIR=$(get_make_bin_home)
 
-echo "
-INSTANA_VERSION=$INSTANA_VERSION
-INSTANA_PLUGIN_RELEASE=$INSTANA_PLUGIN_RELEASE
-" > ${INSTALL_HOME}/release.env
-
 machine=`uname -m`
 os=`uname -o`
 
@@ -52,3 +47,9 @@ echo ""
 
 if test -f $BIN_DIR/kubectl-instana; then rm $BIN_DIR/kubectl-instana; fi
 tar xvf $BIN_DIR/${plugin_tar} -C $BIN_DIR
+
+echo "
+INSTANA_VERSION=$INSTANA_VERSION
+INSTANA_PLUGIN_RELEASE=`$BIN_DIR/kubectl-instana -v | cut -d " " -f3`
+" > ${INSTALL_HOME}/release.env
+
