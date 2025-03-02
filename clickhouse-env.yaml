@@ -1,0 +1,117 @@
+env:
+#
+# cpu and memory requests
+#
+- name: clickhouse-container-cpu-req
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "instana-clickhouse") |
+    .resources.requests.cpu
+  values:
+    uat: 1000m
+    prod: 2000m
+
+- name: clickhouse-container-mem-req
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "instana-clickhouse") |
+    .resources.requests.memory
+  values:
+    uat: 4Gi
+    prod: 8Gi
+
+#
+# storage requests
+#
+- name: clickhouse-data-volume-request
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.resources.request.storage
+  values:
+    uat: 500Gi
+    prod: 1000Gi
+
+- name: clickhouse-data-cold-volume-request
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-cold-volume") |
+    .spec.resources.request.storage
+  values:
+    uat: 500Gi
+    prod: 1000Gi
+
+- name: clickhouse-log-volume-request
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.resources.request.storage
+  values:
+    uat: 100Gi
+    prod: 100Gi
+
+#
+# shards count
+#
+- name: shards-count
+  path: >
+    .spec.configuration.clusters[] | select(.name == "local") |
+    .layout.shardsCount
+  values:
+    uat: 1
+    prod: 1
+
+#
+# container images
+#
+- name: clickhouse-container-image
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "instana-clickhouse") |
+    .image
+  values:
+    default: strenv(clickhouse_container_image)
+
+- name: clickhouse-log-image
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "clickhouse-log") |
+    .image
+  values:
+    default: strenv("clickhouse_log_image")
+
+#
+# storage classes
+#
+- name: clickhouse-data-volume-storage-class
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.storageClassName
+  values:
+    default: strenv(rwo_storageclass)
+
+- name: clickhouse-cold-volume-storage-class
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-cold-volume") |
+    .spec.storageClassName
+  values:
+    default: strenv(rwo_storageclass)
+
+- name: clickhouse-log-volume-storage-class
+  path: >
+    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.storageClassName
+  values:
+    default: strenv(rwo_storageclass)
+
+#
+# passwords
+#
+- name: clickhouse-default-password
+  path: >
+    .spec.configuration.users."default/password"
+  values:
+    default: strenv(clickhouse_default_pass)
+
+- name: clickhouse-user-password
+  path: >
+    .spec.configuration.users."clickhouse-user/password"
+  values:
+    default: strenv(clickhouse_user_pass)
