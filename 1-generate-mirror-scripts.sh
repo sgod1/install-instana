@@ -129,3 +129,23 @@ write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
 write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
 write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
 
+#
+# instana operator
+#
+
+IMAGE_LIST=${MIRROR_HOME}/${INSTANA_OPERATOR_IMAGE_LIST_FILE}
+
+PULL_SCRIPT=${MIRROR_HOME}/$PULL_INSTANA_OPERATOR_IMAGES_SCRIPT
+PUSH_SCRIPT=${MIRROR_HOME}/$PUSH_INSTANA_OPERATOR_IMAGES_SCRIPT
+TAG_SCRIPT=${MIRROR_HOME}/$TAG_INSTANA_OPERATOR_IMAGES_SCRIPT
+
+echo ""
+echo writing cert-manager mirror scripts...
+echo ""
+
+./generate-instana-operator-image-list.sh
+
+write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
+write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
+write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+
