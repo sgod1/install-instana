@@ -1,12 +1,19 @@
 env:
 #
-# cpu and memory requests
+# cpu and memory requests and limits
 #
 - name: clickhouse-container-cpu-req
   path: >
     .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-    .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.cpu
+  values:
+    uat: 1000m
+    prod: 2000m
+
+- name: clickhouse-container-cpu-lim
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .resources.limits.cpu
   values:
     uat: 1000m
     prod: 2000m
@@ -14,8 +21,15 @@ env:
 - name: clickhouse-container-mem-req
   path: >
     .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-    .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.memory
+  values:
+    uat: 4Gi
+    prod: 8Gi
+
+- name: clickhouse-container-mem-lim
+  path: >
+    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .resources.limits.memory
   values:
     uat: 4Gi
     prod: 8Gi

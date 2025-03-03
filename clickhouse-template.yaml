@@ -133,13 +133,13 @@ spec:
             runAsGroup: 0
             runAsUser: 1001
         # Optional - uncomment the following lines if resources need to be specifically defined for the clickhouse pods. The following values are for example only.
-        # resources:
-        #   limits:
-        #     cpu: "4"
-        #     memory: 4Gi
-        #   requests:
-        #     cpu: "1"
-        #     memory: 2Gi
+        resources:
+          limits:
+            cpu: "4"
+            memory: 4Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
   volumeClaimTemplates:
     - name: instana-clickhouse-data-volume
       spec:
