@@ -9,7 +9,6 @@ replace_manifest=${1:-"noreplace"}
 
 template_cr="zookeeper-template.yaml"
 env_file="zookeeper-env.yaml"
-out_file="gen/zookeeper-env-289.yaml"
 profile=${INSTANA_INSTALL_PROFILE:-"template"}
 
 OUT_DIR=$(get_make_manifest_home)
