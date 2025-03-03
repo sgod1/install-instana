@@ -1,0 +1,30 @@
+apiVersion: "zookeeper.pravega.io/v1beta1"
+kind: "ZookeeperCluster"
+metadata:
+  name: "instana-zookeeper"
+spec:
+  # For parameters and default values, see https://github.com/pravega/zookeeper-operator/tree/master/charts/zookeeper#configuration
+  replicas: 3
+  image:
+    repository: <internal-image-registry>/zookeeper
+    tag: 3.9.3_v0.16.0
+  pod:
+    imagePullSecrets: [name: "<internal-registry-secret>"]
+    serviceAccountName: "zookeeper"
+    # Add the following securityContext snippet for Kubernetes offerings other than OCP.
+    # securityContext:
+    #   runAsUser: 1000
+    #   fsGroup: 1000
+  config:
+    tickTime: 2000
+    initLimit: 10
+    syncLimit: 5
+    maxClientCnxns: 0
+    autoPurgeSnapRetainCount: 20
+    autoPurgePurgeInterval: 1
+  persistence:
+    reclaimPolicy: Delete
+    spec:
+      resources:
+        requests:
+          storage: "10Gi"
