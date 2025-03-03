@@ -82,21 +82,21 @@ env:
 #
 - name: clickhouse-data-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
-- name: clickhouse-cold-volume-storage-class
+- name: clickhouse-data-cold-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-cold-volume") |
+    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-cold-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
 - name: clickhouse-log-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)

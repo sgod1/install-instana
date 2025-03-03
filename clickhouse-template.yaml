@@ -148,6 +148,7 @@ spec:
         resources:
           requests:
             storage: 100Gi
+        storageClassName: rwo-storage-class
     - name: instana-clickhouse-log-volume
       spec:
         accessModes:
@@ -155,6 +156,7 @@ spec:
         resources:
           requests:
             storage: 1Gi
+        storageClassName: rwo-storage-class
     - name: instana-clickhouse-data-cold-volume
       spec:
         accessModes:
@@ -162,6 +164,7 @@ spec:
         resources:
           requests:
             storage: 100Gi
+        storageClassName: rwo-storage-class
   serviceTemplates:
     - name: service-template
       generateName: "clickhouse-{chi}"
