@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../instana.env
+source ./datastore-images.env
 source ./help-functions.sh
 source ./cr-env.sh
 
@@ -13,8 +14,10 @@ export clickhouse_default_pass=${CLICKHOUSE_DEFAULT_PASS}
 export clickhouse_user_pass=${CLICKHOUSE_USER_PASS}
 
 template_cr="clickhouse-template.yaml"
-env_file="clikhouse-env.yaml"
-out_file="gen/cr-clickhouse-289.yaml"
-profile="uat"
+env_file="clickhouse-env.yaml"
+out_file="gen/clickhouse-env-289.yaml"
+profile=${INSTANA_INSTALL_PROFILE:-"template"}
 
-cr-env $template_cr $env_file $out_file $profile
+cp $template_cr $out_file
+
+cr_env $template_cr $env_file $out_file $profile

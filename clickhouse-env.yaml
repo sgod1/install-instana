@@ -25,7 +25,7 @@ env:
 #
 - name: clickhouse-data-volume-request
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.resources.request.storage
   values:
     uat: 500Gi
@@ -33,7 +33,7 @@ env:
 
 - name: clickhouse-data-cold-volume-request
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-cold-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-cold-volume") |
     .spec.resources.request.storage
   values:
     uat: 500Gi
@@ -41,7 +41,7 @@ env:
 
 - name: clickhouse-log-volume-request
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.resources.request.storage
   values:
     uat: 100Gi
@@ -52,7 +52,7 @@ env:
 #
 - name: shards-count
   path: >
-    .spec.configuration.clusters[] | select(.name == "local") |
+    .spec.configuration.clusters.[] | select(.name == "local") |
     .layout.shardsCount
   values:
     uat: 1
@@ -75,28 +75,28 @@ env:
     .spec.containers.[] | select(.name == "clickhouse-log") |
     .image
   values:
-    default: strenv("clickhouse_log_image")
+    default: strenv(clickhouse_log_image)
 
 #
 # storage classes
 #
 - name: clickhouse-data-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
 - name: clickhouse-cold-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-cold-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-cold-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
 - name: clickhouse-log-volume-storage-class
   path: >
-    .spec.templates.volumeClaimTemplates[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)

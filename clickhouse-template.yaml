@@ -105,71 +105,70 @@ spec:
       # LJfoOfxl                                  <- first line is the password, put this in the k8s secret
       # 3435258e803cefaab7db2201d04bf50d439f6c7f  <- the corresponding double SHA1 hash, put this below
       # clickhouse-user/password_double_sha1_hex: "3435258e803cefaab7db2201d04bf50d439f6c7f"
-   templates:
-     podTemplates:
-       - name: clickhouse
-         spec:
-           containers:
-             - name: instana-clickhouse
-               image: <internal-image-registry>/clickhouse-openssl:24.3.12.75-1-lts-ibm
-               command:
-                 - clickhouse-server
-                 - --config-file=/etc/clickhouse-server/config.xml
-               volumeMounts:
-                 - mountPath: /var/lib/clickhouse-cold/
-                   name: instana-clickhouse-data-cold-volume
-             - name: clickhouse-log
-               image: <internal-image-registry>/clickhouse-openssl:24.3.12.75-1-lts-ibm
-               args:
-                 - while true; do sleep 30; done;
-               command:
-                 - /bin/sh
-                 - -c
-                 - --
-         # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
-         # imagePullSecrets:
-         #   - name: <internal-image-registry-pull-secret>
-           securityContext:
-             fsGroup: 0
-             runAsGroup: 0
-             runAsUser: 1001
-         # Optional - uncomment the lines below if resources need to be specifically defined for the clickhouse pods. The values below are for example only.
-         # resources:
-         #   limits:
-         #     cpu: "4"
-         #     memory: 4Gi
-         #   requests:
-         #     cpu: "1"
-         #     memory: 2Gi
-     volumeClaimTemplates:
-       - name: instana-clickhouse-data-volume
-         spec:
-           accessModes:
-             - ReadWriteOnce
-           resources:
-             requests:
-               storage: 100Gi
-       - name: instana-clickhouse-data-cold-volume
-         spec:
-           accessModes:
-             - ReadWriteOnce
-           resources:
-             requests:
-               storage: 100Gi
-       - name: instana-clickhouse-log-volume
-         spec:
-           accessModes:
-             - ReadWriteOnce
-           resources:
-             requests:
-               storage: 1Gi
-     serviceTemplates:
-       - name: service-template
-         generateName: "clickhouse-{chi}"
-         spec:
-           ports:
-             - name: http
-               port: 8123
-             - name: tcp
-               port: 9000
-           type: ClusterIP
+  templates:
+    podTemplates:
+      - name: clickhouse
+        spec:
+          containers:
+            - name: instana-clickhouse
+              image: artifact-public.instana.io/clickhouse-openssl:24.3.12.75-1-lts-ibm
+              command:
+                - clickhouse-server
+                - --config-file=/etc/clickhouse-server/config.xml
+              volumeMounts:
+                - mountPath: /var/lib/clickhouse-cold/
+                  name: instana-clickhouse-data-cold-volume
+            - name: clickhouse-log
+              image: artifact-public.instana.io/clickhouse-openssl:24.3.12.75-1-lts-ibm
+              args:
+                - while true; do sleep 30; done;
+              command:
+                - /bin/sh
+                - -c
+                - --
+          imagePullSecrets:
+            - name: instana-registry
+          securityContext:
+            fsGroup: 0
+            runAsGroup: 0
+            runAsUser: 1001
+        # Optional - uncomment the following lines if resources need to be specifically defined for the clickhouse pods. The following values are for example only.
+        # resources:
+        #   limits:
+        #     cpu: "4"
+        #     memory: 4Gi
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+  volumeClaimTemplates:
+    - name: instana-clickhouse-data-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+    - name: instana-clickhouse-log-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+    - name: instana-clickhouse-data-cold-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+  serviceTemplates:
+    - name: service-template
+      generateName: "clickhouse-{chi}"
+      spec:
+        ports:
+          - name: http
+            port: 8123
+          - name: tcp
+            port: 9000
+        type: ClusterIP
