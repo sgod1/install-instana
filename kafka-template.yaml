@@ -1,3 +1,6 @@
+#
+# updated to instana version 289
+#
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
