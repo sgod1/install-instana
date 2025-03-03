@@ -1,0 +1,54 @@
+apiVersion: cassandra.datastax.com/v1beta1
+kind: CassandraDatacenter
+metadata:
+  name: cassandra
+spec:
+  clusterName: instana
+  serverType: cassandra
+  serverImage: <internal-image-registry>/datastore/cassandra:4.1.4_v0.20.0
+  systemLoggerImage: <internal-image-registry>/datastore/system-logger:1.22.4_v0.7.0
+  k8ssandraClientImage: <internal-image-registry>/datastore/k8ssandra-client:0.6.0_v0.9.0
+  serverVersion: "4.1.4"
+  imagePullPolicy: Always
+  podTemplateSpec:
+    spec:
+    # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
+    # imagePullSecrets:
+    #   - name: <internal-image-registry-pull-secret>
+      containers:
+      - name: cassandra
+  managementApiAuth:
+    insecure: {}
+  size: 3
+  allowMultipleNodesPerWorker: false
+  resources:
+    requests:
+      cpu: 2000m
+      memory: 8Gi
+    limits:
+      cpu: 4000m
+      memory: 16Gi
+  storageConfig:
+    cassandraDataVolumeClaimSpec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+  config:
+    jvm-server-options:
+      initial_heap_size: "4G"
+      max_heap_size: "8G"
+      additional-jvm-opts:
+        - -Dcassandra.allow_unsafe_aggressive_sstable_expiration=true
+    cassandra-yaml:
+      authenticator: org.apache.cassandra.auth.PasswordAuthenticator
+      authorizer: org.apache.cassandra.auth.CassandraAuthorizer
+      role_manager: org.apache.cassandra.auth.CassandraRoleManager
+      memtable_flush_writers: 8
+      auto_snapshot: false
+      gc_warn_threshold_in_ms: 10000
+      otc_coalescing_strategy: DISABLED
+      memtable_allocation_type: offheap_objects
+      num_tokens: 256
+      drop_compact_storage_enabled: true
