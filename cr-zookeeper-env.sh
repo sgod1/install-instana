@@ -19,4 +19,4 @@ copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
 
-echo updated zookeeper manifest $MANIFEST
+echo updated zookeeper manifest $MANIFEST, profile $profile

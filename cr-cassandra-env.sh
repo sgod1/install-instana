@@ -26,4 +26,4 @@ copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
 
-echo updated cassandra manifest $MANIFEST
+echo updated cassandra manifest $MANIFEST, profile $profile
