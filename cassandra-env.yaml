@@ -1,33 +1,34 @@
 env:
 #
-# cpu and memory requests
+# cpu requests and limits
 #
 - name: cpu-requests
   path: >
     .spec.resources.requests.cpu
   values:
-    default: 2000m
+    uat: 10
+    production: 14
+
+- name: cpu-limits
+  path: >
+    .spec.resources.limits.cpu
+  values:
+    uat: 10
+    production: 14
 
 - name: memory-requests
   path: >
     .spec.resources.requests.memory
   values:
-    default: 8Gi
-
-#
-# cpu and memory limits
-#
-- name: cpu-limits
-  path: >
-    .spec.resources.limits.cpu
-  values:
-    default: 4000m
+    uat: 30Gi
+    production: 42Gi
 
 - name: memory-limits
   path: >
     .spec.resources.limits.memory
   values:
-    default: 16Gi
+    uat: 40Gi
+    production: 56Gi
 
 #
 # storage requests
@@ -37,6 +38,8 @@ env:
     .spec.storageConfig.cassandraDataVolumeClaimSpec.resources.requests.storage
   values:
     default: 100Gi
+    uat: 3000Gi
+    production: 14500Gi
 
 #
 # size
@@ -45,7 +48,8 @@ env:
   path: >
     .spec.size
   values:
-    default: 3
+    uat: 3
+    production: 7
 
 #
 # container images
