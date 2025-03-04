@@ -7,6 +7,13 @@ source ./cr-env.sh
 
 replace_manifest=${1:-"noreplace"}
 
+export beeinstana_image_registry=${PRIVATE_REGISTRY}
+export beeinstana_ingestor_img_tag=`echo ${BEEINSTANA_INGESTOR_IMG} | cut -d : -f 2 -`
+export beeinstana_aggregator_img_tag=`echo ${BEEINSTANA_AGGREGATOR_IMG} | cut -d : -f 2 -`
+export beeinstana_monconfig_img_tag=`echo ${BEEINSTANA_MONCONFIG_IMG} | cut -d : -f 2 -`
+
+export rwo_storageclass=${RWO_STORAGECLASS}
+
 template_cr="beeinstana-template.yaml"
 env_file="beeinstana-env.yaml"
 profile=${INSTANA_INSTALL_PROFILE:-"template"}

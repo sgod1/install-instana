@@ -1,1 +1,138 @@
-env: []
+env:
+#
+# ingestor
+#
+- name: ingestor-cpu
+  path: >
+    .spec.ingestor.cpu
+  values:
+    default: 8
+    # 250k metrics
+    small: 4
+    # 250k - 750k metrics
+    medium: 4
+    # 750k - 9m metrics
+    large: 16
+
+- name: ingestor-memory
+  path: >
+    .spec.ingestor.memory
+  values:
+    default: 4Gi
+    # 250k metrics
+    small: 3Gi
+    # 250k - 750k metrics
+    medium: 3Gi
+    # 750k - 9m metrics
+    large: 12Gi
+
+- name: ingestor-replicas
+  path: >
+    .spec.ingestor.replicas
+  values:
+    default: 1
+    # 250k metrics
+    small: 1
+    # 250k - 750k metrics
+    medium: 3
+    # 750k - 9m metrics
+    large: 3
+
+#
+# aggregator
+#
+- name: aggregator-cpu
+  path: >
+    .spec.aggregator.cpu
+  values:
+    default: 8
+    # 250k metrics
+    small: 4
+    # 250k - 750k metrics
+    medium: 4
+    # 750k - 9m metrics
+    large: 16
+
+- name: aggregator-memory
+  path: >
+    .spec.aggregator.memory
+  values:
+    default: 16Gi
+    # 250k metrics
+    small: 16Gi
+    # 250k - 750k metrics
+    medium: 16Gi
+    # 750k - 9m metrics
+    large: 128Gi
+
+- name: aggregator-shards
+  path: >
+    .spec.aggregator.shards
+  values:
+    default: 1
+    # 250k metrics
+    small: 1
+    # 250k - 750k metrics
+    medium: 3
+    # 750k - 9m metrics
+    large: 3
+
+#
+# volume sizes
+#
+- name: aggregator-volume-size
+  path: >
+    .spec.aggregator.volumes.live.size
+  values:
+    default: 2000Gi
+    # 250k metrics
+    small: 1000Gi
+    # 250k - 750k metrics
+    medium: 1000Gi
+    # 750k - 9m metrics
+    large: 5000Gi
+
+#
+# storage classes
+#
+- name: aggregator-storage-class
+  path: >
+    .spec.aggregator.volumes.live.storageClass
+  values:
+    default: strenv(rwo_storageclass)
+
+#
+# kafka brokers
+#
+- name: kafka-settings
+  path: >
+    .spec.kafkaSettings.brokers[0]
+  values:
+    default: instana-kafka-bootstrap.instana-kafka:9092
+
+#
+# container images and tags
+#
+- name: beeinstana-image-registry
+  path: >
+    .spec.imageRegistry
+  values:
+    default: strenv(beeinstana_image_registry)
+
+- name: beeinstana-ingestor-img-tag
+  path: >
+    .spec.ingestor.image.tag
+  values:
+    default: strenv(beeinstana_ingestor_img_tag)
+
+- name: beeinstana-aggregator-img-tag
+  path: >
+    .spec.aggregator.image.tag
+  values:
+    default: strenv(beeinstana_aggregator_img_tag)
+
+- name: beeinstana-monconfig-img-tag
+  path: >
+    .spec.config.image.tag
+  values:
+    default: strenv(beeinstana_monconfig_img_tag)
