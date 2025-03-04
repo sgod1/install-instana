@@ -1,6 +1,6 @@
 env:
 #
-# ingestor
+# ingestor cpu, memory and replication
 #
 - name: ingestor-cpu
   path: >
@@ -39,7 +39,7 @@ env:
     large: 3
 
 #
-# aggregator
+# aggregator cpu, memory, and replication
 #
 - name: aggregator-cpu
   path: >
@@ -76,6 +76,27 @@ env:
     medium: 3
     # 750k - 9m metrics
     large: 3
+
+#
+# config cpu, memory, and replication
+#
+- name: config-cpu
+  path: >
+    .spec.config.cpu
+  values:
+    default: 200m
+
+- name: config-memory
+  path: >
+    .spec.config.memory
+  values:
+    default: 200Mi
+
+- name: config-replicas
+  path: >
+    .spec.config.replicas
+  values:
+    default: 1
 
 #
 # volume sizes
