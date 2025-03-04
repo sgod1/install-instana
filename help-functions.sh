@@ -123,3 +123,10 @@ function snapshot_name() {
    instana_version=$1
    echo pre-${instana_version}-upgrade-`date +%F-%H-%M-%S`
 }
+
+function write_install_profile_header() {
+   manifest=$1
+   profile=$2
+
+   echo "#-- instana install profile: $profile" > $manifest
+}
