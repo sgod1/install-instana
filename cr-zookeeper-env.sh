@@ -15,8 +15,7 @@ OUT_DIR=$(get_make_manifest_home)
 MANIFEST="${OUT_DIR}/zookeeper-env-${INSTANA_VERSION}.yaml"
 
 check_replace_manifest $MANIFEST $replace_manifest
-write_install_profile_header $manifest $profile
-cat $template_cr >> $MANIFEST
+copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
 

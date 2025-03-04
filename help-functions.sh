@@ -130,3 +130,12 @@ function write_install_profile_header() {
 
    echo "#-- instana install profile: $profile" > $manifest
 }
+
+function copy_template_manifest() {
+   template=$1
+   manifest=$2
+   profile=$3
+
+   write_install_profile_header $manifest $profile
+   cat $template >> $manifest
+}
