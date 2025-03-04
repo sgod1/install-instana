@@ -1,1 +1,69 @@
-env: []
+env:
+#
+# cpu and memory requests
+#
+- name: cpu-requests
+  path: >
+    .spec.resources.requests.cpu
+  values:
+    default: 2000m
+
+- name: memory-requests
+  path: >
+    .spec.resources.requests.memory
+  values:
+    default: 8Gi
+
+#
+# cpu and memory limits
+#
+- name: cpu-limits
+  path: >
+    .spec.resources.limits.cpu
+  values:
+    default: 4000m
+
+- name: memory-limits
+  path: >
+    .spec.resources.limits.memory
+  values:
+    default: 16Gi
+
+#
+# storage requests
+#
+- name: cassandra-data-volume-request
+  path: >
+    .spec.storageConfig.cassandraDataVolumeClaimSpec.resources.requests.storage
+  values:
+    default: 100Gi
+
+#
+# size
+#
+- name: size
+  path: >
+    .spec.size
+  values:
+    default: 3
+
+#
+# container images
+#
+- name: cassandra-server-image
+  path: >
+    .spec.serverImage
+  values:
+    default: strenv(cassandra_server_image)
+
+- name: cassandra-system-logger-image
+  path: >
+    .spec.systemLoggerImage
+  values:
+    default: strenv(cassandra_system_logger_image)
+
+- name: cassandra-client-image
+  path: >
+    .spec.k8ssandraClientImage
+  values:
+    default: strenv(cassandra_client_image)

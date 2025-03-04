@@ -7,6 +7,13 @@ source ./cr-env.sh
 
 replace_manifest=${1:-"noreplace"}
 
+export cassandra_server_image=${PRIVATE_REGISTRY}/${CASSANDRA_IMG}
+export cassandra_system_logger_image=${PRIVATE_REGISTRY}/${CASSANDRA_SYSTEM_LOGGER_IMG}
+export cassandra_client_image=${PRIVATE_REGISTRY}/${CASSANDRA_K8S_CLIENT_IMG}
+
+# todo: update template with storage class
+export rwo_storageclass=${RWO_STORAGECLASS}
+
 template_cr="cassandra-template.yaml"
 env_file="cassandra-env.yaml"
 profile=${INSTANA_INSTALL_PROFILE:-"template"}
