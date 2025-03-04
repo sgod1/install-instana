@@ -56,7 +56,7 @@ function update_path_for_key() {
    echo path... $path
    echo vals... $vals
 
-   keys=`yq ".env[] | select(.name == \"$path_name\") | .values | keys" $env_file | tr -d "-"`
+   keys=`yq ".env[] | select(.name == \"$path_name\") | .values | keys | .[] comments=\"\"" $env_file | tr -d "-"`
 
    for key in $keys
    do
