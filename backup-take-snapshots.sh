@@ -5,6 +5,8 @@ source ./help-functions.sh
 
 set -x
 
+SNAPSHOT_HOME=$(get_make_snapshot_home)
+
 # zookeeper
 SNAPSHOT=${SNAPSHOT_HOME}/zookeeper-$(snapshot_name $INSTANA_VERSION).yaml
 $KUBECTL get ZookeeperCluster/instana-zookeeper -n instana-clickhouse -o yaml > ${SNAPSHOT}
