@@ -84,6 +84,7 @@ env:
 
 #
 # pod security context fsGroup, runAsUser
+# platform-specific, delete post gen for ocp
 #
 - name: pod-security-context-fs-group
   path: >
