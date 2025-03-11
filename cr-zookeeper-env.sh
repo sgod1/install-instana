@@ -7,6 +7,12 @@ source ./cr-env.sh
 
 replace_manifest=${1:-"noreplace"}
 
+export zookeeper_image_name=`echo ${ZOOKEEPER_IMG} | cut -d : -f 1 -`
+export zookeeper_image_repository=${PRIVATE_REGISTRY}/${zookeeper_image_name}
+export zookeeper_image_tag=`echo ${ZOOKEEPER_IMG} | cut -d : -f 2 -`
+
+export rwo_storageclass=${RWO_STORAGECLASS}
+
 template_cr="zookeeper-template.yaml"
 env_file="zookeeper-env.yaml"
 profile=${INSTANA_INSTALL_PROFILE:-"template"}
