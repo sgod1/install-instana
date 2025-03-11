@@ -25,4 +25,7 @@ copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
 
+# post gen update, delete pod security context for ocp
+# yq -i 'del(.spec.pod.securityContext)' $MANIFEST
+
 echo updated zookeeper manifest $MANIFEST, profile $profile
