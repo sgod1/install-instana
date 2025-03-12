@@ -7,6 +7,11 @@ source ./cr-env.sh
 
 replace_manifest=${1:-"noreplace"}
 
+export kafka_operator_image=${PRIVATE_REGISTRY}/${KAFKA_OPERATOR_IMG}
+export kafka_image=${PRIVATE_REGISTRY}/${KAFKA_IMG}
+
+export rwo_storage_class=$RWO_STORAGECLASS
+
 template_cr="kafka-template.yaml"
 env_file="kafka-env.yaml"
 profile=${INSTANA_INSTALL_PROFILE:-"template"}
@@ -18,5 +23,39 @@ check_replace_manifest $MANIFEST $replace_manifest
 cp $template_cr $MANIFEST
 
 cr_env $template_cr $env_file $MANIFEST $profile
+
+# platform-specific
+# delete pod security context if openshift
+
+#
+# write kafka user
+#
+cat <<EOF >> $MANIFEST
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: strimzi-kafka-user
+  labels:
+    strimzi.io/cluster: instana
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: '*'
+          patternType: literal
+        operation: All
+        host: "*"
+      - resource:
+          type: group
+          name: '*'
+          patternType: literal
+        operation: All
+        host: "*"
+EOF
 
 echo updated kafka manifest $MANIFEST
