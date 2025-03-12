@@ -41,6 +41,13 @@ spec:
         name: instanaadmin
   superuserSecret:
     name: instanaadmin
+  resources:
+    limits:
+      cpu: 2
+      memory: 8Gi
+    requests:
+      cpu: 2
+      memory: 8Gi
   storage:
     size: 1Gi
-  #    storageClass: "Optional"
+    storageClass: "Optional"
