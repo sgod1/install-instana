@@ -15,9 +15,9 @@ spec:
   imagePullPolicy: Always
   podTemplateSpec:
     spec:
-    # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
-    # imagePullSecrets:
-    #   - name: <internal-image-registry-pull-secret>
+      # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
+      imagePullSecrets:
+      - name: <internal-image-registry-pull-secret>
       containers:
       - name: cassandra
   managementApiAuth:

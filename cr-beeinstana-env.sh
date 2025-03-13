@@ -22,8 +22,8 @@ OUT_DIR=$(get_make_manifest_home)
 MANIFEST="${OUT_DIR}/beeinstana-env-${INSTANA_VERSION}.yaml"
 
 check_replace_manifest $MANIFEST $replace_manifest
-cp $template_cr $MANIFEST
+copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
 
-echo updated beeinstana manifest $MANIFEST
+echo updated beeinstana manifest $MANIFEST, profile $profile

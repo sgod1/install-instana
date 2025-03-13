@@ -20,7 +20,7 @@ env:
   path: >
     .spec.resources.requests.memory
   values:
-    uat: 30Gi
+    uat: 40Gi
     production: 42Gi
 
 - name: memory-limits
@@ -71,3 +71,12 @@ env:
     .spec.k8ssandraClientImage
   values:
     default: strenv(cassandra_client_image)
+
+#
+# image pull secret
+#
+- name: cassandra-image-pull-secret
+  path: >
+    .spec.podTemplateSpec.spec.imagePullSecrets[0].name
+  values:
+    default: instana-registry
