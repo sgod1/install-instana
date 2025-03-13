@@ -67,7 +67,7 @@ spec:
     shards: 1
     volumes:
       live:
-        size: $BEEINSTANA_LIVE_VOLUME_SIZE
+        size: 500Gi
         storageClass: $RWO_STORAGECLASS
     image:
       name: ${beeinstana_aggregator_img_repo}
