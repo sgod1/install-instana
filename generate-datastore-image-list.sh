@@ -2,6 +2,8 @@
 
 source ../instana.env
 
+source ./install.env
+
 source ./datastore-images.env
 
 source ./help-functions.sh

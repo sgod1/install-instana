@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./install.env
 
 function write_pull_image_script() {
    image_list_file=$1
@@ -63,6 +64,13 @@ function write_push_image_script() {
    chmod +x $script_file
 }
 
+function print_mirror_header() {
+   component=$1
+   echo ""
+   echo writing $component mirror scripts...
+   echo ""
+}
+
 MIRROR_HOME=$(get_make_mirror_home)
 MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
 
@@ -71,81 +79,65 @@ mkdir -p ${MIRROR_HOME}
 #
 # instana backend
 #
-
-IMAGE_LIST=${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
-
-PULL_SCRIPT=${MIRROR_HOME}/$PULL_BACKEND_IMAGES_SCRIPT
-PUSH_SCRIPT=${MIRROR_HOME}/$PUSH_BACKEND_IMAGES_SCRIPT
-TAG_SCRIPT=${MIRROR_HOME}/$TAG_BACKEND_IMAGES_SCRIPT
-
-echo ""
-echo writing backend mirror scripts...
-echo ""
+print_mirror_header "backend"
 
 ./generate-backend-image-list.sh 
 
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+image_list=${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
+pull_script=${MIRROR_HOME}/$PULL_BACKEND_IMAGES_SCRIPT
+push_script=${MIRROR_HOME}/$PUSH_BACKEND_IMAGES_SCRIPT
+tag_script=${MIRROR_HOME}/$TAG_BACKEND_IMAGES_SCRIPT
+
+write_pull_image_script $image_list $pull_script
+write_tag_image_script $image_list $tag_script
+write_push_image_script $image_list $push_script
 
 #
 # datastores
 #
-
-IMAGE_LIST=${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
-
-PULL_SCRIPT=${MIRROR_HOME}/$PULL_DATASTORE_IMAGES_SCRIPT
-PUSH_SCRIPT=${MIRROR_HOME}/$PUSH_DATASTORE_IMAGES_SCRIPT
-TAG_SCRIPT=${MIRROR_HOME}/$TAG_DATASTORE_IMAGES_SCRIPT
-
-echo ""
-echo writing datastore mirror scripts...
-echo ""
+print_mirror_header "datastore"
 
 ./generate-datastore-image-list.sh
 
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+image_list=${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}
+pull_script=${MIRROR_HOME}/$PULL_DATASTORE_IMAGES_SCRIPT
+push_script=${MIRROR_HOME}/$PUSH_DATASTORE_IMAGES_SCRIPT
+tag_script=${MIRROR_HOME}/$TAG_DATASTORE_IMAGES_SCRIPT
+
+write_pull_image_script $image_list $pull_script
+write_tag_image_script $image_list $tag_script
+write_push_image_script $image_list $push_script
 
 #
 # cert manager
 #
-
-IMAGE_LIST=${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}
-
-PULL_SCRIPT=${MIRROR_HOME}/$PULL_CERT_MGR_IMAGES_SCRIPT
-PUSH_SCRIPT=${MIRROR_HOME}/$PUSH_CERT_MGR_IMAGES_SCRIPT
-TAG_SCRIPT=${MIRROR_HOME}/$TAG_CERT_MGR_IMAGES_SCRIPT
-
-echo ""
-echo writing cert-manager mirror scripts...
-echo ""
+print_mirror_header "cert-manager"
 
 ./generate-certmgr-image-list.sh 
 
-#write_pull_image_script $IMAGE_LIST $PULL_SCRIPT anonymous
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+image_list=${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}
+pull_script=${MIRROR_HOME}/$PULL_CERT_MGR_IMAGES_SCRIPT
+push_script=${MIRROR_HOME}/$PUSH_CERT_MGR_IMAGES_SCRIPT
+tag_script=${MIRROR_HOME}/$TAG_CERT_MGR_IMAGES_SCRIPT
+
+#write_pull_image_script $image_list $pull_script anonymous
+write_pull_image_script $image_list $pull_script
+write_tag_image_script $image_list $tag_script
+write_push_image_script $image_list $push_script
 
 #
 # instana operator
 #
-
-IMAGE_LIST=${MIRROR_HOME}/${INSTANA_OPERATOR_IMAGE_LIST_FILE}
-
-PULL_SCRIPT=${MIRROR_HOME}/$PULL_INSTANA_OPERATOR_IMAGES_SCRIPT
-PUSH_SCRIPT=${MIRROR_HOME}/$PUSH_INSTANA_OPERATOR_IMAGES_SCRIPT
-TAG_SCRIPT=${MIRROR_HOME}/$TAG_INSTANA_OPERATOR_IMAGES_SCRIPT
-
-echo ""
-echo writing cert-manager mirror scripts...
-echo ""
+print_mirror_header "instana-operator"
 
 ./generate-instana-operator-image-list.sh
 
-write_pull_image_script $IMAGE_LIST $PULL_SCRIPT
-write_tag_image_script $IMAGE_LIST $TAG_SCRIPT
-write_push_image_script $IMAGE_LIST $PUSH_SCRIPT
+image_list=${MIRROR_HOME}/${INSTANA_OPERATOR_IMAGE_LIST_FILE}
+pull_script=${MIRROR_HOME}/$PULL_INSTANA_OPERATOR_IMAGES_SCRIPT
+push_script=${MIRROR_HOME}/$PUSH_INSTANA_OPERATOR_IMAGES_SCRIPT
+tag_script=${MIRROR_HOME}/$TAG_INSTANA_OPERATOR_IMAGES_SCRIPT
+
+write_pull_image_script $image_list $pull_script
+write_tag_image_script $image_list $tag_script
+write_push_image_script $image_list $push_script
 
