@@ -1,0 +1,196 @@
+apiVersion: instana.io/v1beta2
+kind: Core
+metadata:
+  namespace: instana-core
+  name: instana-core
+
+spec:
+  imageConfig:
+    registry: <registry>
+    #repository: <repository>
+    tag: <tag>
+
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: image-pull-secret
+
+  # assign iam roles on eks
+  #serviceAccountAnnotations: {} 
+  
+  #priorityClassName: global-pri-class-for-all-pods-by-operator
+
+  baseDomain: base-domain
+  # cpu and memory: small/medium-large
+  resourceProfile: small
+
+  storageConfigs:
+    rawSpans:
+      #s3Config:
+      #gcloudConfig:
+      pvcConfig:
+        accessModes: 
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: rwx_storageclass
+
+    synthetics:
+      pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 50Gi
+        storageClassName: rwx_storageclass
+
+    syntheticsKeystore:
+      pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: rwx_storageclass
+
+    eumSourceMaps: 
+      pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: rwx_storageclass
+
+  #heapDumpsPVC:
+  #  pvcConfig:
+  #    accessModes:
+  #      - ReadWriteMany
+  #    resources:
+  #      requests:
+  #        storage: 10Gi
+  #    storageClassName: rwx_storageclass
+
+  datastoreConfigs:
+    cassandraConfigs:
+      - hosts:
+          - instana-cassandra-service.instana-cassandra.svc
+        ports:
+          - name: tcp
+            port: 9042
+        #properties: {}
+        authEnabled: true
+        #keyspaces: []
+        datacenter: cassandra
+        replicationFactor: 1
+
+    clickhouseConfigs:
+      - hosts: []
+        ports:
+          - name: tcp
+            port: 9000
+          - name: http
+            port: 8123
+        #properties: {}
+        authEnabled: true
+        #schemas: []
+        clusterName: local
+
+    elasticsearchConfig:
+      hosts:
+        - instana-es-http.instana-elasticsearch.svc
+      ports: 
+        - name: tcp
+          port: 9300
+        - name: http
+          port: 9200
+      #properties: {}
+      authEnabled: true
+      clusterName: instana
+      defaultIndexShards: 5
+      defaultIndexReplicas: 0
+      defaultIndexRoutingPartitionSize: 2
+      #indexConfigs: []
+
+    kafkaConfig:
+      hosts:
+        - instana-kafka-bootstrap.instana-kafka.svc
+      ports: 
+        - name: tcp
+          port: 9092
+      #properties: {}
+      authEnabled: true
+      replicationFactor: 1
+      # PLAIN, SCRAM-SHA-256, SCRAM-SHA-512
+      saslMechanism: SCRAM-SHA-512
+
+    beeInstanaConfig:
+      hosts:
+        - aggregators.beeinstana.svc
+      ports:
+        - name: tcp
+          port: 9998
+      #properties:
+      authEnabled: true
+      clustered: true
+
+    postgresConfigs:
+      - hosts:
+          - postgres-rw.instana-postgres.svc
+        ports:
+          - name: tcp
+            port: 5432
+        #properties: {}
+        authEnabled: true
+        #databases: []
+
+  # override resourceProfile
+  #componentConfigs:
+  #  - name: component
+  #    resources:
+  #      requests:
+  #        cpu: 1
+  #        memory: 1Gi
+  #      limits:
+  #        cpu: 1
+  #        memory: 1Gi
+
+  deploymentStrategyType: RollingUpdate
+
+  emailConfig:
+    smtpConfig:
+      from: from@example.com
+      host: smtp.example.com
+      port: 465
+      useSSL: false
+      startTLS: false
+      check_server_identity: false
+
+  # saml|oidc
+  serviceProviderConfig: {} 
+
+  #proxyConfig: {}
+
+  #geoDbUrl:
+
+  agentAcceptorConfig:
+    host: agent-acceptor.instana.monitoring.<...>
+    port: 443
+
+  featureFlags:
+    - name: beeinstana
+      enabled: true
+
+  #env: {}
+
+  properties:
+    - name: retention.metrics.rollup5
+      value: 86400
+
+  #nodeSelector:
+  #tolerations:
+
+  operationMode: normal
+
+  # saas only
+  #operationScopes: []

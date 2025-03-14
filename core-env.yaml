@@ -1,0 +1,196 @@
+env:
+#
+# base domain
+#
+- name: base-domain
+  path: >
+    .spec.baseDomain
+  values:
+    default: strenv(instana_base_domain)
+
+#
+# resource profile
+#
+- name: resource-profile
+  path: >
+    .spec.resourceProfile
+  values:
+    default: small
+    uat: large
+    production: large
+
+#
+# beeinstana config
+#
+
+#
+# cassandra config
+#
+- name: cassandra-datacenter
+  path: >
+    .spec.datastoreConfigs.cassandraConfigs[0].datacenter
+  values:
+    default: cassandra
+
+- name: cassandra-replication-factor
+  path: >
+    .spec.datastoreConfigs.cassandraConfigs[0].datacenter
+  values:
+    default: 1
+
+#
+# clickhouse config
+#
+#- name: clickhouse-hosts
+#  path: >
+#    .spec.datastoreConfigs.clickhouseConfigs.[] | select(.clusterName=="local") | .hosts.[]
+#  patch:
+#    uat:
+#      - chi-instana-local-0-0.instana-clickhouse.svc
+#      - chi-instana-local-0-1.instana-clickhouse.svc
+#      - chi-instana-local-1-0.instana-clickhouse.svc
+#      - chi-instana-local-1-1.instana-clickhouse.svc
+#      - chi-instana-local-2-0.instana-clickhouse.svc
+#      - chi-instana-local-2-1.instana-clickhouse.svc
+#      - chi-instana-local-3-0.instana-clickhouse.svc
+#      - chi-instana-local-3-1.instana-clickhouse.svc
+#    production:
+
+#
+# elasticsearch config
+#
+- name: elasticsearch-cluster-name
+  path: .spec.datastoreConfigs.elasticsearchConfig.clusterName
+  values:
+    default: instana
+
+- name: elasticsearch-index-partition-size
+  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexRoutingPartitionSize
+  values:
+    default: 2
+
+- name: elasticsearch-index-shards
+  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexShards
+  values:
+    default: 5
+
+#
+# kafka config
+#
+- name: kafka-replication-factor
+  path: .spec.datastoreConfigs.kafkaConfig.replicationFactor
+  values:
+    default: 1
+
+- name: kafka-sasl-mechanism
+  path: .spec.datastoreConfigs.kafkaConfig.saslMechanism
+  values:
+    default: SCRAM-SHA-512
+
+#
+# images
+#
+- name: image-registry
+  path: >
+    .spec.imageConfig.registry
+  values:
+    default: strenv(private_registry)
+
+- name: image-tag
+  path: >
+    .spec.imageConfig.tag
+  values:
+    default: strenv(core_image_tag)
+
+#
+# image pull secret
+#
+- name: image-pull-secret
+  path: >
+    .spec.imagePullSecrets[0].name
+  values:
+    default: instana-registry
+
+#
+# storage requests and storage class
+#
+
+#
+# raw spans storage request
+#
+- name: raw-spans-storage-request
+  path: >
+    .spec.storageConfigs.rawSpans.pvcConfig.resources.requests.storage
+  values:
+    default: 50Gi
+    uat: 100Gi
+    production: 200Gi
+
+#
+# raw spans storage class
+#
+- name: raw-spans-storage-class
+  path: >
+    .spec.storageConfigs.rawSpans.pvcConfig.storageClassName
+  values:
+    default: strenv(rwx_storageclass)
+
+#
+# synthetics storage request
+#
+- name: synthetics-storage-request
+  path: >
+    .spec.storageConfigs.synthetics.pvcConfig.resources.requests.storage
+  values:
+    default: 50Gi
+    uat: 50Gi
+    production: 50Gi
+
+#
+# synthetics storage class
+#
+- name: synthetics-storage-class
+  path: >
+    .spec.storageConfigs.synthetics.pvcConfig.storageClassName
+  values:
+    default: strenv(rwx_storageclass)
+
+#
+# synthetics keystore storage request
+#
+- name: synthetics-keystore-storage-request
+  path: >
+    .spec.storageConfigs.syntheticsKeystore.pvcConfig.resources.requests.storage
+  values:
+    default: 50Gi
+    uat: 50Gi
+    production: 50Gi
+
+#
+# synthetics keystore storage class
+#
+- name: synthetics-keystore-storage-class
+  path: >
+    .spec.storageConfigs.syntheticsKeystore.pvcConfig.storageClassName
+  values:
+    default: strenv(rwx_storageclass)
+
+#
+# eum source maps storage request
+#
+- name: eum-source-maps-storage-request
+  path: >
+    .spec.storageConfigs.eumSourceMaps.pvcConfig.resources.requests.storage
+  values:
+    default: ..
+    uat:
+    production:
+
+#
+# eum source maps storage class
+#
+- name: eum-source-maps-storage-class
+  path: >
+    .spec.storageConfigs.eumSourceMaps.pvcConfig.storageClassName
+  values:
+    default: strenv(rwx_storageclass)
