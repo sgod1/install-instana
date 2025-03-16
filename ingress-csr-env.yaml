@@ -1,0 +1,37 @@
+env:
+- name: csr-default-bits
+  path: .csr.default-bits
+  values:
+    default: 4096
+
+- name: csr-default-md
+  path: .csr.default-md
+  values:
+    default: sha256
+
+  # required dn components
+  # do not include cn
+- name: core-ingeress-dn
+  path: .csr.dn
+  values:
+    default:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
+    uat:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
+    production:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
