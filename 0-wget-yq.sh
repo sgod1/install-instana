@@ -6,7 +6,7 @@ INSTALL_HOME=$(get_make_install_home)
 BIN_HOME=$(get_make_bin_home)
 
 function cleanup_tool_tar() {
-   tool_tar=$1
+   local tool_tar=$1
 
    if test -f $BIN_HOME/${tool_tar}; then
       rm $BIN_HOME/${tool_tar}

@@ -167,7 +167,10 @@ spec:
       check_server_identity: false
 
   # saml|oidc
-  serviceProviderConfig: {} 
+  serviceProviderConfig:
+    basePath: "/auth"
+    maxIDPMetadataSizeInBytes: 200000
+    maxAuthenticationLifetimeSeconds: 604800
 
   #proxyConfig: {}
 

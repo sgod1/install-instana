@@ -5,9 +5,9 @@ source ./help-functions.sh
 source ./install.env
 
 function write_pull_image_script() {
-   image_list_file=$1
-   script_file=$2
-   anonymous=$3
+   local image_list_file=$1
+   local script_file=$2
+   local anonymous=$3
 
    echo writing pull image script to $script_file
 
@@ -24,8 +24,8 @@ function write_pull_image_script() {
 }
 
 function write_tag_image_script() {
-   image_list_file=$1
-   script_file=$2
+   local image_list_file=$1
+   local script_file=$2
 
    echo writing tag image script to $script_file
 
@@ -44,8 +44,8 @@ function write_tag_image_script() {
 }
 
 function write_push_image_script() {
-   image_list_file=$1
-   script_file=$2
+   local image_list_file=$1
+   local script_file=$2
 
    echo writing push image script to $script_file
 
@@ -65,7 +65,7 @@ function write_push_image_script() {
 }
 
 function print_mirror_header() {
-   component=$1
+   local component=$1
    echo ""
    echo writing $component mirror scripts...
    echo ""

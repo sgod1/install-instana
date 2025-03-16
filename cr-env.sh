@@ -3,9 +3,9 @@
 export PATH=./gen/bin:$PATH
 
 function y() {
-   f=$1
-   p=$2
-   v1=$3
+   local f=$1
+   local p=$2
+   local v1=$3
 
    if [[ "$v1" =~ ^strenv* ]]; then
       ev=`yq --null-input ".a = $v1"`
@@ -44,19 +44,19 @@ function y() {
 }
 
 function update_path_for_key() {
-   path_name=$1 
-   profile_key=$2
-   env_file=$3
-   out_file=$4
+   local path_name=$1 
+   local profile_key=$2
+   local env_file=$3
+   local out_file=$4
 
-   path=`yq ".env[] | select(.name == \"$path_name\") | .path" $env_file | tr -d "\n "`
-   vals=`yq ".env[] | select(.name == \"$path_name\") | .values" $env_file | tr -d "-"`
+   local path=`yq ".env[] | select(.name == \"$path_name\") | .path" $env_file | tr -d "\n "`
+   local vals=`yq ".env[] | select(.name == \"$path_name\") | .values" $env_file | tr -d "-"`
 
    echo ""
    echo path... $path
    echo vals... $vals
 
-   keys=`yq ".env[] | select(.name == \"$path_name\") | .values | keys | .[] comments=\"\"" $env_file | tr -d "-"`
+   local keys=`yq ".env[] | select(.name == \"$path_name\") | .values | keys | .[] comments=\"\"" $env_file | tr -d "-"`
 
    for key in $keys
    do
@@ -79,21 +79,21 @@ function update_path_for_key() {
 }
 
 function display_match_code() {
-   match_code=$1
+   local match_code=$1
    if test $match_code -eq 0; then echo -n "0 - match"; fi
    if test $match_code -eq 1; then echo -n "1 - no match"; fi
 }
 
 function cr_env () {
-   template_cr=$1
-   env_file=$2
-   out_file=$3
-   profile=$4
+   local template_cr=$1
+   local env_file=$2
+   local out_file=$3
+   local profile=$4
 
    # truncate error file
    > ${out_file}.err
 
-   path_names=`yq ".env[] | .name" $env_file`
+   local path_names=`yq ".env[] | .name" $env_file`
 
    for path_name in $path_names; do
       echo ===

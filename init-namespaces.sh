@@ -9,8 +9,8 @@ select_label=${2:-""}
 INSTALL_HOME=$(get_install_home)
 
 function create_psa_labeled_namespace() {
-  ns=$1
-  label=$2
+  local ns=$1
+  local label=$2
 
   NS_YAML="$INSTALL_HOME/ns-$ns.yaml"
 
@@ -47,8 +47,8 @@ EOF
 }
 
 function create_labeled_namespace() {
-  ns=$1
-  label=$2
+  local ns=$1
+  local label=$2
 
   echo creating namespace $ns, label "app.kubernetes.io/name:" $label
 
@@ -68,8 +68,8 @@ EOF
 }
 
 function create_namespace() {
-  ns=$1
-  label=$2
+  local ns=$1
+  local label=$2
 
   if compare_values "$label" "privileged"; then
     create_psa_labeled_namespace $ns $label
@@ -90,8 +90,8 @@ function create_namespace() {
 }
 
 function create_image_pull_secret() {
-   ns=$1
-   secret_name="instana-registry"
+   local ns=$1
+   local secret_name="instana-registry"
 
    echo creating image pull secret $secret_name, namespace $ns
 
@@ -103,8 +103,8 @@ function create_image_pull_secret() {
 }
 
 function init_namespace() {
-   ns=$1
-   label=$2
+   local ns=$1
+   local label=$2
    create_namespace $ns $label
    create_image_pull_secret $ns
 }

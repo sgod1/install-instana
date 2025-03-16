@@ -10,7 +10,7 @@ INSTALL_HOME=$(get_make_install_home)
 BIN_DIR=$(get_make_bin_home)
 
 function cleanup_plugin_tar() {
-   plugin_tar=$1
+   local plugin_tar=$1
 
    if test -f $BIN_DIR/${plugin_tar}; then
       rm $BIN_DIR/${plugin_tar}
