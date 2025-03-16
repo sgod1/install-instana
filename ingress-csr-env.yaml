@@ -11,7 +11,7 @@ env:
 
   # required dn components
   # do not include cn
-- name: core-ingeress-dn
+- name: ingress-dn
   path: .csr.dn
   values:
     default:
