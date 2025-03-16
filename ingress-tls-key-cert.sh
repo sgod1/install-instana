@@ -5,6 +5,7 @@ source ./help-functions.sh
 source ./install.env
 
 ingress_home=$(get_make_ingress_home)
+bin_home=$(get_bin_home)
 
 # ingress alt subject names
 __ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN" "agent-acceptor.$INSTANA_BASE_DOMAIN" "otlp-grpc.$INSTANA_BASE_DOMAIN" "otlp-http.$INSTANA_BASE_DOMAIN" "$INSTANA_TENANT_DOMAIN")
@@ -27,7 +28,7 @@ function write_dn_config() {
   echo "[ dn ]" >> $outfile
 
   for dn in $dns; do
-    val=`gen/bin/yq ".env.[]|select(.path==\".csr.dn\")|.values.$prof | .$dn" $ingress_csr_env_yaml | tr -d "-"`
+    val=`$bin_home/yq ".env.[]|select(.path==\".csr.dn\")|.values.$prof | .$dn" $ingress_csr_env_yaml | tr -d "-"`
     echo $dn = $val >> $outfile
   done
 
@@ -40,17 +41,17 @@ function write_csr_config() {
   local prof=$2
 
   # use input prof
-  default_bits=`gen/bin/yq ".env.[]|select(.path==\".csr.default-bits\")|.values.$prof|." $ingress_csr_env_yaml`
+  default_bits=`$bin_home/yq ".env.[]|select(.path==\".csr.default-bits\")|.values.$prof|." $ingress_csr_env_yaml`
   if test "$default_bits" = "null"; then
     # use default profile
-    default_bits=`gen/bin/yq ".env.[]|select(.path==\".csr.default-bits\")|.values.default|." $ingress_csr_env_yaml`
+    default_bits=`$bin_home/yq ".env.[]|select(.path==\".csr.default-bits\")|.values.default|." $ingress_csr_env_yaml`
   fi
 
   # use input prof
-  default_md=`gen/bin/yq ".env.[]|select(.path==\".csr.default-md\")|.values.$prof|." $ingress_csr_env_yaml`
+  default_md=`$bin_home/yq ".env.[]|select(.path==\".csr.default-md\")|.values.$prof|." $ingress_csr_env_yaml`
   if test "$default_md" = "null"; then
     # use default prof
-    default_md=`gen/bin/yq ".env.[]|select(.path==\".csr.default-md\")|.values.default|." $ingress_csr_env_yaml`
+    default_md=`$bin_home/yq ".env.[]|select(.path==\".csr.default-md\")|.values.default|." $ingress_csr_env_yaml`
   fi
 
   # write req section
@@ -65,13 +66,13 @@ function write_csr_config() {
   echo "distinguished_name = dn" >> $outfile
 
   # use input prof
-  dns=`gen/bin/yq ".env.[]|select(.path==\".csr.dn\")|.values.$prof | select(.) | keys" $ingress_csr_env_yaml | tr -d "-"`
+  dns=`$bin_home/yq ".env.[]|select(.path==\".csr.dn\")|.values.$prof | select(.) | keys" $ingress_csr_env_yaml | tr -d "-"`
   if test ! -z "$dns"; then
     write_dn_config "$dns" $outfile $prof
 
   else
     # use default prof
-    dns=`gen/bin/yq ".env.[]|select(.path==\".csr.dn\")|.values.default | select(.) | keys" $ingress_csr_env_yaml | tr -d "-"`
+    dns=`$bin_home/yq ".env.[]|select(.path==\".csr.dn\")|.values.default | select(.) | keys" $ingress_csr_env_yaml | tr -d "-"`
     write_dn_config "$dns" $outfile "default"
   fi
 
