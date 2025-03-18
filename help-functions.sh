@@ -119,15 +119,15 @@ function get_make_snapshot_home() {
    echo "$snapshot_home"
 }
 
-function get_ingress_home() {
+function get_tls_home() {
    local install_home=$(get_install_home)
-   echo "$install_home/ingress"
+   echo "$install_home/tls"
 }
 
-function get_make_ingress_home() {
-   local ingress_home=$(get_ingress_home)
-   mkdir -p "$ingress_home"
-   echo "$ingress_home"
+function get_make_tls_home() {
+   local tls_home=$(get_tls_home)
+   mkdir -p "$tls_home"
+   echo "$tls_home"
 }
 
 function snapshot_name() {

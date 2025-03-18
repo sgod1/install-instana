@@ -29,15 +29,13 @@ function write_tag_image_script() {
 
    echo writing tag image script to $script_file
 
-   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY -v QUAY_REGISTRY=$QUAY_REGISTRY '
+   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY '
    BEGIN {
       print "#!/bin/bash" 
       print "source ../../../../instana.env"
       print "set -x"
    }
    NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { printf("$PODMAN tag %s", $0); sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) } 
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { printf("$PODMAN tag %s", $0); sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf(" %s\n", $0) } 
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -49,7 +47,7 @@ function write_push_image_script() {
 
    echo writing push image script to $script_file
 
-   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY -v QUAY_REGISTRY=$QUAY_REGISTRY '
+   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../../instana.env"
@@ -57,8 +55,6 @@ function write_push_image_script() {
       print "set -x"
    }
    NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^quay.io/ { sub(QUAY_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /^cr.dtsx.io/ { sub("cr.dtsx.io", "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -70,6 +66,10 @@ function print_mirror_header() {
    echo writing $component mirror scripts...
    echo ""
 }
+
+#
+# main
+#
 
 MIRROR_HOME=$(get_make_mirror_home)
 MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
