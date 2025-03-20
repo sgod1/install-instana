@@ -7,10 +7,15 @@ source ./install.env
 # extend path
 PATH=".:$PATH"
 
-offline=$1
+# debug offline
+offline_mode=$1
 
-# create instana-core secret
-core-instana-core-secret.sh $offline
+# instana-core secret
+core-instana-core-secret.sh $offline_mode
+check_return_code $?
+
+# core-tls secret
+core-instana-tls-secret.sh $offline_mode
 check_return_code $?
 
 manifest_home=$(get_manifest_home)
@@ -27,4 +32,21 @@ if test ! -f $manifest; then
    exit 1
 fi
 
-$KUBECTL apply -n instana-core -f $manifest
+# debug offline
+if test $offline_mode; then
+   online=""
+   offline="offline"
+
+else
+   online="online"
+fi
+
+# apply cr
+if test $online; then
+   $KUBECTL apply -n instana-core -f $manifest
+   check_return_code $?
+else
+   echo offline
+fi
+
+exit 0
