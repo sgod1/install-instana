@@ -63,14 +63,15 @@ env:
 
 #
 # shards count
+# shards-replicas, replicas fixed to 2
 #
 - name: shards-count
   path: >
     .spec.configuration.clusters.[] | select(.name == "local") |
     .layout.shardsCount
   values:
-    uat: 1
-    prod: 1
+    uat: 4
+    prod: 4
 
 #
 # container images

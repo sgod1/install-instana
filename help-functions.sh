@@ -164,5 +164,11 @@ function format_file_path() {
 }
 
 function log_msg() {
+   # calling script name not included
+   echo "$@"
+}
+
+function log_msg0() {
+   # calling script name included
    echo "$@"
 }

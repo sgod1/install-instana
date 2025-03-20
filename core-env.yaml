@@ -40,6 +40,8 @@ env:
 
 #
 # clickhouse config
+# replicas-shards, replicas=2 - fixed, shards=1...
+# shards count 1 ...
 #
 #- name: clickhouse-hosts
 #  path: >
