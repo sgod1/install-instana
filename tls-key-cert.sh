@@ -10,21 +10,8 @@ bin_home=$(get_bin_home)
 # ingress alt subject names
 __ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN" "agent-acceptor.$INSTANA_BASE_DOMAIN" "otlp-grpc.$INSTANA_BASE_DOMAIN" "otlp-http.$INSTANA_BASE_DOMAIN" "$INSTANA_TENANT_DOMAIN")
 
-# ingress csr env
+# csr env
 csr_env_yaml=$CSR_ENV_FILE_NAME
-
-function format_file_path() {
-  local home=$1
-  local filename=$2
-  local profile=$3
-  local ver=$4
-  local name=`echo $filename | cut -d "." -f1`
-  local ext=`echo $filename | cut -d "." -f2`
-
-  # home/name-profile-version.ext
-  echo "${home}/${name}-${profile}-${ver}.${ext}"
-  #echo "${home}/${name}-${ver}.${ext}"
-}
 
 function prefix_file_name() {
   local filename=$1
@@ -123,8 +110,8 @@ key_file=$(prefix_file_name $key_file_name $prof)
 
 # check for private key file
 if test -f $key_file; then
-   echo ingress private key $key_file already exits, exiting
-   exit 1
+   echo ... reusing existing private key $key_file
+   exit 0
 fi
 
 # write csr config file
@@ -154,7 +141,7 @@ openssl req -newkey rsa:2048 \
 check_return_code $?
 
 #
-# use internal ca to issue ingress cert
+# use internal ca to issue cert
 #
 root_ca_key_file_name="${qual}-${ROOT_CA_KEY_FILE_NAME}"
 root_ca_key_file=$(prefix_file_name $root_ca_key_file_name $prof)

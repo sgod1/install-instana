@@ -118,11 +118,11 @@ env:
 #
 # passwords
 #
-- name: clickhouse-default-password
+- name: clickhouse-admin-password
   path: >
     .spec.configuration.users."default/password"
   values:
-    default: strenv(clickhouse_default_pass)
+    default: strenv(clickhouse_admin_pass)
 
 - name: clickhouse-user-password
   path: >

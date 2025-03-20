@@ -150,3 +150,19 @@ function copy_template_manifest() {
    write_install_profile_header $manifest $profile
    cat $template >> $manifest
 }
+
+function format_file_path() {
+  local home=$1
+  local filename=$2
+  local profile=$3
+  local instana_version=$4
+
+  local name=`echo $filename | cut -d "." -f1`
+  local ext=`echo $filename | cut -d "." -f2`
+
+  echo "${home}/${name}-${profile}-${instana_version}.${ext}"
+}
+
+function log_msg() {
+   echo "$@"
+}
