@@ -178,6 +178,14 @@ env:
     default: strenv(rwx_storageclass)
 
 #
+# agent acceptor
+#
+- name: agent-acceptor-host
+  path: .spec.agentAcceptorConfig.host
+  values:
+    default: strenv(agent_acceptor_host)
+
+#
 # optional features
 #
 
