@@ -17,7 +17,7 @@ env:
   values:
     default: small
     uat: large
-    production: large
+    production: strenv(resource_profile)
 
 #
 # beeinstana config
@@ -37,26 +37,6 @@ env:
     .spec.datastoreConfigs.cassandraConfigs[0].datacenter
   values:
     default: 1
-
-#
-# clickhouse config
-# replicas-shards, replicas=2 - fixed, shards=1...
-# shards count 1 ...
-#
-#- name: clickhouse-hosts
-#  path: >
-#    .spec.datastoreConfigs.clickhouseConfigs.[] | select(.clusterName=="local") | .hosts.[]
-#  patch:
-#    uat:
-#      - chi-instana-local-0-0.instana-clickhouse.svc
-#      - chi-instana-local-0-1.instana-clickhouse.svc
-#      - chi-instana-local-1-0.instana-clickhouse.svc
-#      - chi-instana-local-1-1.instana-clickhouse.svc
-#      - chi-instana-local-2-0.instana-clickhouse.svc
-#      - chi-instana-local-2-1.instana-clickhouse.svc
-#      - chi-instana-local-3-0.instana-clickhouse.svc
-#      - chi-instana-local-3-1.instana-clickhouse.svc
-#    production:
 
 #
 # elasticsearch config
@@ -196,3 +176,92 @@ env:
     .spec.storageConfigs.eumSourceMaps.pvcConfig.storageClassName
   values:
     default: strenv(rwx_storageclass)
+
+#
+# optional features
+#
+
+# logging, requires second clickhouse cluster and license
+- name: feature.logging.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.logging.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.beeinstana.infra.metrics.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.beeinstana.infra.metrics.enabled")|.enabled
+  values:
+    default: true
+
+- name: feature.infra.smart.alerts.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.infra.smart.alerts.enabled")|.enabled
+  values:
+    default: true
+
+- name: feature.automation.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.automation.enabled")|.enabled
+  values:
+    default: true
+
+# requires core.storageConfigs.synthetics|syntheticsKeystore
+- name: feature.synthetics.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.synthetics.enabled")|.enabled
+  values:
+    default: true
+
+- name: feature.sap.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.sap.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.kubecost.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.kubecost.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.pcf.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.pcf.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.vsphere.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.vsphere.enabled")|.enabled
+  values:
+    default: true
+
+- name: feature.openstack.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.openstack.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.phmc.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.phmc.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.powervc.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.powervc.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.zhmc.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.zhmc.enabled")|.enabled
+  values:
+    default: false
+
+- name: feature.business.observability.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.business.observability.enabled")|.enabled
+  values:
+    default: true
+
+- name: feature.assistme.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.assistme.enabled")|.enabled
+  values:
+    default: true
+
+# enabled by default
+# check feature name spelling
+#
+#- name: feature.kubernetes.horizontal.pod.autoscaler.enable
+#  path: .spec.featureFlags.[]|select(.name == "feature.kubernetes.horizontal.pod.autoscaler.enable")|.enabled
+#  values:
+#    default: true

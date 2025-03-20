@@ -76,6 +76,7 @@ replace_manifest=${1:-"noreplace"}
 export instana_base_domain=${INSTANA_BASE_DOMAIN}
 export private_registry=${PRIVATE_REGISTRY}
 export core_image_tag=${__instana_sem_version["${INSTANA_VERSION}"]}
+export resource_profile=$CORE_RESOURCE_PROFILE}
 
 export rwo_storageclass=${RWO_STORAGECLASS}
 export rwx_storageclass=${RWX_STORAGECLASS}

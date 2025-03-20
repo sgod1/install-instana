@@ -184,6 +184,54 @@ spec:
     - name: beeinstana
       enabled: true
 
+    - name: feature.beeinstana.infra.metrics.enabled
+      enabled: true
+
+    - name: feature.infra.smart.alerts.enabled
+      enabled: true
+
+    - name: feature.logging.enabled
+      enabled: false
+
+    - name: feature.automation.enabled
+      enabled: true
+
+    - name: feature.synthetics.enabled
+      enabled: true
+
+    - name: feature.sap.enabled
+      enabled: false
+
+    - name: feature.kubecost.enabled
+      enabled: false
+
+    - name: feature.pcf.enabled
+      enabled: false
+
+    - name: feature.vsphere.enabled
+      enabled: true
+
+    - name: feature.openstack.enabled
+      enabled: false
+
+    - name: feature.phmc.enabled
+      enabled: false
+
+    - name: feature.powervc.enabled
+      enabled: false
+
+    - name: feature.zhmc.enabled
+      enabled: false
+
+    - name: feature.business.observability.enabled
+      enabled: false
+
+    - name: feature.assistme.enabled
+      enabled: false
+
+    #- name: feature.kubernetes.horizontal.pod.autoscaler.enable
+    #enabled: true
+
   #env: {}
 
   properties:
