@@ -92,6 +92,9 @@ check_for_key "CLICKHOUSE_USER_PASS" "$CLICKHOUSE_USER_PASS"
 check_for_key "CLICKHOUSE_ADMIN_PASS" "$CLICKHOUSE_ADMIN_PASS"
 check_for_key "BEEINSTANA_ADMIN_PASS" "$BEEINSTANA_ADMIN_PASS"
 
+display_header "resource profile"
+check_for_key "CORE_RESOURCE_PROFILE" "$CORE_RESOURCE_PROFILE"
+
 display_header "core config"
 check_for_key "CORE_CONFIG_RAW_SPANS_TYPE" "$CORE_CONFIG_RAW_SPANS_TYPE"
 
@@ -118,6 +121,7 @@ fi
 check_for_key "CORE_CONFIG_TOKEN_SECRET" "$CORE_CONFIG_TOKEN_SECRET"
 
 check_for_key "CORE_CONFIG_SP_KEY_PASSWORD" "$CORE_CONFIG_SP_KEY_PASSWORD"
+
 
 echo
 if [ $rc -gt 0 ]; then echo "validation failed..."; else echo "validation passed..."; fi

@@ -2,6 +2,7 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./install.env
 
 INSTALL_HOME=$(get_install_home)
 BIN_HOME=$(get_bin_home)
@@ -19,7 +20,8 @@ if test ! -f $LICENSE_JSON; then
 fi
 
 # check for unit manifest
-UNIT_MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_UNIT
+UNIT_MANIFEST=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_UNIT $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+#UNIT_MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_UNIT
 
 echo cheking for unit manifest file $UNIT_MANIFEST
 echo
@@ -30,7 +32,8 @@ if test ! -f $UNIT_MANIFEST; then
 fi
 
 # create unit-config.yaml
-UNIT_CONFIG=$MANIFEST_HOME/unit-config.yaml
+UNIT_CONFIG=$(format_file_path $MANIFEST_HOME "unit-config.yaml" $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+#UNIT_CONFIG=$MANIFEST_HOME/unit-config.yaml
 
 cat << EOF > $UNIT_CONFIG
 # The initial user of this tenant unit with admin role, default admin@instana.local.

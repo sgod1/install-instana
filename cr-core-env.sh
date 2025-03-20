@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ../instana.env
-source ./datastore-images.env
 source ./help-functions.sh
 source ./cr-env.sh
 source ./release.env
@@ -67,6 +66,10 @@ function update_clickhouse_hosts() {
 
    gen/bin/yq -i "(.spec.datastoreConfigs.clickhouseConfigs.[]|select(.clusterName=\"local\")|.hosts)=$hlist" $coreyaml
 }
+
+#
+# main
+#
 
 replace_manifest=${1:-"noreplace"}
 
