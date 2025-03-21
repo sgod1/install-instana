@@ -133,6 +133,7 @@ function cr_env () {
    if [[ $errc > 0 ]]; then
       return 1
    else
+      rm ${out_file}.err
       return 0
    fi
 }
