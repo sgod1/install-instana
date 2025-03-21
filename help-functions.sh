@@ -5,7 +5,7 @@ compare_values() {
 }
 
 check_return_code() {
-   if [ $1 -gt 0 ]; then echo "exit on script error, rc $1"; exit $1; fi
+   if [[ $1 > 0 ]]; then echo "exit on script error, rc $1"; exit $1; fi
 }
 
 check_replace_manifest() {
@@ -65,12 +65,18 @@ function get_make_install_home() {
 }
 
 function get_mirror_home() {
+   instana_version=$1
    local install_home=$(get_install_home)
-   echo "$install_home/mirror"
+   if test "$instana_version"; then
+      echo "$install_home/mirror/$instana_version"
+   else
+      echo "$install_home/mirror"
+   fi
 }
 
 function get_make_mirror_home() {
-   local mirror_home=$(get_mirror_home)
+   instana_version=$1
+   local mirror_home=$(get_mirror_home $instana_version)
    mkdir -p $mirror_home
    echo "$mirror_home"
 }

@@ -11,14 +11,19 @@ function write_pull_image_script() {
 
    echo writing pull image script to $script_file
 
+   #
+   # do not pass $PODMAN_TLS_VERIFY to login to the mothership
+   # do not pass $PODMAN_TLS_VERIFY to pull from the mothership
+   #
+
    /usr/bin/awk -v ANONYMOUS=$anonymous '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../../instana.env"
-      if (ANONYMOUS=="") print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY";
+      if (ANONYMOUS=="") print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; if [[ $? > 0 ]]; then exit $?; fi"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ { print "$PODMAN pull", $0 } ' $image_list_file > $script_file
+   NF > 0 && $0 !~ /^#/ { printf("$PODMAN pull %s; if [[ $? > 0 ]]; then exit $?; fi\n", $0) } ' $image_list_file > $script_file
 
    chmod +x $script_file
 }
@@ -35,7 +40,7 @@ function write_tag_image_script() {
       print "source ../../../../instana.env"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s; if [[ $? > 0 ]]; then exit $?; fi\n", $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -47,14 +52,18 @@ function write_push_image_script() {
 
    echo writing push image script to $script_file
 
+   #
+   # pass $PODMAN_TLS_VERIFY to login and push into private registry
+   #
+
    /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../../instana.env"
-      print "$PODMAN $PODMAN_TLS_VERIFY login --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_REGISTRY"
+      print "$PODMAN login $PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_SERVER; if [[ $? > 0 ]]; then exit $?; fi"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s\n", $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s; if [[ $? > 0 ]]; then exit $?; fi\n", $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -71,10 +80,10 @@ function print_mirror_header() {
 # main
 #
 
-MIRROR_HOME=$(get_make_mirror_home)
-MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
+# pass "run" argument to run scripts
+run=${1:-"norun"}
 
-mkdir -p ${MIRROR_HOME}
+MIRROR_HOME=$(get_make_mirror_home $INSTANA_VERSION)
 
 #
 # instana backend
@@ -140,4 +149,13 @@ tag_script=${MIRROR_HOME}/$TAG_INSTANA_OPERATOR_IMAGES_SCRIPT
 write_pull_image_script $image_list $pull_script
 write_tag_image_script $image_list $tag_script
 write_push_image_script $image_list $push_script
+
+#
+# run generated scripts
+#
+if test $run = "run"; then
+   echo running mirror images scripts...
+
+   ./mirror-images.sh
+fi
 
