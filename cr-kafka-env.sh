@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./datastore-images.env
 source ./help-functions.sh
 source ./cr-env.sh
@@ -12,17 +13,19 @@ export kafka_image=${PRIVATE_REGISTRY}/${KAFKA_IMG}
 
 export rwo_storage_class=$RWO_STORAGECLASS
 
-template_cr="kafka-template.yaml"
-env_file="kafka-env.yaml"
-profile=${INSTANA_INSTALL_PROFILE:-"template"}
+template_cr=$CR_TEMPLATE_FILENAME_KAFKA
+env_file=$CR_ENV_FILENAME_KAFKA
+profile=${INSTANA_INSTALL_PROFILE}
 
 OUT_DIR=$(get_make_manifest_home)
-MANIFEST="${OUT_DIR}/kafka-env-${INSTANA_VERSION}.yaml"
+
+MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_KAFKA $profile $INSTANA_VERSION)
 
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
+check_return_code $?
 
 # platform-specific
 # delete pod security context if openshift

@@ -128,4 +128,11 @@ function cr_env () {
    # display error file
    echo ""
    cat ${out_file}.err
+
+   errc=`cat ${out_file}.err | wc -l`
+   if [[ $errc > 0 ]]; then
+      return 1
+   else
+      return 0
+   fi
 }

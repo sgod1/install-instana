@@ -22,7 +22,7 @@ fi
 
 mkdir -p $MANIFEST_DIR
 
-VALUES_FILE="$INSTALL_HOME/instana-operator-values.yaml"
+VALUES_FILE="$INSTALL_HOME/instana-operator-values-${INSTANA_VERSION}.yaml"
 
 echo Generating Instana operator values file $VALUES_FILE
 echo ""

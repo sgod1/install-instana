@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./help-functions.sh
 source ./cr-env.sh
 source ./release.env
@@ -26,13 +27,15 @@ function update_clickhouse_hosts() {
       fi
    fi
 
-   # number of replicas is fixed
-   rmax=2 
+   # number of replicas is 2 (fixed) 
+   local replicas=(0 1)
 
-   local replicas=()
-   for ((ri = 0; ri < $rmax; ri++)); do
-      replicas+=($ri)
-   done
+   #rmax=2 
+   #
+   #local replicas=()
+   #for ((ri = 0; ri < $rmax; ri++)); do
+   #   replicas+=($ri)
+   #done
 
    # number of shards is configured in clickhouse-env.yaml
    smax=$sval
@@ -82,19 +85,19 @@ export agent_acceptor_host=$INSTANA_AGENT_ACCEPTOR
 export rwo_storageclass=${RWO_STORAGECLASS}
 export rwx_storageclass=${RWX_STORAGECLASS}
 
-template_cr="core-template.yaml"
-env_file="core-env.yaml"
-profile=${INSTANA_INSTALL_PROFILE:-"template"}
+template_cr=$CR_TEMPLATE_FILENAME_CORE
+env_file=$CR_ENV_FILENAME_CORE
+profile=${INSTANA_INSTALL_PROFILE}
 
 OUT_DIR=$(get_make_manifest_home)
-#MANIFEST="${OUT_DIR}/core-env-${INSTANA_VERSION}.yaml"
 
-MANIFEST=$(format_file_path $OUT_DIR "core.yaml" $profile $INSTANA_VERSION)
+MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_CORE $profile $INSTANA_VERSION)
 
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
 cr_env $template_cr $env_file $MANIFEST $profile
+check_return_code $?
 
 # postprocess manifest with dynamic clickhouse host list
 update_clickhouse_hosts $MANIFEST $profile

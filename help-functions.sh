@@ -160,7 +160,10 @@ function format_file_path() {
   local name=`echo $filename | cut -d "." -f1`
   local ext=`echo $filename | cut -d "." -f2`
 
-  echo "${home}/${name}-${profile}-${instana_version}.${ext}"
+  #echo "${home}/${name}-${profile}-${instana_version}.${ext}"
+
+  # name-version.ext
+  echo "${home}/${name}-${instana_version}.${ext}"
 }
 
 function log_msg() {
