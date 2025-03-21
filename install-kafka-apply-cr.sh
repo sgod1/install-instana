@@ -1,11 +1,12 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./help-functions.sh
 
 MANIFEST_HOME=$(get_manifest_home)
 
-MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_KAFKA
+MANIFEST=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_KAFKA $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 echo applying kafka cr $MANIFEST, namespace instana-kafka
 

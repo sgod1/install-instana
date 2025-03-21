@@ -21,7 +21,6 @@ fi
 
 # check for unit manifest
 UNIT_MANIFEST=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_UNIT $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
-#UNIT_MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_UNIT
 
 echo cheking for unit manifest file $UNIT_MANIFEST
 echo
@@ -33,7 +32,6 @@ fi
 
 # create unit-config.yaml
 UNIT_CONFIG=$(format_file_path $MANIFEST_HOME "unit-config.yaml" $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
-#UNIT_CONFIG=$MANIFEST_HOME/unit-config.yaml
 
 cat << EOF > $UNIT_CONFIG
 # The initial user of this tenant unit with admin role, default admin@instana.local.
@@ -69,8 +67,12 @@ echo
 
 ${KUBECTL} delete secret $UNIT_SECRET --namespace instana-units
 ${KUBECTL} create secret generic $UNIT_SECRET --namespace instana-units --from-file=config.yaml=$UNIT_CONFIG
+check_return_code $?
 
 echo creating instana-unit, mainfest $UNIT_MANIFEST, namespace instana-units
 echo
 
 ${KUBECTL} apply -f $UNIT_MANIFEST -n instana-units
+check_return_code $?
+
+exit 0

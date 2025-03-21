@@ -1,16 +1,17 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./help-functions.sh
 
 MANIFEST_HOME=$(get_manifest_home)
 
-MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_POSTGRES
+MANIFEST=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_POSTGRES $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 #
 # create postgres secret, do not overwite secret file
 #
-POSTGRES_SECRET_FILE=$MANIFEST_HOME/postgres-secret.yaml
+POSTGRES_SECRET_FILE="$MANIFEST_HOME/postgres-secret-${INSTANA_VERSION}.yaml"
 
 echo creating postgres secret $POSTGRES_SECRET_FILE
 
@@ -28,6 +29,7 @@ EOF
 fi
 
 $KUBECTL -n instana-postgres apply -f $POSTGRES_SECRET_FILE
+check_return_code $?
 
 #
 # apply postgres cr
@@ -41,3 +43,6 @@ fi
 
 # deploy postgres cr
 $KUBECTL -n instana-postgres apply -f $MANIFEST
+check_return_code $?
+
+exit 0

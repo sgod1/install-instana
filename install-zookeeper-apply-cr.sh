@@ -1,11 +1,12 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./help-functions.sh
 
 MANIFEST_HOME=$(get_manifest_home)
 
-MANIFEST=$MANIFEST_HOME/$MANIFEST_FILENAME_ZOOKEEPER
+MANIFEST=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_ZOOKEEPER $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 echo applying zookeeper cr $MANIFEST, namespace instana-clickhouse
 
