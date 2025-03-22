@@ -21,8 +21,3 @@ echo ... download helm ...
 0-wget-helm.sh $reload
 check_return_code $?
 
-# kubectl
-echo ... download kubectl ...
-0-wget-kubectl.sh $reload
-check_return_code $?
-
