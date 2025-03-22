@@ -1,13 +1,38 @@
 #!/bin/bash
 
-BIN_URL_LINUX_AMD64="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-BIN_URL_LINUX_ARM64="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
-BIN_URL_DARWIN_AMD64="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
-BIN_URL_DARWIN_ARM64="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
+source ./help-functions.sh
 
-mkdir linux-amd64
-mkdir linux-arm64
-mkdir darwin-amd64
-mkdir darwin-arm64
+kv="v1.32.3"
 
+#kv=curl -L -s https://dl.k8s.io/release/stable.txt
+
+bin_home=$(get_make_bin_home)
+
+#set -x
+
+function init_dir() {
+   local os=$1; local arch=$2; local osa="${os}-${arch}"
+   mkdir -p $bin_home/"${osa}" && find $bin_home/"${osa}" -type f -name "kubectl*" -delete && if [[ $? > 0 ]]; then exit $?; fi
+}
+
+function load() {
+  local os=$1; local arch=$2; local osa="${os}-${arch}"
+  if test -f $bin_home/"${osa}"/kubectl && test $reload_flag = "noreload"; then
+     echo kubectl already downloaded to $bin_home/"${osa}"
+  else
+     init_dir ${os} ${arch} && wget -P $bin_home/"${osa}" "https://dl.k8s.io/release/${kv}/bin/${os}/${arch}/kubectl" && if [[ $? > 0 ]]; then exit $?; fi
+  fi
+}
+
+#
+# main
+#
+
+# reload
+reload_flag=${1:-"noreload"}
+
+load "linux" "amd64" 
+load "linux" "arm64"
+load "darwin" "amd64"
+load "darwin" "arm64"
 
