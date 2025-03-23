@@ -2,7 +2,11 @@
 
 source ./help-functions.sh
 
-helm_version=v3.17.2
+helm_version="v3.17.2"
+TAR_DARWIN_AMD64="helm-${helm_version}-darwin-amd64.tar.gz"
+TAR_DARWIN_ARM64="helm-${helm_version}-darwin-arm64.tar.gz"
+TAR_LINUX_AMD64="helm-${helm_version}-linux-amd64.tar.gz"
+TAR_LINUX_ARM64="helm-${helm_version}-linux-arm64.tar.gz"
 
 INSTALL_HOME=$(get_make_install_home)
 BIN_HOME=$(get_make_bin_home)
@@ -29,11 +33,6 @@ function build_img_list() {
 # main
 #
 reload=${1:-"noreload"}
-
-TAR_DARWIN_AMD64="helm-${helm_version}-darwin-amd64.tar.gz"
-TAR_DARWIN_ARM64="helm-${helm_version}-darwin-arm64.tar.gz"
-TAR_LINUX_AMD64="helm-${helm_version}-linux-amd64.tar.gz"
-TAR_LINUX_ARM64="helm-${helm_version}-linux-arm64.tar.gz"
 
 URL="https://get.helm.sh"
 

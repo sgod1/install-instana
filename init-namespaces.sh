@@ -42,7 +42,7 @@ cat << EOF >> $NS_YAML
 EOF
   fi
 
-  $KUBECTL apply -f $NS_YAML
+  $KUBECTL apply -f $NS_YAML; rc=$?; check_return_code $rc
   rm $NS_YAML
 }
 
@@ -63,7 +63,7 @@ metadata:
     app.kubernetes.io/name: $ns
 EOF
 
-  $KUBECTL apply -f $NS_YAML
+  $KUBECTL apply -f $NS_YAML; rc=$?; check_return_code $rc
   rm $NS_YAML
 }
 
@@ -85,7 +85,7 @@ function create_namespace() {
 
   else
     echo creating namespace $ns
-    $KUBECTL create namespace $ns
+    $KUBECTL create namespace $ns; rc=$?; check_return_code $rc
   fi
 }
 
@@ -99,7 +99,7 @@ function create_image_pull_secret() {
       --namespace $ns \
       --docker-username=$PRIVATE_REGISTRY_USER \
       --docker-password=$PRIVATE_REGISTRY_PASSWORD \
-      --docker-server=$PRIVATE_DOCKER_SERVER
+      --docker-server=$PRIVATE_DOCKER_SERVER; rc=$?; check_return_code $rc
 }
 
 function init_namespace() {

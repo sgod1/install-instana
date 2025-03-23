@@ -7,6 +7,9 @@ source ./help-functions.sh
 source ./datastore-images.env
 source ./certmgr-images.env
 
+BIN_HOME=$(get_bin_home)
+export PATH=".:$BIN_HOME:$PATH"
+
 CHART_HOME=$(get_make_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
 

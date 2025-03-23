@@ -181,3 +181,10 @@ function log_msg0() {
    # calling script name included
    echo "$@"
 }
+
+function display_install_header() {
+   local header=$*
+   echo
+   echo ~~~~~~~~~~~ $header
+   echo
+}
