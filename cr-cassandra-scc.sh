@@ -1,10 +1,11 @@
 #!/bin/bash
 
 source ../instana.env
+source ./install.env
 source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
-MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_CASSANDRA_SCC
+MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_CASSANDRA_SCC $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 if ! is_platform_ocp $PLATFORM; then
    echo cassandra scc is openshift specific, does not apply to $PLATFORM

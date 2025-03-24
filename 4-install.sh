@@ -48,8 +48,7 @@ fi
 
 if [[ -z $skip_install_cassandra ]]; then
    echo installing cassandra
-   install-cassandra-operator.sh; check_return_code $?
-   install-cassandra-apply-cr.sh; check_return_code $?
+   install_cassandra.sh; check_return_code $?
 else
    echo skip install cassandra
 fi

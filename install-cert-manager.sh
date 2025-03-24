@@ -30,6 +30,9 @@ fi
 # gke:
 # --set global.leaderElection.namespace=cert-manager \
 
+# deprecated:
+# installCRDs=true
+
 set -x
 
 helm ${helm_action} cert-manager $CHART \
@@ -37,7 +40,7 @@ helm ${helm_action} cert-manager $CHART \
    --version ${CERTMGR_VERSION} \
    --set global.imagePullSecrets[0].name="instana-registry" \
    --set global.leaderElection.namespace=cert-manager \
-   --set installCRDs=true \
+   --set crds.enabled=true \
    --set webhook.timeoutSeconds=4 \
    --set image.repository=$REGISTRY/jetstack/cert-manager-controller \
    --set image.tag=${CERTMGR_VERSION} \

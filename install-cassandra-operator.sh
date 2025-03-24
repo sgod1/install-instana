@@ -1,11 +1,15 @@
 #!/bin/bash
 
+source ../instana.env
+source ./install.env
+source ./help-functions.sh
+source ./datastore-images.env; check_return_code $?
+
 # install, upgrade
 helm_action=${1:-"install"}
 
-source ../instana.env
-source ./help-functions.sh
-source ./datastore-images.env
+bin_home=$(get_bin_home)
+PATH=".:$bin_home:$PATH"
 
 # pass "disable_webhook" argument to disable webhook
 DISABLE_WEBHOOK="disable_webhook"
@@ -20,11 +24,11 @@ custom_webhook_cert=${1:-$NO_CUSTOM_WEBHOOK_CERT}
 CHART_HOME=$(get_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
 mkdir -p ${CHART_HOME}
-MANIFEST_HOME=$(get_manifest_home)
 
 CHART=$CHART_HOME/cass-operator-${CASSANDRA_OPERATOR_CHART_VERSION}.tgz
 
-SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CASSANDRA_SCC
+MANIFEST_HOME=$(get_manifest_home)
+SCC=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_CASSANDRA_SCC $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 if is_platform_ocp $PLATFORM && test ! -f $SCC; then
    echo cassandra scc $SCC not found
@@ -33,7 +37,10 @@ fi
 
 if is_platform_ocp $PLATFORM; then
    echo applying cassandra scc $SCC
-   $KUBECTL apply -f $SCC -n instana-cassandra
+   $KUBECTL -n instana-cassandra adm policy add-scc-to-user privileged -z cassandra-operator-cass-operator
+   $KUBECTL -n instana-cassandra adm policy add-scc-to-user privileged -z default
+
+   #$KUBECTL apply -f $SCC -n instana-cassandra
 fi
 
 if test ! -f $CHART; then
@@ -119,5 +126,5 @@ helm ${helm_action} cassandra-operator -n instana-cassandra $CHART \
    --set appVersion="$CASSANDRA_OPERATOR_CHART_APP_VERSION" \
    --set imageConfig.systemLogger="$PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG" \
    --set imageConfig.k8ssandraClient="$PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG" \
-   --set imageConfig.configBuilder="$PRIVATE_REGISTRY/$CASSANDRA_CONFIG_BUILDER_IMG" \
    --wait --timeout 60m0s
+
