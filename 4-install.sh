@@ -34,8 +34,7 @@ fi
 
 if [[ -z $skip_install_elasticsearch ]]; then
 echo installing elasticsearch
-   install-elasticsearch-operator.sh; check_return code $?
-   install-elasticsearch-apply-cr.sh; check_retun code $?
+   install-elasticsearch.sh; check_return_code $?
 else
    echo skip install elasticsearch
 fi
