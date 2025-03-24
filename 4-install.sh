@@ -27,8 +27,7 @@ fi
 
 if [[ -z $skip_install_kafka ]]; then
 echo installing kafka
-   install-kafka-operator.sh; check_return_code $?
-   install-kafka-apply-cr.sh; check_return_code $?
+   install-kafka.sh; check_return_code $?
 else
    echo skip install kafka
 fi

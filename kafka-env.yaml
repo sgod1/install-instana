@@ -32,7 +32,7 @@ env:
 - name: kafka-version
   path: .spec.kafka.version
   values:
-    default: 3.8.2
+    default: 3.8.1
 
 #
 # kafka replicas
