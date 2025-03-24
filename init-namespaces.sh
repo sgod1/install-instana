@@ -108,7 +108,7 @@ init_namespace "instana-kafka" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-elasticsearch" ${K8S_PSA_LABEL:-"privileged"}
 init_namespace "instana-postgres"
 init_namespace "instana-cassandra" ${K8S_PSA_LABEL:-"privileged"}
-init_namespace "instana-clickhouse"
+init_namespace "instana-clickhouse" "privileged"
 init_namespace "beeinstana"
 init_namespace "instana-operator"
 init_namespace "instana-core"
