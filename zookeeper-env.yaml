@@ -78,7 +78,7 @@ env:
 
 - name: zookeeper-pod-limits-memory
   path: >
-    .spec.pod.resources.limits.cpu
+    .spec.pod.resources.limits.memory
   values:
     default: 8Gi
 
