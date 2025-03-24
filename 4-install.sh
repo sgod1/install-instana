@@ -41,8 +41,7 @@ fi
 
 if [[ -z $skip_install_postgres ]]; then
 echo installing postgres
-   install-postgres-operator.sh; check_return_code $?
-   install-postgres-apply-cr.sh; check_return_code $?
+   install-postgres.sh; check_return_code $?
 else
    echo skip install postgres
 fi

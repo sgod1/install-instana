@@ -45,4 +45,11 @@ fi
 $KUBECTL -n instana-postgres apply -f $MANIFEST
 check_return_code $?
 
+#conditions:
+#    - lastTransitionTime: "2025-03-24T20:20:53Z"
+#      message: Cluster is Ready
+#      reason: ClusterIsReady
+#      status: "True"
+#      type: Ready
+
 exit 0
