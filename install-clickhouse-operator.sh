@@ -16,13 +16,17 @@ MANIFEST_HOME=$(get_manifest_home)
 SCC=$MANIFEST_HOME/$MANIFEST_FILENAME_CLICKHOUSE_SCC
 echo applying clickhouse scc $SCC
 
-if is_platform_ocp "$PLATFORM" && test ! -f $SCC; then
-   echo clickhouse scc $SCC not found
-   exit 1
-fi
+#if is_platform_ocp "$PLATFORM" && test ! -f $SCC; then
+#   echo clickhouse scc $SCC not found
+#   exit 1
+#fi
 
 if is_platform_ocp "$PLATFORM"; then
-   $KUBECTL apply -f $SCC -n instana-clickhouse
+   $KUBECTL -n instana-clickhouse adm policy add-scc-to-user privileged -z clickhouse-operator
+   $KUBECTL -n instana-clickhouse adm policy add-scc-to-user privileged -z clickhouse-operator-ibm-clickhouse-operator
+   $KUBECTL -n instana-clickhouse adm policy add-scc-to-user privileged -z default
+
+   #$KUBECTL apply -f $SCC -n instana-clickhouse
 fi
 
 # install clickhouse operator chart

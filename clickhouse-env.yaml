@@ -2,52 +2,56 @@ env:
 #
 # cpu and memory requests and limits
 #
-- name: clickhouse-container-cpu-req
+- name: clickhouse-container-req-cpu
   path: >
     .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.cpu
   values:
     uat: 1000m
     prod: 2000m
 
-- name: clickhouse-container-cpu-lim
-  path: >
-    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-    .resources.limits.cpu
-  values:
-    uat: 1000m
-    prod: 2000m
+#- name: clickhouse-container-lim-cpu
+#  path: >
+#    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+#    .spec.containers.[] | select(.name == "instana-clickhouse") |
+#    .resources.limits.cpu
+#  values:
+#    uat: 1000m
+#    prod: 2000m
 
-- name: clickhouse-container-mem-req
+- name: clickhouse-container-req-mem
   path: >
     .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+    .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.memory
   values:
     uat: 4Gi
     prod: 8Gi
 
-- name: clickhouse-container-mem-lim
-  path: >
-    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-    .resources.limits.memory
-  values:
-    uat: 4Gi
-    prod: 8Gi
+#- name: clickhouse-container-lim-mem
+#  path: >
+#    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
+#    .spec.containers.[] | select(.name == "instana-clickhouse") |
+#    .resources.limits.memory
+#  values:
+#    uat: 4Gi
+#    prod: 8Gi
 
 #
 # storage requests
 #
 - name: clickhouse-data-volume-request
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.resources.requests.storage
   values:
     uat: 500Gi
     prod: 1000Gi
 
-- name: clickhouse-data-cold-volume-request
+- name: clickhouse-cold-volume-request
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-cold-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-cold-volume") |
     .spec.resources.requests.storage
   values:
     uat: 500Gi
@@ -55,7 +59,7 @@ env:
 
 - name: clickhouse-log-volume-request
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.resources.requests.storage
   values:
     uat: 100Gi
@@ -97,21 +101,21 @@ env:
 #
 - name: clickhouse-data-volume-storage-class
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
-- name: clickhouse-data-cold-volume-storage-class
+- name: clickhouse-cold-volume-storage-class
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-cold-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-cold-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
 
 - name: clickhouse-log-volume-storage-class
   path: >
-    .spec.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
+    .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)

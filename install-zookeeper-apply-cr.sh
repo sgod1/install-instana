@@ -16,4 +16,7 @@ if test ! -f $MANIFEST; then
 fi
 
 $KUBECTL apply -f $MANIFEST -n instana-clickhouse
+check_return_code $?
 
+#$KUBECTL -n instana-clickhouse wait --for=condition=Ready=true pod -lrelease=instana-zookeeper --timeout 600s
+#check_return_code $?
