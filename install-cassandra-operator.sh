@@ -30,10 +30,10 @@ CHART=$CHART_HOME/cass-operator-${CASSANDRA_OPERATOR_CHART_VERSION}.tgz
 MANIFEST_HOME=$(get_manifest_home)
 SCC=$(format_file_path $MANIFEST_HOME $MANIFEST_FILENAME_CASSANDRA_SCC $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
-if is_platform_ocp $PLATFORM && test ! -f $SCC; then
-   echo cassandra scc $SCC not found
-   exit 1
-fi
+#if is_platform_ocp $PLATFORM && test ! -f $SCC; then
+#   echo cassandra scc $SCC not found
+#   exit 1
+#fi
 
 if is_platform_ocp $PLATFORM; then
    echo applying cassandra scc $SCC
