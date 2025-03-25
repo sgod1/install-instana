@@ -19,8 +19,7 @@ fi
 
 if [[ -z $skip_install_zookeeper ]]; then
    echo installing zookeeper
-   install-zookeeper-operator.sh; check_return_code $?
-   install-zookeeper-apply-cr.sh; check_return_code $?
+   install-zookeeper.sh; check_return_code $?
 else
    echo skip install zookeeper
 fi
@@ -55,8 +54,7 @@ fi
 
 if [[ -z $skip_install_clickhouse ]]; then
 echo installing clickhouse
-   install-clickhouse-operator.sh; check_return_code $?
-   install-clickhouse-apply-cr.sh; check_return_code $?
+   install-clickhouse.sh; check_return_code $?
 else
    echo skip install clickhouse
 fi
