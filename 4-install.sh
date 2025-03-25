@@ -82,7 +82,7 @@ fi
 
 if [[ -z $skip_install_instana_unit ]]; then
    echo installing instana unit
-   install-unit-apply-cr.sh; check_return_code $?
+   install-unit.sh; check_return_code $?
 else
    echo skip install instana unit
 fi
