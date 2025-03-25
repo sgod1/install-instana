@@ -61,8 +61,7 @@ fi
 
 if [[ -z $skip_install_beeinstana ]]; then
 echo installing beeinstana
-   install-beeinstana-operator.sh; check_return_code $?
-   install-beeinstana-apply-cr.sh; check_return_code $?
+   install-beeinstana.sh; check_return_code $?
 else
    echo skip install beeinstana
 fi
