@@ -75,7 +75,7 @@ fi
 
 if [[ -z $skip_install_instana_core ]]; then
    echo installing instana core
-   install-core-apply-cr.sh; check_return_code $?
+   install-core.sh; check_return_code $?
 else
    echo skip install instana core
 fi
