@@ -5,6 +5,7 @@ source ./help-functions.sh
 
 OUT_DIR=$(get_make_manifest_home)
 MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE_SCC
+MANIFEST=gen/clickhouse-scc.yaml
 
 if ! is_platform_ocp $PLATFORM; then
    echo clickhouse scc is openshift specific, does not apply to $PLATFORM
