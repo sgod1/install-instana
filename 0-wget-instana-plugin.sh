@@ -44,10 +44,11 @@ build_img_list ${INSTANA_PLUGIN_TAR_LINUX_ARM64} ${INSTANA_PLUGIN_URL_LINUX_ARM6
 build_img_list ${INSTANA_PLUGIN_TAR_DARWIN_AMD64} ${INSTANA_PLUGIN_URL_DARWIN_AMD64}
 build_img_list ${INSTANA_PLUGIN_TAR_DARWIN_ARM64} ${INSTANA_PLUGIN_URL_DARWIN_ARM64}
 
-set -x
+#set -x
 
 if test "$__imglist"; then
-wget -w 3 --user=_ --password=${DOWNLOAD_KEY} -P ${BIN_DIR} $__imglist
+#wget -w 3 --user=_ --password=${DOWNLOAD_KEY} -P ${BIN_DIR} $__imglist
+curl -L --user _:${DOWNLOAD_KEY} --remote-name-all --output-dir ${BIN_DIR} $__imglist
 else
 echo instana plugin already downloaded to $BIN_DIR ...
 fi

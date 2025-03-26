@@ -48,8 +48,11 @@ build_img_list $TAR_LINUX_ARM64 ${URL}/${TAR_LINUX_ARM64}
 build_img_list $TAR_DARWIN_AMD64 ${URL}/${TAR_DARWIN_AMD64}
 build_img_list $TAR_DARWIN_ARM64 ${URL}/${TAR_DARWIN_ARM64}
 
+#set -x
+
 if test "$__imglist"; then
-wget -w 3 -P ${BIN_HOME} $__imglist
+#wget -w 3 -P ${BIN_HOME} $__imglist
+curl -L --remote-name-all --output-dir ${BIN_HOME} $__imglist
 else
 echo helm tar already downloaded to $BIN_HOME ...
 fi
