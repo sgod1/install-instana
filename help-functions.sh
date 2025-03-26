@@ -55,7 +55,7 @@ function is_platform_ocp() {
 }
 
 function get_install_home() {
-   echo ${INSTANA_INSTALL_HOME:-"gen"}
+   echo ${INSTANA_INSTALL_HOME:-"./gen"}
 }
 
 function get_make_install_home() {
