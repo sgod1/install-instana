@@ -1,0 +1,51 @@
+#
+# updated to instana version 289
+#
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: instana
+spec:
+  version: 7.17.24
+  image: <internal-image-registry>/datastore/elasticsearch:7.17.24_v0.12.0
+  nodeSets:
+    - name: default
+      count: 3
+      config:
+        node.master: true
+        node.data: true
+        node.ingest: true
+        node.store.allow_mmap: false
+      podTemplate:
+        spec:
+          # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
+          imagePullSecrets:
+            - name: <internal-image-registry-pull-secret>
+          # Add the following securityContext snippet for Kubernetes offerings other than OCP.
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+          containers:
+            - name: elasticsearch
+              resources:
+                limits:
+                  cpu: 8
+                  memory: 32Gi
+                requests:
+                  cpu: 8
+                  memory: 32Gi
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 20Gi
+            storageClassName: rwo_storageclass
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true

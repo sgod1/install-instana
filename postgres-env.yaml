@@ -1,0 +1,81 @@
+env:
+#
+# container images
+#
+- name: postgres-container-image
+  path: .spec.imageName
+  values:
+    default: strenv(postgres_image)
+
+#
+# image pull secret (passed to operator heml)
+#
+#- name: image-pull-secret
+#  path: .spec.imagePullSecrets[0].name
+#  values:
+#    default: instana-registry
+ 
+#
+# image pull policy (passed to operator helm)
+#
+#- name: image-pull-policy
+#  path: .spec.imagePullPolicy
+#  values:
+#    default: IfNotPresent
+
+#
+# instance count
+#
+- name: postgres-instance-count
+  path: .spec.instances
+  values:
+    default: 3
+
+#
+# cpu and memory requests and limits
+#
+- name: postgres-cpu-request
+  path: .spec.resources.requests.cpu
+  values:
+    default: 2
+    uat: 2
+    production: 2
+
+- name: postgres-cpu-limit
+  path: .spec.resources.requests.cpu
+  values:
+    default: 2
+    uat: 2
+    production: 2
+
+- name: postgres-memory-request
+  path: .spec.resources.requests.memory
+  values:
+    default: 4Gi
+    uat: 8Gi
+    production: 8Gi
+
+- name: postgres-memory-limit
+  path: .spec.resources.limits.memory
+  values:
+    default: 4Gi
+    uat: 8Gi
+    production: 8Gi
+
+#
+# storage size
+#
+- name: postgres-storage-size
+  path: .spec.storage.size
+  values:
+    default: 1Gi
+    uat: 100Gi
+    production: 100Gi
+
+#
+# storage class
+#
+- name: postgres-storage-class
+  path: .spec.storage.storageClass
+  values:
+    default: strenv(rwo_storageclass)

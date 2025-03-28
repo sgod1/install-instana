@@ -1,0 +1,112 @@
+env:
+#
+# container images
+#
+- name: kafka-user-operator-image
+  path: .spec.entityOperator.userOperator.image
+  values:
+    default: strenv(kafka_operator_image)
+
+- name: kafka-image
+  path: .spec.kafka.image
+  values:
+    default: strenv(kafka_image)
+
+#
+# entity operator pod security context fsGroup, runAsUser
+# platform specific, delete for openshift post-gen
+#
+- name: pod-security-context-fs-group
+  path: .spec.entityOperator.template.pod.securityContext.fsGroup
+  values:
+    default: 1000
+
+- name: pod-security-context-run-as-user
+  path: .spec.entityOperator.template.pod.securityContext.runAsUser
+  values:
+    default: 1000
+
+#
+# kafka version
+#
+- name: kafka-version
+  path: .spec.kafka.version
+  values:
+    default: 3.8.1
+
+#
+# kafka replicas
+#
+- name: kafka-replicas
+  path: .spec.kafka.replicas
+  values:
+    default: 3
+
+#
+# kafka cpu requests and limits
+#
+- name: kafka-requests-cpu
+  path: .spec.kafka.resources.requests.cpu
+  values:
+    default: 4
+    uat: 4
+    production: 4
+
+- name: kafka-limits-cpu
+  path: .spec.kafka.resources.limits.cpu
+  values:
+    default: 4
+    uat: 4
+    production: 4
+
+#
+# kafka memory requests and limits
+#
+- name: kafka-requests-memory
+  path: .spec.kafka.resources.requests.memory
+  values:
+    default: 8Gi
+    uat: 16Gi
+    production: 16Gi
+
+- name: kafka-limits-memory
+  path: .spec.kafka.resources.limits.memory
+  values:
+    default: 8Gi
+    uat: 16Gi
+    production: 16Gi
+
+#
+# kafka storage volumes
+#
+- name: kafka-storage-volume
+  path: >
+    .spec.kafka.storage.volumes[0].size
+  values:
+    default: 100Gi
+    uat: 400Gi
+    production: 400Gi
+
+#
+# zookeeper replicas
+#
+- name: zookeeper-replicas
+  path: .spec.zookeeper.replicas
+  values:
+    default: 3
+
+#
+# zookeeper storage class
+#
+- name: zookeeper-storage-class
+  path: .spec.zookeeper.storage.class
+  values:
+    default: strenv(rwo_storage_class)
+
+#
+# zookeeper storage volumes
+#
+- name: zookeeper-storage-volume
+  path: .spec.zookeeper.storage.size
+  values:
+    default: 5Gi

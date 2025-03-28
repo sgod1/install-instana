@@ -1,0 +1,58 @@
+#
+# updated to instana version 289
+#
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: instana
+  labels:
+    strimzi.io/cluster: instana
+spec:
+  kafka:
+    version: 3.8.1
+    image: <internal-image-registry>/self-hosted-images/3rd-party/datastore/kafka:0.45.0-kafka-3.8.1_v0.14.0
+    replicas: 3
+    listeners:
+      - name: scram
+        port: 9092
+        type: internal
+        tls: false
+        authentication:
+          type: scram-sha-512
+        configuration:
+          useServiceDnsDomain: true
+    authorization:
+      type: simple
+      superUsers:
+        - strimzi-kafka-user
+    resources:
+      limits:
+        cpu: 4
+        memory: 8Gi
+      requests:
+        cpu: 4
+        memory: 8Gi
+    storage:
+      type: jbod
+      volumes:
+        - id: 0
+          type: persistent-claim
+          size: 50Gi
+          deleteClaim: true
+  zookeeper:
+    replicas: 3
+    storage:
+      class: ro_storage_class
+      type: persistent-claim
+      size: 5Gi
+      deleteClaim: true
+  entityOperator:
+    template:
+      pod:
+        tmpDirSizeLimit: 100Mi
+        # Add the following securityContext snippet for Kubernetes offerings other than OCP.
+        securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+    userOperator:
+      image: <internal-image-registry>/operator/strimzi:0.45.0_v0.14.0

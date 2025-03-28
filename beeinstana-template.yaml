@@ -1,0 +1,53 @@
+#
+# updated to instana version 289
+#
+apiVersion: beeinstana.instana.com/v1beta1
+kind: BeeInstana
+metadata:
+  name: instance
+  namespace: beeinstana
+spec:
+  version: 1.3.15
+  imageRegistry: <internal-image-registry>
+  adminCredentials:
+    secretName: beeinstana-admin-creds
+  kafkaSettings:
+    brokers:
+      # Update KAFKA_NAMESPACE to the namespace where Kafka is installed
+      - instana-kafka-bootstrap.<KAFKA_NAMESPACE>:9092
+    securityProtocol: SASL_PLAINTEXT
+    saslMechanism: SCRAM-SHA-512
+    saslPasswordCredential:
+      secretName: beeinstana-kafka-creds
+  config:
+    cpu: 200m
+    memory: 200Mi
+    replicas: 1
+    image:
+      name: beeinstana/monconfig
+      tag: v2.19.0
+  ingestor:
+    cpu: 8
+    memory: 4Gi
+    limitMemory: true
+    env: on-prem
+    metricsTopic: raw_metrics
+    replicas: 1
+    image:
+      name: beeinstana/ingestor
+      tag: v1.85.36-release
+  aggregator:
+    cpu: 4
+    memory: 16Gi
+    limitMemory: true
+    mirrors: 2
+    shards: 1
+    volumes:
+      live:
+        size: 2000Gi
+        # Replace <storage_class> with your own storage class in the following line.
+        storageClass: <storage_class>
+    image:
+      name: beeinstana/aggregator
+      tag: v1.85.36-release
+  useMultiArchImages: true

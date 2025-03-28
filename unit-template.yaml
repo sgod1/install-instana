@@ -1,0 +1,23 @@
+#
+# updated to instana version 289
+#
+apiVersion: instana.io/v1beta2
+kind: Unit
+metadata:
+  namespace: instana-units
+  name: tenant0-unit0
+spec:
+  # Must refer to the namespace of the associated Core object that was created previously
+  coreName: instana-core
+
+  # Must refer to the name of the associated Core object that was created previously
+  coreNamespace: instana-core
+
+  # the name of the tenant, lowercase
+  tenantName: tenant0
+
+  # The name of the unit within the tenant
+  unitName: unit0
+
+  # The same rules apply as for Cores. May be ommitted. Default is 'medium'
+  resourceProfile: small

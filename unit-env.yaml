@@ -1,0 +1,38 @@
+env:
+- name: tenant-unit
+  path: .metadata.name
+  values:
+    default: strenv(instana_tenant_unit)
+
+- name: namespace
+  path: .metadata.namespace
+  values:
+    # fixed
+    default: instana-units
+
+- name: core-name
+  path: .spec.coreName
+  values:
+    # fixed
+    default: instana-core
+
+- name: core-namespace
+  path: .spec.coreNamespace
+  values:
+    # fixed
+    default: instana-core
+
+- name: tenant
+  path: .spec.tenantName
+  values:
+    default: strenv(instana_tenant)
+
+- name: unit
+  path: .spec.unitName
+  values:
+    default: strenv(instana_unit)
+
+- name: resource-profile
+  path: .spec.resourceProfile
+  values:
+    default: strenv(resource_profile)

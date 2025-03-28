@@ -1,0 +1,82 @@
+env:
+#
+# cpu requests and limits
+#
+- name: cpu-requests
+  path: >
+    .spec.resources.requests.cpu
+  values:
+    uat: 10
+    production: 14
+
+- name: cpu-limits
+  path: >
+    .spec.resources.limits.cpu
+  values:
+    uat: 10
+    production: 14
+
+- name: memory-requests
+  path: >
+    .spec.resources.requests.memory
+  values:
+    uat: 40Gi
+    production: 42Gi
+
+- name: memory-limits
+  path: >
+    .spec.resources.limits.memory
+  values:
+    uat: 40Gi
+    production: 56Gi
+
+#
+# storage requests
+#
+- name: cassandra-data-volume-request
+  path: >
+    .spec.storageConfig.cassandraDataVolumeClaimSpec.resources.requests.storage
+  values:
+    default: 100Gi
+    uat: 3000Gi
+    production: 14500Gi
+
+#
+# size
+#
+- name: size
+  path: >
+    .spec.size
+  values:
+    uat: 3
+    production: 7
+
+#
+# container images
+#
+- name: cassandra-server-image
+  path: >
+    .spec.serverImage
+  values:
+    default: strenv(cassandra_server_image)
+
+- name: cassandra-system-logger-image
+  path: >
+    .spec.systemLoggerImage
+  values:
+    default: strenv(cassandra_system_logger_image)
+
+- name: cassandra-client-image
+  path: >
+    .spec.k8ssandraClientImage
+  values:
+    default: strenv(cassandra_client_image)
+
+#
+# image pull secret
+#
+- name: cassandra-image-pull-secret
+  path: >
+    .spec.podTemplateSpec.spec.imagePullSecrets[0].name
+  values:
+    default: instana-registry

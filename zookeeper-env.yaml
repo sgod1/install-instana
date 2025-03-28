@@ -1,0 +1,108 @@
+env:
+#
+# container images and tags
+#
+- name: zookeeper-image-repository
+  path: >
+    .spec.image.repository
+  values:
+    default: strenv(zookeeper_image_repository)
+
+- name: zookeeper-image-tag
+  path: >
+    .spec.image.tag
+  values:
+    default: strenv(zookeeper_image_tag)
+
+#
+# image pull secrets
+#
+- name: zookeeper-image-pull-secret
+  path: >
+    .spec.pod.imagePullSecrets[0].name
+  values:
+    default: instana-registry
+
+#
+# image pull policy
+#
+- name: zookeeper-image-pull-policy
+  path: >
+    .spec.image.pullPolicy
+  values:
+    default: IfNotPresent
+
+#
+# storage classes
+#
+- name: zookeeper-storage-class
+  path: >
+    .spec.persistence.spec.storageClassName
+  values:
+    default: strenv(rwo_storageclass)
+
+#
+# zookeeper storage request
+#
+- name: zookeeper-storage-req
+  path: >
+    .spec.persistence.spec.resources.requests.storage
+  values:
+    default: 10Gi
+    uat: 100Gi
+    production: 100Gi
+
+#
+# cpu requests and limits
+#
+- name: zookeeper-pod-req-cpu
+  path: >
+    .spec.pod.resources.requests.cpu
+  values:
+    default: 2
+
+- name: zookeeper-pod-limits-cpu
+  path: >
+    .spec.pod.resources.limits.cpu
+  values:
+    default: 2
+
+#
+# memory requests and limits
+#
+- name: zookeeper-pod-req-memory
+  path: >
+    .spec.pod.resources.requests.memory
+  values:
+    default: 8Gi
+
+- name: zookeeper-pod-limits-memory
+  path: >
+    .spec.pod.resources.limits.memory
+  values:
+    default: 8Gi
+
+#
+# pod security context fsGroup, runAsUser
+# platform-specific, delete post gen for ocp
+#
+- name: pod-security-context-fs-group
+  path: >
+    .spec.pod.securityContext.fsGroup
+  values:
+    default: 1000
+
+- name: pod-security-context-run-as-user
+  path: >
+    .spec.pod.securityContext.runAsUser
+  values:
+    default: 1000
+
+#
+# replicas
+#
+- name: zookeeper-replicas
+  path: >
+    .spec.replicas
+  values:
+    default: 3

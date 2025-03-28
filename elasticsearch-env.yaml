@@ -1,0 +1,129 @@
+env:
+#
+# container images
+#
+- name: elasticsearch-container-image
+  path: >
+    .spec.image
+  values:
+    default: strenv(elasticsearch_image)
+
+#
+# image pull secret
+#
+- name: elasticsearch-image-pull-secret
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.imagePullSecrets[0].name
+  values:
+    default: instana-registry
+
+#
+# elasticsearch pod security context fsGroup, runAsGroup, runAsUser
+# platform specific, remove post-gen for openshift
+#
+- name: elasticsearch-pod-security-context-fsGroup
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.securityContext.fsGroup
+  values:
+    default: 1000
+
+- name: elasticsearch-pod-security-context-runAsGroup
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.securityContext.runAsGroup
+  values:
+    default: 1000
+
+- name: elasticsearch-pod-security-context-runAsUser
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.securityContext.runAsUser
+  values:
+    default: 1000
+
+#
+# elasticsearch version
+#
+- name: elasticsearch-version
+  path: .spec.version
+  values:
+    default: strenv(elasticsearch_version)
+
+#
+# elasticsearch node count
+#
+- name: elasticsearch-node-count
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .count
+  values:
+    default: 3
+
+#
+# elasticsearch cpu requests and limits
+#
+- name: elasticsearch-cpu-requests
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.containers.[] | select(.name == "elasticsearch") |
+    .resources.requests.cpu
+  values:
+    default: 4
+    uat: 8
+    production: 8
+
+- name: elasticsearch-cpu-limits
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.containers.[] | select(.name == "elasticsearch") |
+    .resources.limits.cpu
+  values:
+    default: 4
+    uat: 8
+    production: 8
+
+- name: elasticsearch-memory-requests
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.containers.[] | select(.name == "elasticsearch") |
+    .resources.requests.memory
+  values:
+    default: 16Gi
+    uat: 32Gi
+    production: 32Gi
+
+- name: elasticsearch-memory-limits
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .podTemplate.spec.containers.[] | select(.name == "elasticsearch") |
+    .resources.limits.memory
+  values:
+    default: 16Gi
+    uat: 32Gi
+    production: 32Gi
+
+#
+# elasticsearch data volume
+#
+- name: elasticsearch-data
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .volumeClaimTemplates.[] | select(.metadata.name == "elasticsearch-data") |
+    .spec.resources.requests.storage
+  values:
+    default: 20Gi
+    uat: 400Gi
+    production: 400Gi
+
+#
+# storage class
+#
+- name: storage-class
+  path: >
+    .spec.nodeSets.[] | select(.name == "default") |
+    .volumeClaimTemplates.[] | select(.metadata.name == "elasticsearch-data") |
+    .spec.storageClassName
+  values:
+    default: strenv(rwo_storageclass)
