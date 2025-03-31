@@ -16,10 +16,10 @@ function update_clickhouse_hosts() {
 
    # or select from clickhouse-env.yaml
    clickhouse_env_yaml="clickhouse-env.yaml"
-   local sval=`gen/bin/yq ".env.[]|select(.name==\"shards-count\")|.values.$profile" $clickhouse_env_yaml`
+   local sval=`./gen/bin/yq ".env.[]|select(.name==\"shards-count\")|.values.$profile" $clickhouse_env_yaml`
 
    if test $sval = "null"; then
-      sval=`gen/bin/yq ".env.[]|select(.name==\"shards-count\")|.values.default" $clickhouse_env_yaml`
+      sval=`./gen/bin/yq ".env.[]|select(.name==\"shards-count\")|.values.default" $clickhouse_env_yaml`
 
       if test $sval = "null"; then
          echo ... error ... $clickhouse_env_yaml: shards-count value udefined for $profile or default profiles.
@@ -67,7 +67,7 @@ function update_clickhouse_hosts() {
 
    #echo $hlist
 
-   gen/bin/yq -i "(.spec.datastoreConfigs.clickhouseConfigs.[]|select(.clusterName=\"local\")|.hosts)=$hlist" $coreyaml
+   ./gen/bin/yq -i "(.spec.datastoreConfigs.clickhouseConfigs.[]|select(.clusterName=\"local\")|.hosts)=$hlist" $coreyaml
 }
 
 #

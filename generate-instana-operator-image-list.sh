@@ -20,7 +20,7 @@ echo writing instana operator image list to ${OUTFILE}
 
 echo "# Instana operator images, Plugin version: $INSTANA_PLUGIN_VERSION, Instana version: $INSTANA_VERSION" > ${OUTFILE}
 
-INSTANA_OPERATOR_IMAGE=`gen/bin/yq ".release.plugin.[] | select(.version==\"$INSTANA_PLUGIN_VERSION\") | .INSTANA_OPERATOR_IMAGE" ./$INSTANA_RELEASE_FILENAME` 
+INSTANA_OPERATOR_IMAGE=`./gen/bin/yq ".release.plugin.[] | select(.version==\"$INSTANA_PLUGIN_VERSION\") | .INSTANA_OPERATOR_IMAGE" ./$INSTANA_RELEASE_FILENAME` 
 if test -z "$INSTANA_OPERATOR_IMAGE" 
    then echo "undefined plugin key: INSTANA_RELEASE_FILENAME, instana plugin version $INSTANA_PLUGIN_VERSION, file $INSTANA_RELEASE_FILENAME"
    exit 1 

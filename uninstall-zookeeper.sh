@@ -3,7 +3,7 @@
 source ../instana.env
 source ./help-functions.sh
 
-export PATH="gen/bin:$PATH"
+export PATH="./gen/bin:$PATH"
 
 set -x
 
