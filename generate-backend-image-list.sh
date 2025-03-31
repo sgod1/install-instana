@@ -21,6 +21,7 @@ semver=${__instana_sem_version[${INSTANA_VERSION}]}
 
 outfile_noplatform=${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}_noplatform
 ${INSTALL_HOME}/bin/kubectl-instana versions list-images --download-key="$DOWNLOAD_KEY" --instana-version "$semver" > $outfile_noplatform
+check_return_code $?
 
 IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
 
