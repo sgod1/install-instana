@@ -11,7 +11,12 @@ function yqdelete() {
 
 function yqdownload() {
    local yqbin=$1
-   if [[ ! -f $BIN_HOME/$yqbin ]]; then
+
+   if [[ -f ./cli/$yqbin ]]; then
+      echo copying yq $yqbin from cli to gen/bin
+      cp ./cli/$yqbin $BIN_HOME/$yqbin
+
+   elif [[ ! -f $BIN_HOME/$yqbin ]]; then
       curl -L --output-dir $BIN_HOME https://github.com/mikefarah/yq/releases/latest/download/$yqbin -o $yqbin
       check_return_code $?
    else
