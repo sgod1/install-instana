@@ -74,6 +74,7 @@ env:
     .spec.configuration.clusters.[] | select(.name == "local") |
     .layout.shardsCount
   values:
+    default: 2
     uat: 4
     prod: 4
 
