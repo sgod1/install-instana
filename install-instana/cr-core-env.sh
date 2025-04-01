@@ -80,7 +80,7 @@ export instana_base_domain=${INSTANA_BASE_DOMAIN}
 export private_registry=${PRIVATE_REGISTRY}
 export core_image_tag=${__instana_sem_version["${INSTANA_VERSION}"]}
 export resource_profile=$CORE_RESOURCE_PROFILE
-export agent_acceptor_host=$INSTANA_AGENT_ACCEPTOR
+export agent_acceptor_host=$(instana_agent_acceptor $INSTANA_BASE_DOMAIN)
 
 export rwo_storageclass=${RWO_STORAGECLASS}
 export rwx_storageclass=${RWX_STORAGECLASS}

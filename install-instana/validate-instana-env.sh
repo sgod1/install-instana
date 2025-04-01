@@ -1,6 +1,11 @@
 #!/bin/bash
 
-source ../instana.env
+if [[ -f ../instana.env ]]; then
+   source ../instana.env
+else
+   echo instana.env file not found in the parent directory, required...
+   exit 1
+fi
 
 rc=0
 
@@ -73,6 +78,7 @@ display_header "instana cli"
 check_for_key "PLATFORM" "$PLATFORM"
 check_for_key "KUBECTL" "$KUBECTL"
 check_for_key "PODMAN" "$PODMAN"
+check_for_opt_key "PODMAN_TLS_VERIFY" "$PODMAN_TLS_VERIFY"
 
 display_header "private registry"
 check_for_key "PRIVATE_DOCKER_SERVER" "$PRIVATE_DOCKER_SERVER"
@@ -85,7 +91,7 @@ check_for_key "RWO_STORAGECLASS" "$RWO_STORAGECLASS"
 check_for_key "RWX_STORAGECLASS" "$RWX_STORAGECLASS"
 
 display_header "namespace security label"
-check_for_key "K8S_PSA_LABEL" "$K8S_PSA_LABEL"
+check_for_opt_key "K8S_PSA_LABEL" "$K8S_PSA_LABEL"
 
 display_header "datastore creds"
 check_for_key "CLICKHOUSE_USER_PASS" "$CLICKHOUSE_USER_PASS"

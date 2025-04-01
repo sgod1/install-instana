@@ -172,6 +172,34 @@ function format_file_path() {
   echo "${home}/${name}-${instana_version}.${ext}"
 }
 
+function instana_tenant_domain() {
+   local unit_name=$1
+   local tenant_name=$2
+   local base_domain=$3
+   echo "${unit_name}-${tenant_name}.${base_domain}"
+}
+
+function instana_agent_acceptor() {
+   local base_domain=$1
+   echo "agent-acceptor.${base_domain}"
+}
+
+function instana_otlp_grpc_acceptor() {
+   local base_domain=$1
+   echo "otlp-grpc.${base_domain}"
+}
+
+function instana_otlp_http_acceptor() {
+   local base_domain=$1
+   echo "otlp-http.${base_domain}"
+}
+
+function private_registry() {
+   local private_docker_server=$1
+   local private_registry_subpath=$2
+   echo "${private_docker_server}${private_registry_subpath}"
+}
+
 function log_msg() {
    # calling script name not included
    echo "$@"
