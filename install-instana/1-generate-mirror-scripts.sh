@@ -21,6 +21,8 @@ function write_pull_image_script() {
       print "#!/bin/bash" 
       print "source ../../../install.env"
       print "source ../../../../instana.env"
+      print "if [[ $PODMAN_HTTP_PROXY ]]; then export HTTP_PROXY=$PODMAN_HTTP_PRXY; fi"
+      print "if [[ $PODMAN_HTTPS_PROXY ]]; then export HTTPS_PROXY=$PODMAN_HTTPS_PRXY; fi"
       if (ANONYMOUS=="") print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; rc=$?; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY failed, rc=$rc; exit $rc; fi"
       print "set -x"
    }

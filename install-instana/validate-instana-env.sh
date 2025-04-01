@@ -79,6 +79,8 @@ check_for_key "PLATFORM" "$PLATFORM"
 check_for_key "KUBECTL" "$KUBECTL"
 check_for_key "PODMAN" "$PODMAN"
 check_for_opt_key "PODMAN_TLS_VERIFY" "$PODMAN_TLS_VERIFY"
+check_for_opt_key "PODMAN_HTTP_PROXY" "$PODMAN_HTTP_PROXY"
+check_for_opt_key "PODMAN_HTTPS_PROXY" "$PODMAN_HTTPS_PROXY"
 
 display_header "private registry"
 check_for_key "PRIVATE_DOCKER_SERVER" "$PRIVATE_DOCKER_SERVER"
