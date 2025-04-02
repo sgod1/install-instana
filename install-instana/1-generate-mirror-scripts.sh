@@ -7,24 +7,21 @@ source ./install.env
 function write_pull_image_script() {
    local image_list_file=$1
    local script_file=$2
-   local anonymous=$3
 
    echo writing pull image script to $script_file
 
-   #
-   # do not pass $PODMAN_TLS_VERIFY to login to the mothership
-   # do not pass $PODMAN_TLS_VERIFY to pull from the mothership
-   #
+   local REG=${INSTANA_REGISTRY_PROXY:-$INSTANA_REGISTRY}
 
-   /usr/bin/awk -v ANONYMOUS=$anonymous '
+   /usr/bin/awk -v REG="$REG" -v IREG="$INSTANA_REGISTRY" -v PROXY_USER="$INSTANA_REGISTRY_PROXY_USER" '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../install.env"
       print "source ../../../../instana.env"
-      if (ANONYMOUS=="") print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; rc=$?; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY failed, rc=$rc; exit $rc; fi"
+      if (REG == IREG) print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY failed, rc=$rc; exit $rc; fi"
+      if (REG != IREG && PROXY_USER != "") print "$PODMAN login $PODMAN_TLS_VERIFY --username $INSTANA_REGISTRY_PROXY_USER --password $INSTANA_REGISTRY_PROXY_PASSWORD $INSTANA_REGISTRY_RPOXY; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY_PROXY failed, rc=$rc; exit $rc; fi" 
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ { printf("$PODMAN pull %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image pull %s failed, rc=$rc; exit $rc; fi\n", $0, $0) } ' $image_list_file > $script_file
+   NF > 0 && $0 !~ /^#/ {sub(IREG,REG); printf("$PODMAN pull %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image pull %s failed, rc=$rc; exit $rc; fi\n", $0, $0) } ' $image_list_file > $script_file
 
    chmod +x $script_file
 }
@@ -35,14 +32,16 @@ function write_tag_image_script() {
 
    echo writing tag image script to $script_file
 
-   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY '
+   local REG=${INSTANA_REGISTRY_PROXY:-$INSTANA_REGISTRY}
+
+   /usr/bin/awk -v REG="$REG" -v IREG="$INSTANA_REGISTRY" -v PLATFORM="$(podman_image_platform $PODMAN_IMG_PLATFORM)" '
    BEGIN {
       print "#!/bin/bash" 
       print "source ../../../install.env"
       print "source ../../../../instana.env"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); printf("$PODMAN tag %s", $0); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf(" %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image tag %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub(PLATFORM, ""); tg=sprintf("$PODMAN tag %s", $0); if(REG != IREG) sub(IREG,REG,tg); printf("%s ",tg); sub(IREG, "$PRIVATE_REGISTRY"); printf("%s; rc=$?; if [[ $rc > 0 ]]; then echo error: image tag %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -58,7 +57,9 @@ function write_push_image_script() {
    # pass $PODMAN_TLS_VERIFY to login and push into private registry
    #
 
-   /usr/bin/awk -v INSTANA_REGISTRY=$INSTANA_REGISTRY '
+   local PLATFROM=$(podman_image_platform $PODMAN_IMG_PLATFORM)
+
+   /usr/bin/awk -v IREG="$INSTANA_REGISTRY" -v PLATFORM="$PLATFORM" '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../install.env"
@@ -66,7 +67,7 @@ function write_push_image_script() {
       print "$PODMAN login $PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_SERVER; rc=$?; if [[ $rc > 0 ]]; then echo error: failed to login to $PRIVATE_DOCKER_SERVER, rc=$rc; exit $rc; fi"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub("--platform linux/amd64", ""); sub(INSTANA_REGISTRY, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image push %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub(PLATFORM, ""); sub(IREG, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image push %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
@@ -101,7 +102,7 @@ pull_script=${MIRROR_HOME}/$PULL_BACKEND_IMAGES_SCRIPT
 push_script=${MIRROR_HOME}/$PUSH_BACKEND_IMAGES_SCRIPT
 tag_script=${MIRROR_HOME}/$TAG_BACKEND_IMAGES_SCRIPT
 
-write_pull_image_script $image_list $pull_script
+write_pull_image_script $image_list $pull_script 
 check_return_code $?
 
 write_tag_image_script $image_list $tag_script

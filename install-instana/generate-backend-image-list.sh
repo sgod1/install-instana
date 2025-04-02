@@ -14,7 +14,6 @@ MIRROR_HOME=${MIRROR_HOME}/${INSTANA_VERSION}
 mkdir -p $MIRROR_HOME
 
 outfile=${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}
-echo writing backend image list to ${outfile}, Instana version: $INSTANA_VERSION
 
 # instana semantic version
 semver=${__instana_sem_version[${INSTANA_VERSION}]}
@@ -23,9 +22,7 @@ outfile_noplatform=${MIRROR_HOME}/${INSTANA_BACKEND_IMAGE_LIST_FILE}_noplatform
 ${INSTALL_HOME}/bin/kubectl-instana versions list-images --download-key="$DOWNLOAD_KEY" --instana-version "$semver" > $outfile_noplatform
 check_return_code $?
 
-IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
-
-awk '{print "--platform linux/amd64 " $0}' $outfile_noplatform > $outfile
+echo writing backend image list to ${outfile}, Instana version: $INSTANA_VERSION
+awk -v IMG_PLATFORM="$(podman_image_platform $PODMAN_IMG_PLATFORM)" '{printf("%s %s\n", IMG_PLATFORM, $0)}' $outfile_noplatform > $outfile
 
 rm ${outfile_noplatform}
-

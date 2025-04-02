@@ -80,6 +80,11 @@ check_for_key "KUBECTL" "$KUBECTL"
 check_for_key "PODMAN" "$PODMAN"
 check_for_opt_key "PODMAN_TLS_VERIFY" "$PODMAN_TLS_VERIFY"
 
+display_header "instana registry proxy"
+check_for_opt_key "INSTANA_REGISTRY_PROXY" "$INSTANA_REGISTRY_PROXY"
+check_for_opt_key "INSTANA_REGISTRY_PROXY_USER" "$INSTANA_REGISTRY_PROXY_USER"
+check_for_opt_key "INSTANA_REGISTRY_PROXY_PASSWORD" "$INSTANA_REGISTRY_PROXY_PASSWORD"
+
 display_header "private registry"
 check_for_key "PRIVATE_DOCKER_SERVER" "$PRIVATE_DOCKER_SERVER"
 check_for_opt_key "PRIVATE_REGISTRY_SUBPATH" "$PRIVATE_REGISTRY_SUBPATH"

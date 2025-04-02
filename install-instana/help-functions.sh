@@ -200,6 +200,11 @@ function private_registry() {
    echo "${private_docker_server}${private_registry_subpath}"
 }
 
+function podman_image_platform() {
+   local platform=${1:-"--platform linux/amd64"}
+   echo "${platform}"
+}
+
 function log_msg() {
    # calling script name not included
    echo "$@"
