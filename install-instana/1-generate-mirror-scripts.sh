@@ -57,9 +57,7 @@ function write_push_image_script() {
    # pass $PODMAN_TLS_VERIFY to login and push into private registry
    #
 
-   local PLATFROM=$(podman_image_platform $PODMAN_IMG_PLATFORM)
-
-   /usr/bin/awk -v IREG="$INSTANA_REGISTRY" -v PLATFORM="$PLATFORM" '
+   /usr/bin/awk -v IREG="$INSTANA_REGISTRY" -v IMG_PLATFORM="$(podman_image_platform $PODMAN_IMG_PLATFORM)" '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../install.env"
@@ -67,7 +65,7 @@ function write_push_image_script() {
       print "$PODMAN login $PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_SERVER; rc=$?; if [[ $rc > 0 ]]; then echo error: failed to login to $PRIVATE_DOCKER_SERVER, rc=$rc; exit $rc; fi"
       print "set -x"
    }
-   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub(PLATFORM, ""); sub(IREG, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image push %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
+   NF > 0 && $0 !~ /^#/ && $0 ~ /artifact-public.instana.io/ { sub(IMG_PLATFORM, ""); sub(IREG, "$PRIVATE_REGISTRY"); printf("$PODMAN push $PODMAN_TLS_VERIFY %s; rc=$?; if [[ $rc > 0 ]]; then echo error: image push %s failed, rc=$rc; exit $rc; fi\n", $0, $0) }
    ' $image_list_file > $script_file
 
    chmod +x $script_file
