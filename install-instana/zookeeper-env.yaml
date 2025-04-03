@@ -50,7 +50,7 @@ env:
   values:
     default: 10Gi
     uat: 100Gi
-    production: 100Gi
+    prod: 100Gi
 
 #
 # cpu requests and limits

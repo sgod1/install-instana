@@ -72,7 +72,7 @@ env:
   values:
     default: 4
     uat: 8
-    production: 8
+    prod: 8
 
 - name: elasticsearch-cpu-limits
   path: >
@@ -82,7 +82,7 @@ env:
   values:
     default: 4
     uat: 8
-    production: 8
+    prod: 8
 
 - name: elasticsearch-memory-requests
   path: >
@@ -92,7 +92,7 @@ env:
   values:
     default: 16Gi
     uat: 32Gi
-    production: 32Gi
+    prod: 32Gi
 
 - name: elasticsearch-memory-limits
   path: >
@@ -102,7 +102,7 @@ env:
   values:
     default: 16Gi
     uat: 32Gi
-    production: 32Gi
+    prod: 32Gi
 
 #
 # elasticsearch data volume
@@ -115,7 +115,7 @@ env:
   values:
     default: 20Gi
     uat: 400Gi
-    production: 400Gi
+    prod: 400Gi
 
 #
 # storage class

@@ -7,28 +7,28 @@ env:
     .spec.resources.requests.cpu
   values:
     uat: 10
-    production: 14
+    prod: 14
 
 - name: cpu-limits
   path: >
     .spec.resources.limits.cpu
   values:
     uat: 10
-    production: 14
+    prod: 14
 
 - name: memory-requests
   path: >
     .spec.resources.requests.memory
   values:
     uat: 40Gi
-    production: 42Gi
+    prod: 42Gi
 
 - name: memory-limits
   path: >
     .spec.resources.limits.memory
   values:
     uat: 40Gi
-    production: 56Gi
+    prod: 56Gi
 
 #
 # storage requests
@@ -39,7 +39,7 @@ env:
   values:
     default: 100Gi
     uat: 3000Gi
-    production: 14500Gi
+    prod: 14500Gi
 
 #
 # size
@@ -49,7 +49,7 @@ env:
     .spec.size
   values:
     uat: 3
-    production: 7
+    prod: 7
 
 #
 # container images

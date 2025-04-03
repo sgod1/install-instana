@@ -13,6 +13,8 @@ env:
     medium: 4
     # 750k - 9m metrics
     large: 16
+    uat: 8
+    prod: 16
 
 - name: ingestor-memory
   path: >
@@ -25,6 +27,8 @@ env:
     medium: 3Gi
     # 750k - 9m metrics
     large: 12Gi
+    uat: 4Gi
+    prod: 12Gi
 
 - name: ingestor-replicas
   path: >
@@ -37,6 +41,8 @@ env:
     medium: 3
     # 750k - 9m metrics
     large: 3
+    uat: 3
+    prod: 3
 
 #
 # aggregator cpu, memory, and replication
@@ -52,6 +58,8 @@ env:
     medium: 4
     # 750k - 9m metrics
     large: 16
+    uat: 8
+    prod: 16
 
 - name: aggregator-memory
   path: >
@@ -64,6 +72,8 @@ env:
     medium: 16Gi
     # 750k - 9m metrics
     large: 128Gi
+    uat: 32Gi
+    prod: 128Gi
 
 - name: aggregator-shards
   path: >
@@ -76,6 +86,8 @@ env:
     medium: 3
     # 750k - 9m metrics
     large: 3
+    uat: 3
+    prod: 3
 
 #
 # config cpu, memory, and replication
@@ -112,6 +124,8 @@ env:
     medium: 1000Gi
     # 750k - 9m metrics
     large: 5000Gi
+    uat: 1000Gi
+    prod: 5000Gi
 
 #
 # storage classes

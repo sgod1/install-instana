@@ -17,7 +17,7 @@ env:
   values:
     default: small
     uat: large
-    production: strenv(resource_profile)
+    prod: strenv(resource_profile)
 
 #
 # beeinstana config
@@ -106,7 +106,7 @@ env:
   values:
     default: 50Gi
     uat: 100Gi
-    production: 200Gi
+    prod: 200Gi
 
 #
 # raw spans storage class
@@ -126,7 +126,7 @@ env:
   values:
     default: 50Gi
     uat: 50Gi
-    production: 50Gi
+    prod: 50Gi
 
 #
 # synthetics storage class
@@ -146,7 +146,7 @@ env:
   values:
     default: 50Gi
     uat: 50Gi
-    production: 50Gi
+    prod: 50Gi
 
 #
 # synthetics keystore storage class
@@ -164,9 +164,9 @@ env:
   path: >
     .spec.storageConfigs.eumSourceMaps.pvcConfig.resources.requests.storage
   values:
-    default: ..
-    uat:
-    production:
+    default: 1Gi
+    uat: 1Gi
+    prod: 1Gi
 
 #
 # eum source maps storage class

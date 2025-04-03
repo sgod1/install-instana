@@ -39,28 +39,28 @@ env:
   values:
     default: 2
     uat: 2
-    production: 2
+    prod: 2
 
 - name: postgres-cpu-limit
   path: .spec.resources.requests.cpu
   values:
     default: 2
     uat: 2
-    production: 2
+    prod: 2
 
 - name: postgres-memory-request
   path: .spec.resources.requests.memory
   values:
     default: 4Gi
     uat: 8Gi
-    production: 8Gi
+    prod: 8Gi
 
 - name: postgres-memory-limit
   path: .spec.resources.limits.memory
   values:
     default: 4Gi
     uat: 8Gi
-    production: 8Gi
+    prod: 8Gi
 
 #
 # storage size
@@ -70,7 +70,7 @@ env:
   values:
     default: 1Gi
     uat: 100Gi
-    production: 100Gi
+    prod: 100Gi
 
 #
 # storage class

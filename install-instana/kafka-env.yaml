@@ -50,14 +50,14 @@ env:
   values:
     default: 4
     uat: 4
-    production: 4
+    prod: 4
 
 - name: kafka-limits-cpu
   path: .spec.kafka.resources.limits.cpu
   values:
     default: 4
     uat: 4
-    production: 4
+    prod: 4
 
 #
 # kafka memory requests and limits
@@ -67,14 +67,14 @@ env:
   values:
     default: 8Gi
     uat: 16Gi
-    production: 16Gi
+    prod: 16Gi
 
 - name: kafka-limits-memory
   path: .spec.kafka.resources.limits.memory
   values:
     default: 8Gi
     uat: 16Gi
-    production: 16Gi
+    prod: 16Gi
 
 #
 # kafka storage volumes
@@ -85,7 +85,7 @@ env:
   values:
     default: 100Gi
     uat: 400Gi
-    production: 400Gi
+    prod: 400Gi
 
 #
 # zookeeper replicas
