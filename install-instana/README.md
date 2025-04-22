@@ -3,7 +3,86 @@
 This project is a fork of play-instana by Oleg Samoylov. 
 It follows similar pattern of steps: install prerequisites, generate manifests and apply manifests.
 
-It adds support for image mirror and makes it easy to deploy components one at a time.
+It adds support for image mirror and fine-grained externalized component customization.<br/>
+
+### Global Configuration Parameters
+Base directory contains `instana-env-template.env` file that defines global configuration parameters required<br/>
+for Instana instllation. This includes license keys, instana version, storage classes, admin user name and password, etc.<br/>
+
+Copy `instana-env-template.env` to the `instana.env` file and update `instana.env` with your values.<br/>
+```
+cp instana-env-template.env instana.env
+```
+
+To see what parameters are required or optinal, run:<br/>
+```
+cd install-instana
+./validate-instana-env.sh
+```
+
+```
+-- install keys:
+DOWNLOAD_KEY(required) ... missing ... 
+SALES_KEY(required) ... missing ... 
+AGENT_KEY(optional) ... 
+
+-- install profile:
+INSTANA_INSTALL_PROFILE(required) ... missing ... 
+
+-- instana version:
+INSTANA_PLUGIN_VERSION(required) ... missing ... 
+INSTANA_VERSION(required) ... missing ... 
+
+-- instana base domain:
+INSTANA_UNIT_NAME(required) ... missing ... 
+INSTANA_TENANT_NAME(required) ... missing ... 
+INSTANA_BASE_DOMAIN(required) ... missing ... 
+INSTANA_ADMIN_USER(required) = admin@instana.local
+INSTANA_ADMIN_PASSWORD(required) ... missing ... 
+
+-- instana cli:
+PLATFORM(required) ... missing ... ocp|eks|gcp|k8s
+KUBECTL(required) ... missing ... oc|kubectl
+PODMAN(required) ... missing ... podman|docker
+PODMAN_TLS_VERIFY(optional) ... list of options in instana.env
+
+-- instana registry proxy:
+INSTANA_REGISTRY_PROXY(optional) ... 
+INSTANA_REGISTRY_PROXY_USER(optional) ... 
+INSTANA_REGISTRY_PROXY_PASSWORD(optional) ... 
+
+-- private registry:
+PRIVATE_DOCKER_SERVER(required) ... missing ... 
+PRIVATE_REGISTRY_SUBPATH(optional) ... 
+PRIVATE_REGISTRY_USER(required) ... missing ... 
+PRIVATE_REGISTRY_PASSWORD(required) ... missing ... 
+
+-- storage classes:
+RWO_STORAGECLASS(required) ... missing ... 
+RWX_STORAGECLASS(required) ... missing ... 
+
+-- namespace security label:
+K8S_PSA_LABEL(optional) = privileged
+
+-- datastore creds:
+CLICKHOUSE_USER_PASS(required) ... hidden
+CLICKHOUSE_ADMIN_PASS(required) ... hidden
+BEEINSTANA_ADMIN_PASS(required) ... hidden
+
+-- resource profile:
+CORE_RESOURCE_PROFILE(required) ... missing ... 
+
+-- core config:
+CORE_CONFIG_RAW_SPANS_TYPE(required) = pvc
+CORE_CONFIG_EMAIL_ENABLE_SMTP(optional) ... 
+CORE_CONFIG_EMAIL_ENABLE_AWS_SES(optional) ... 
+CORE_CONFIG_PROXY_ENABLE(optional) ... 
+CORE_CONFIG_TOKEN_SECRET)(required) ... hidden
+CORE_CONFIG_SP_KEY_PASSWORD(required) ... missing ... 
+```
+
+Set all `missing` required parameters and optional parameters that you need.<br/>
+
 
 ## Steps 
 
