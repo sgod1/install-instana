@@ -8,8 +8,8 @@ function y() {
    local v1=$3
 
    if [[ "$v1" =~ ^strenv* ]]; then
-      ev=`yq --null-input ".a = $v1"`
-      v=`echo $ev | yq '.a'`
+      ev=`./gen/bin/yq --null-input ".a = $v1"`
+      v=`echo $ev | ./gen/bin/yq '.a'`
       echo ... env var $v1 expanded to $v ...
    else
       v=$v1
@@ -20,18 +20,18 @@ function y() {
       echo ... path is $p ...
       echo ... file is $f ...
 
-      yq -i "setpath($p|path; $v)" $f
+      ./gen/bin/yq -i "setpath($p|path; $v)" $f
       rc=$?
       echo yq return... $rc
 
-      #yq -i "($p) = $v" $f
+      #./gen/bin/yq -i "($p) = $v" $f
 
    elif [[ "$v" == "true" || "$v" == "false" ]]; then
       echo ... value $v is a boolean ...
       echo ... path is $p ...
       echo ... file is $f ...
 
-      yq -i "setpath($p|path; $v)" $f
+      ./gen/bin/yq -i "setpath($p|path; $v)" $f
       rc=$?
       echo yq return... $rc
 
@@ -40,11 +40,11 @@ function y() {
       echo ... path is $p ...
       echo ... file is $f ...
 
-      yq -i "setpath($p|path; \"$v\")" $f
+      ./gen/bin/yq -i "setpath($p|path; \"$v\")" $f
       rc=$?
       echo yq return... $rc
 
-      #yq -i "($p) = \"$v\"" $f
+      #./gen/bin/yq -i "($p) = \"$v\"" $f
    fi
 
    if test $rc -eq 1; then
@@ -58,14 +58,14 @@ function update_path_for_key() {
    local env_file=$3
    local out_file=$4
 
-   local path=`yq ".env[] | select(.name == \"$path_name\") | .path" $env_file | tr -d "\n "`
-   local vals=`yq ".env[] | select(.name == \"$path_name\") | .values" $env_file | tr -d "-"`
+   local path=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .path" $env_file | tr -d "\n "`
+   local vals=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .values" $env_file | tr -d "-"`
 
    echo ""
    echo path... $path
    echo vals... $vals
 
-   local keys=`yq ".env[] | select(.name == \"$path_name\") | .values | keys | .[] comments=\"\"" $env_file | tr -d "-"`
+   local keys=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .values | keys | .[] comments=\"\"" $env_file | tr -d "-"`
 
    for key in $keys
    do
@@ -74,7 +74,7 @@ function update_path_for_key() {
       if test "$key" = "$profile_key"
       then
 
-         val=`yq ".env[] | select(.name == \"$path_name\") | .values.$key" $env_file | tr -d " "`
+         val=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .values.$key" $env_file | tr -d " "`
 
          echo updating path $path with value $val in $out_file
 
@@ -102,7 +102,7 @@ function cr_env () {
    # truncate error file
    > ${out_file}.err
 
-   local path_names=`yq ".env[] | .name" $env_file`
+   local path_names=`./gen/bin/yq ".env[] | .name" $env_file`
 
    for path_name in $path_names; do
       echo ===

@@ -1,0 +1,70 @@
+env:
+- name: agent-image
+  path: .[]|select(.yqmeta=="DaemonSet-instana-agent")|.spec.template.spec.containers.[]|select(.name=="instana-agent")|.image
+  values:
+    default: strenv(agent_image)
+    ocp_custom: strenv(agent_image)
+    k8s_custom: strenv(agent_image)
+
+- name: k8sensor
+  path: .[]|select(.yqmeta=="Deployment-k8sensor")|.spec.template.spec.containers.[]|select(.name=="instana-agent")|.image
+  values:
+    default: strenv(agent_sensor_image)
+
+- name: cluster-name
+  path: .[]|select(.yqmeta=="ConfigMap-instana-agent")|.data.cluster_name
+  values:
+    default: strenv(agent_cluster_name)
+
+- name: agent-key
+  path: .[]|select(.yqmeta=="Secret-instana-agent").data.key
+  values:
+    default: strenv(agent_key)
+
+- name: download-key
+  path: .[]|select(.yqmeta=="Secret-instana-agent")|.data.downloadKey
+  values:
+    default: strenv(download_key)
+
+- name: instana-agent-endpoint
+  path: >  
+    .[]|select(.yqmeta=="DaemonSet-instana-agent")|
+    .spec.template.spec.containers.[]|select(.name=="instana-agent")|
+    .env.[]|select(.name=="INSTANA_AGENT_ENDPOINT")|.value
+  values:
+    # set by cr-agent-env.sh script
+    default: strenv(instana_agent_endpoint)
+
+- name: instana-agent-endpoint-port
+  path: > 
+    .[]|select(.yqmeta=="DaemonSet-instana-agent")|
+    .spec.template.spec.containers.[]|select(.name=="instana-agent")|
+    .env.[]|select(.name=="INSTANA_AGENT_ENDPOINT_PORT")|.value
+  values:
+    # set by cr-agent-env.sh script
+    default: strenv(instana_agent_endpoint_port)
+
+- name: sensor-backend-url
+  path: .[]|select(.yqmeta=="ConfigMap-k8sensor")|.data.backend
+  values:
+    # set by cr-agent-env.sh script
+    default: strenv(sensor_backend_url)
+
+- name: availability-zone-enable
+  path: .[]|select(.yqmeta=="ConfigMap-instana-agent")|.data."configuration.yaml"|."com.instana.plugin.generic.hardware"|.enabled
+  values:
+    default: true
+
+- name: availability-zone
+  path: .[]|select(.yqmeta=="ConfigMap-instana-agent")|.data."configuration.yaml"|."com.instana.plugin.generic.hardware"|."availability-zone"
+  values:
+    default: szesto-io
+
+- name: instana-agent-zone
+  path: >  
+    .[]|select(.yqmeta=="DaemonSet-instana-agent")|
+    .spec.template.spec.containers.[]|select(.name=="instana-agent")|
+    .env.[]|select(.name=="INSTANA_ZONE")|.value
+  values:
+    # set by cr-agent-env.sh script
+    default: szesto-io

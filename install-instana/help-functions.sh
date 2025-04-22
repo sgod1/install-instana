@@ -13,7 +13,8 @@ check_replace_manifest() {
    local replace_manifest=${2:-"missingvalue"}
 
    if test -f $manifest; then
-      if compare_values "$replace_manifest" "replace"; then
+      if [[ $replace_manifest == "replace" ]]; then
+      #if compare_values "$replace_manifest" "replace"; then
          echo backup "$manifest" to "${manifest}.bak"
          cp "$manifest" "${manifest}.bak"
       else
