@@ -17,7 +17,7 @@ function agent_yaml_yqmeta_preprocess() {
    | awk '{print "  " $0;}' | sed 's/^  ---/-/'| awk '
 $0~/^-/ {print $0; print "  yqmeta:"}
 $0!~/^-/ {print $0}
-' | gen/bin/yq 'with(.[]; .yqmeta=.kind + "-" + .metadata.name)' | tee $manifest
+' | ./gen/bin/yq 'with(.[]; .yqmeta=.kind + "-" + .metadata.name)' | tee $manifest
 }
 
 function agent_yaml_yqmeta_postprocess() {
