@@ -17,7 +17,7 @@ ARTIFACT_PUBLIC="artifact-public.instana.io"
 
 OUTFILE="${MIRROR_HOME}/${INSTANA_DATASTORE_IMAGE_LIST_FILE}"
 
-IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
+IMG_PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)"
 
 echo writing datastore image list to ${OUTFILE}, Instana version: ${INSTANA_VERSION}
 

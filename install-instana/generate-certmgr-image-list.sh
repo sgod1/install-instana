@@ -13,7 +13,7 @@ mkdir -p ${MIRROR_HOME}
 
 OUTFILE="${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}"
 
-IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
+IMG_PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)"
 
 echo writing cert manager image list to ${OUTFILE}
 

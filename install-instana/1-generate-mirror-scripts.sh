@@ -34,7 +34,7 @@ function write_tag_image_script() {
 
    local REG=${INSTANA_REGISTRY_PROXY:-$INSTANA_REGISTRY}
 
-   /usr/bin/awk -v REG="$REG" -v IREG="$INSTANA_REGISTRY" -v PLATFORM="$(podman_image_platform $PODMAN_IMG_PLATFORM)" '
+   /usr/bin/awk -v REG="$REG" -v IREG="$INSTANA_REGISTRY" -v PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)" '
    BEGIN {
       print "#!/bin/bash" 
       print "source ../../../install.env"
@@ -57,7 +57,7 @@ function write_push_image_script() {
    # pass $PODMAN_TLS_VERIFY to login and push into private registry
    #
 
-   /usr/bin/awk -v IREG="$INSTANA_REGISTRY" -v IMG_PLATFORM="$(podman_image_platform $PODMAN_IMG_PLATFORM)" '
+   /usr/bin/awk -v IREG="$INSTANA_REGISTRY" -v IMG_PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)" '
    BEGIN { 
       print "#!/bin/bash" 
       print "source ../../../install.env"

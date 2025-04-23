@@ -14,16 +14,25 @@ mkdir -p ${MIRROR_HOME}
 
 OUTFILE="${MIRROR_HOME}/${INSTANA_OPERATOR_IMAGE_LIST_FILE}"
 
-IMG_PLATFORM=${PODMAN_IMG_PLATFORM:-"--platform linux/amd64"}
+IMG_PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)"
 
 echo writing instana operator image list to ${OUTFILE}
 
 echo "# Instana operator images, Plugin version: $INSTANA_PLUGIN_VERSION, Instana version: $INSTANA_VERSION" > ${OUTFILE}
 
 INSTANA_OPERATOR_IMAGE=`./gen/bin/yq ".release.plugin.[] | select(.version==\"$INSTANA_PLUGIN_VERSION\") | .INSTANA_OPERATOR_IMAGE" ./$INSTANA_RELEASE_FILENAME` 
+
 if test -z "$INSTANA_OPERATOR_IMAGE" 
-   then echo "undefined plugin key: INSTANA_RELEASE_FILENAME, instana plugin version $INSTANA_PLUGIN_VERSION, file $INSTANA_RELEASE_FILENAME"
+   then echo "undefined plugin key: INSTANA_OPERATOR_IMAGE, instana plugin version $INSTANA_PLUGIN_VERSION, file $INSTANA_RELEASE_FILENAME"
+   exit 1 
+fi
+
+INSTANA_OPERATOR_WEBHOOK_IMAGE=`./gen/bin/yq ".release.plugin.[] | select(.version==\"$INSTANA_PLUGIN_VERSION\") | .INSTANA_OPERATOR_WEBHOOK_IMAGE" ./$INSTANA_RELEASE_FILENAME`
+
+if test -z "$INSTANA_OPERATOR_WEBHOOK_IMAGE"
+   then echo "undefined plugin key: INSTANA_OPERATOR_WEBHOOK_IMAGE, instana plugin version $INSTANA_PLUGIN_VERSION, file $INSTANA_RELEASE_FILENAME"
    exit 1 
 fi
 
 echo "${IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${INSTANA_OPERATOR_IMAGE}" >> ${OUTFILE}
+echo "${IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${INSTANA_OPERATOR_WEBHOOK_IMAGE}" >> ${OUTFILE}

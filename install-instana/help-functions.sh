@@ -202,7 +202,8 @@ function private_registry() {
 }
 
 function podman_image_platform() {
-   local platform=${1:-"--platform linux/amd64"}
+   local linamd64="linux/amd64"
+   local platform="${1:-$linamd64}"
    echo "${platform}"
 }
 
