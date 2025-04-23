@@ -224,7 +224,7 @@ DNS.1 = base.domain
 DNS.2 = agent-acceptor.base.domain
 DNS.3 = otlp-grpc.base.domain
 DNS.4 = otlp-http.base.domain
-DNS.5 = unit0-tenant0.base.domain
+DNS.5 = unit-tenant.base.domain
 ```
 
 `tls-key-cert.sh` takes `qualifier`, `profile name` and `key password file` as input.</br>
