@@ -129,32 +129,74 @@ kubectl-instana version 1.1.1 (commit=6e0290eeb35fb028c81da94fb88cda786e55f14b, 
 This version check becomes important at upgrade time when plugin version and instana version are changed.<br/>
 If you see mismatch, run `0-install-plugin.sh` script.<br/>
 
-### Generate image mirror scripts
+### Generate image [and run] mirror scripts
 ```
-1-generate-mirror-scripts.sh
+1-generate-mirror-scripts.sh [run]
 ```
 Mirror scripts are generated in `gen/mirror` subdirectory<br/>
 
+To run `pull/tag/push` scripts automatically, pass `run` argument to the script.<br/>
+
 #### Certificate Manager images.
-Change to `gen/mirror` directory.<br/>
+Change to the `gen/mirror` directory.<br/>
 ```
 cert-manager-pull-images.sh
 cert-manager-tag-images.sh
 cert-manager-push-images.sh
 ```
 #### Datastore images.
-Change to `gen/mirror` directory.<br/>
+Change to the `gen/mirror` directory.<br/>
 ```
 datastore-pull-images.sh
 datastore-tag-images.sh
 datastore-push-images.sh
 ```
 #### Backend images.
-Change to `gen/mirror` directory.<br/>
+Change to the `gen/mirror` directory.<br/>
 ```
 backend-pull-images.sh
 backend-tag-images.sh
 backend-push-images.sh
+```
+
+### Instana operator images
+Change to the `gen/mirror` directory.<br/>
+```
+instana-operator-pull-images.sh
+instana-operator-tag-images.sh
+instana-operator-push-images.sh
+```
+
+### Manifest customization
+Component customization is defined by `*env.yaml` file specific to the component.<br/>
+
+```
+zookeeper-env.yaml - customize zookeeper
+cassandra-env.yaml - customize cassandra
+postgres-env.yaml - customize postgres
+elasticsearch-env.yaml - customize elasticsearch
+clickhouse-env.yaml - customize clickhouse
+kafka-env.yaml - customize kafka
+beeinstana-env.yaml - customize beeinstana
+core-env.yaml - customize core
+unit-env.yaml - customize unit
+agent-env.yaml - customize isntana agent
+```
+
+All customizations are applied by passing env file to the `cr-*-env.sh` script.<vr/>
+
+`cr-*-env.sh` will set environment variables required by the `*-env.yaml` file.<br/>
+
+```
+cr-zookeeper-env.sh - customize and generate zookeeper manifest in gen/zookeeper-${instana-version}.yaml
+cr-cassandra-env.sh - customize and generate cassandra manifest in gen/cassandra-${instana-version}.yaml
+cr-postgres-env.sh - customize and generate postgres manifest in gen/postgres-${instana-version}.yaml
+cr-elasticsearch-env.sh - customize and generate elasticsearch manifest in gen/elasticsearch-${instana-version}.yaml
+cr-clickhouse-env.sh - customize and generate clickhouse manifest in gen/clickhouse-${instana-version}.yaml
+cr-kafka-env.sh - customize and generate kafka manifest in gen/kafka-${instana-version}.yaml
+cr-beeinstana-env.sh - customize and generate beeinstana manifest in gen/beeinstana-${instana-version}.yaml
+cr-core-env.sh - customize and generate core manifest in gen/core-${instana-version}.yaml
+cr-unit-env.sh - customize and generate unit manifest in gen/unit-${instana-version}.yaml
 ```
 
 ### Manifests
@@ -162,7 +204,7 @@ Generate all manifests.<br/>
 ```
 2-generate-manifests.sh
 ```
-Manifests are generated in `gen` directory.<br/>
+Manifests are generated in the `gen` directory.<br/>
 
 ### Datastore operator charts
 ```
