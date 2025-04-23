@@ -218,6 +218,12 @@ Here is example from `postgres-env.yaml`:<br/>
 `path` is `yq` path to an element in `postgres.yaml` cr template.<br/>
 `values` lists values based on the install profile.<br/>
 
+
+Set `INSTANA_INSTALL_PROFILE` value in `instana.env`:<br/>
+```
+INSTANA_INSTALL_PROFILE="uat"
+```
+
 ### Manifests
 Generate all manifests.<br/>
 ```
