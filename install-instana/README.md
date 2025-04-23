@@ -106,6 +106,63 @@ INSTANA_PLUGIN_VERSION="1.3.0"
 INSTANA_VERSION="293"
 ```
 
+### Manifest customization and INSTANA_INSTALL_PROFILE
+Component customization is defined by `*env.yaml` file specific to the component.<br/>
+
+```
+zookeeper-env.yaml - customize zookeeper
+cassandra-env.yaml - customize cassandra
+postgres-env.yaml - customize postgres
+elasticsearch-env.yaml - customize elasticsearch
+clickhouse-env.yaml - customize clickhouse
+kafka-env.yaml - customize kafka
+beeinstana-env.yaml - customize beeinstana
+core-env.yaml - customize core
+unit-env.yaml - customize unit
+agent-env.yaml - customize isntana agent
+```
+
+All customizations are applied by passing env file to the `cr-*-env.sh` script.<vr/>
+
+`cr-*-env.sh` will set environment variables required by the `*-env.yaml` file.<br/>
+
+```
+cr-zookeeper-env.sh - customize and generate zookeeper manifest in gen/zookeeper-${instana-version}.yaml
+cr-cassandra-env.sh - customize and generate cassandra manifest in gen/cassandra-${instana-version}.yaml
+cr-postgres-env.sh - customize and generate postgres manifest in gen/postgres-${instana-version}.yaml
+cr-elasticsearch-env.sh - customize and generate elasticsearch manifest in gen/elasticsearch-${instana-version}.yaml
+cr-clickhouse-env.sh - customize and generate clickhouse manifest in gen/clickhouse-${instana-version}.yaml
+cr-kafka-env.sh - customize and generate kafka manifest in gen/kafka-${instana-version}.yaml
+cr-beeinstana-env.sh - customize and generate beeinstana manifest in gen/beeinstana-${instana-version}.yaml
+cr-core-env.sh - customize and generate core manifest in gen/core-${instana-version}.yaml
+cr-unit-env.sh - customize and generate unit manifest in gen/unit-${instana-version}.yaml
+```
+
+### Instana install profile
+`*env.yaml` files apply values based on the instana install profile.<br/>
+
+If profile name is matched, then it's value is used, otherwise default value is used.<br/>
+
+Here is example from `postgres-env.yaml`:<br/>
+
+```
+- name: postgres-memory-request
+  path: .spec.resources.requests.memory
+  values:
+    default: 4Gi
+    uat: 8Gi
+    prod: 8Gi
+```
+
+`path` is `yq` path to an element in `postgres.yaml` cr template.<br/>
+`values` lists values based on the install profile.<br/>
+
+
+Set `INSTANA_INSTALL_PROFILE` value in `instana.env`:<br/>
+```
+INSTANA_INSTALL_PROFILE="uat"
+```
+
 ## Steps 
 
 ### Install instana plugin and Instana license.
@@ -167,64 +224,9 @@ instana-operator-tag-images.sh
 instana-operator-push-images.sh
 ```
 
-### Manifest customization
-Component customization is defined by `*env.yaml` file specific to the component.<br/>
-
-```
-zookeeper-env.yaml - customize zookeeper
-cassandra-env.yaml - customize cassandra
-postgres-env.yaml - customize postgres
-elasticsearch-env.yaml - customize elasticsearch
-clickhouse-env.yaml - customize clickhouse
-kafka-env.yaml - customize kafka
-beeinstana-env.yaml - customize beeinstana
-core-env.yaml - customize core
-unit-env.yaml - customize unit
-agent-env.yaml - customize isntana agent
-```
-
-All customizations are applied by passing env file to the `cr-*-env.sh` script.<vr/>
-
-`cr-*-env.sh` will set environment variables required by the `*-env.yaml` file.<br/>
-
-```
-cr-zookeeper-env.sh - customize and generate zookeeper manifest in gen/zookeeper-${instana-version}.yaml
-cr-cassandra-env.sh - customize and generate cassandra manifest in gen/cassandra-${instana-version}.yaml
-cr-postgres-env.sh - customize and generate postgres manifest in gen/postgres-${instana-version}.yaml
-cr-elasticsearch-env.sh - customize and generate elasticsearch manifest in gen/elasticsearch-${instana-version}.yaml
-cr-clickhouse-env.sh - customize and generate clickhouse manifest in gen/clickhouse-${instana-version}.yaml
-cr-kafka-env.sh - customize and generate kafka manifest in gen/kafka-${instana-version}.yaml
-cr-beeinstana-env.sh - customize and generate beeinstana manifest in gen/beeinstana-${instana-version}.yaml
-cr-core-env.sh - customize and generate core manifest in gen/core-${instana-version}.yaml
-cr-unit-env.sh - customize and generate unit manifest in gen/unit-${instana-version}.yaml
-```
-
-### Instana install profile
-`*env.yaml` files apply values based on the instana install profile.<br/>
-
-If profile name is matched, then it's value is used, otherwise default value is used.<br/>
-
-Here is example from `postgres-env.yaml`:<br/>
-
-```
-- name: postgres-memory-request
-  path: .spec.resources.requests.memory
-  values:
-    default: 4Gi
-    uat: 8Gi
-    prod: 8Gi
-```
-
-`path` is `yq` path to an element in `postgres.yaml` cr template.<br/>
-`values` lists values based on the install profile.<br/>
-
-
-Set `INSTANA_INSTALL_PROFILE` value in `instana.env`:<br/>
-```
-INSTANA_INSTALL_PROFILE="uat"
-```
-
 ### Manifests
+Review and update component customization values in `*env.yaml` files based on `INSTANA_INSTALL_PROFILE`<br/>
+
 Generate all manifests.<br/>
 ```
 2-generate-manifests.sh
