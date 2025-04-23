@@ -215,7 +215,7 @@ Here is example from `postgres-env.yaml`:<br/>
     prod: 8Gi
 ```
 
-`path` points to an element in `postgres.yaml` cr template.<br/>
+`path` is `yq` path to an element in `postgres.yaml` cr template.<br/>
 `values` lists values based on the install profile.<br/>
 
 ### Manifests
