@@ -199,6 +199,25 @@ cr-core-env.sh - customize and generate core manifest in gen/core-${instana-vers
 cr-unit-env.sh - customize and generate unit manifest in gen/unit-${instana-version}.yaml
 ```
 
+### Instana install profile
+`*env.yaml` files apply values based on the instana install profile.<br/>
+
+If profile name is matched, then it's value is used, otherwise default value is used.<br/>
+
+Here is example from `postgres-env.yaml`:<br/>
+
+```
+- name: postgres-memory-request
+  path: .spec.resources.requests.memory
+  values:
+    default: 4Gi
+    uat: 8Gi
+    prod: 8Gi
+```
+
+`path` points to an element in `postgres.yaml` cr template.<br/>
+`values` lists values based on the install profile.<br/>
+
 ### Manifests
 Generate all manifests.<br/>
 ```
