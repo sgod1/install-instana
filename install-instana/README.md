@@ -139,7 +139,9 @@ cr-unit-env.sh - customize and generate unit manifest in gen/unit-${instana-vers
 ```
 
 ### Instana install profile
-`*env.yaml` files apply values based on the instana install profile.<br/>
+`*env.yaml` customize cr template for a list of profiles.<br/>
+
+Customization works by applying profile specific value to `yq` path in cr template.<br/>
 
 If profile name is matched, then it's value is used, otherwise default value is used.<br/>
 
@@ -157,10 +159,88 @@ Here is example from `postgres-env.yaml`:<br/>
 `path` is `yq` path to an element in `postgres.yaml` cr template.<br/>
 `values` lists values based on the install profile.<br/>
 
+Profile names are arbitrary.<br/>
 
 Set `INSTANA_INSTALL_PROFILE` value in `instana.env`:<br/>
 ```
 INSTANA_INSTALL_PROFILE="uat"
+```
+
+### Public key pairs
+Public/private key pairs are required by `instana-core` secret and `instana-tls` secret.<br/>
+
+`tls-key-cert.sh` script creates private/public key pair and a csr.<br/>
+
+csr is configured by the `tls-csr-env.yaml` file that defines cryptographic parameters and `dn` components for a list of instana install profiles.<br/>
+If profile name is matched, then it's values are used, otherwise default values are used.<br/>
+
+Do not include `CN` in the list of `dn` components.<br/>
+`CN` is automatically set to the value of `BASE_DOMAIN`.<br/>
+
+Customize `tls-csr-env.yaml` file:<br/>
+```
+env:
+- name: csr-default-bits
+  path: .csr.default-bits
+  values:
+    default: 4096
+
+- name: csr-default-md
+  path: .csr.default-md
+  values:
+    default: sha256
+
+  # required dn components
+  # do not include cn
+- name: ingress-dn
+  path: .csr.dn
+  values:
+    default:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
+    uat:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
+    prod:
+      C: US
+      ST: CA
+      L: Los Angeles
+      O: Instana
+      OU: sre
+      emailAddress: sre@instana.com
+```
+
+Generated alt names:</br>
+```
+DNS.1 = base.domain
+DNS.2 = agent-acceptor.base.domain
+DNS.3 = otlp-grpc.base.domain
+DNS.4 = otlp-http.base.domain
+DNS.5 = unit0-tenant0.base.domain
+```
+
+`tls-key-cert.sh` takes `qualifier`, `profile name` and `key password file` as input.</br>
+
+Qualifier value is set by calling script to distingush output files: `sp` for `instana-core` and `ingress` for `instana-tls`.<br/>
+
+csr is immediately signed by the internal ca.<br/>
+
+It creates output files:<br/>
+```
+gen/tls/{qualifier}-conf-{instana-version}.conf - csr config file
+gen/tls/{qualifier}-csr-{instana-version}.pem - csr file
+gen/tls/{qualifier}-key-{instana-version}.pem - private key file encrypted by the password from input password file
+gen/tls/{qualifier}-cert-{instana-versino}.pem - public key cert singed by the root ca
+gen/tls/{qualifier}-root-ca-key-{instana-version}.pem - root ca private key
+gen/tls/{qualifier}-root-ca-cert-{instana-version}.pem - root ca cert.
 ```
 
 ## Steps 
@@ -324,6 +404,18 @@ Install Instana operator.<br/>
 ./install-instana-operator.sh
 ```
 #### Instana Core.
+
+`instana-core` secret is a secret created from the config map.<br/>
+
+`instana-core` secret includes keychain to connect to oidc service provider.<br/>
+
+Key pair for the service provider keychain is created internally by the `tls-key-cert.sh` script.<br/>
+
+
+Instana ingress key pair.<br/>
+`instana-tls` secret is key and public key certificate for instana ingress<br/>
+
+
 Apply Instana Core custom resource.<br/>
 ```
 install-core-apply-cr.sh

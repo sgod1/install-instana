@@ -28,7 +28,7 @@ env:
       O: Instana
       OU: sre
       emailAddress: sre@instana.com
-    production:
+    prod:
       C: US
       ST: CA
       L: Los Angeles
