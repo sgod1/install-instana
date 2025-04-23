@@ -102,6 +102,7 @@ check_for_key "PLATFORM" "${PLATFORM:-$missingval}" "ocp|eks|gcp|k8s"
 check_for_key "KUBECTL" "${KUBECTL:-$missingval}" "oc|kubectl"
 check_for_key "PODMAN" "${PODMAN:-$missingval}" "podman|docker"
 check_for_opt_key "PODMAN_TLS_VERIFY" "${PODMAN_TLS_VERIFY:-$missingval}" "list of options in instana.env"
+check_for_opt_key "PODMAN_IMG_PLATFORM" "${PODMAN_IMG_PLATFORM:-$missingval}" "linux/amd64"
 
 display_header "instana registry proxy"
 check_for_opt_key "INSTANA_REGISTRY_PROXY" "${INSTANA_REGISTRY_PROXY:-$missingval}"
