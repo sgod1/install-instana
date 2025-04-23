@@ -8,30 +8,43 @@ release:
   # instana plugin version/supported instana versions
   #
   plugin:
+  - version: 1.3.0
+    instana: [293]
+    INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.3.0
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.3.0
+
   - version: 1.2.1
     instana: [287, 289]
     INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.2.1
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.2.1
 
   - version: 1.2.0
     instana: [287, 289]
     INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.2.0
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.2.0
 
   - version: 1.1.1
     instana: [281,283,285]
     INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.1.1
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.1.1
 
   - version: 1.1.0
     instana: [281,283]
     INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.1.0
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.1.0
   
   - version: 1.0.0
     instana: [279]
     INSTANA_OPERATOR_IMAGE: infrastructure/instana-enterprise-operator:1.0.0
+    INSTANA_OPERATOR_WEBHOOK_IMAGE: infrastructure/instana-enterprise-operator-webhook:1.0.0
 
   #
   # instana version/instana semantic version
   #
   instana:
+    - version: 293
+      semver: 3.293.425-0
+
     - version: 289
       semver: 3.289.617-0
 
@@ -57,6 +70,18 @@ certmanager:
   images: ["CERTMGR_CAINJECTOR_IMG","CERTMGR_CONTROLLER_IMG","CERTMGR_WEBHOOK_IMG","CERTMGR_ACMESOLVER","CERTMGR_APICHECK"]
 
   versions:
+  - instana: 293
+    CERTMGR_OPERATOR_CHART_VERSION: "v1.17.1"
+
+    # deprecated, will be removed
+    CERTMGR_VERSION: "v1.17.1"
+
+    CERTMGR_CAINJECTOR_IMG: jetstack/cert-manager-cainjector:v1.17.1
+    CERTMGR_CONTROLLER_IMG: jetstack/cert-manager-controller:v1.17.1
+    CERTMGR_WEBHOOK_IMG: jetstack/cert-manager-webhook:v1.17.1
+    CERTMGR_ACMESOLVER: jetstack/cert-manager-acmesolver:v1.17.1
+    CERTMGR_APICHECK: jetstack/cert-manager-startupapicheck:v1.17.1
+
   - instana: 289
     CERTMGR_OPERATOR_CHART_VERSION: "v1.16.3"
 
@@ -93,6 +118,17 @@ datastores:
     images: ["CASSANDRA_OPERATOR_IMG","CASSANDRA_SYSTEM_LOGGER_IMG","CASSANDRA_K8S_CLIENT_IMG","CASSANDRA_IMG"]
 
     versions:
+    - instana: 293
+      CASSANDRA_OPERATOR_CHART_VERSION: 0.53.6
+      CASSANDRA_OPERATOR_CHART_APP_VERSION: 1.22.4
+
+      CASSANDRA_OPERATOR_VERSION: 1.22.4
+      CASSANDRA_OPERATOR_IMG: self-hosted-images/3rd-party/operator/cass-operator:1.22.4_v0.21.0
+
+      CASSANDRA_SYSTEM_LOGGER_IMG: self-hosted-images/3rd-party/datastore/system-logger:1.22.4_v0.7.0
+      CASSANDRA_K8S_CLIENT_IMG: self-hosted-images/3rd-party/datastore/k8ssandra-client:0.6.0_v0.11.0
+      CASSANDRA_IMG: self-hosted-images/3rd-party/datastore/cassandra:4.1.8_v0.17.2
+
     - instana: 289
       CASSANDRA_OPERATOR_CHART_VERSION: 0.45.2
       CASSANDRA_OPERATOR_CHART_APP_VERSION: 1.22.4
@@ -122,6 +158,14 @@ datastores:
     images: ["CLICKHOUSE_OPERATOR_IMG", "CLICKHOUSE_OPENSSL_IMG"]
 
     versions:
+    - instana: 293
+      CLICKHOUSE_OPERATOR_CHART_VERSION: "1.2.0"
+
+      CLICKHOUSE_OPERATOR_VERSION: "v1.2.2"
+      CLICKHOUSE_OPERATOR_IMG: "clickhouse-operator:v1.2.2"
+
+      CLICKHOUSE_OPENSSL_IMG: "clickhouse-openssl:24.8.12.28-5-lts-ibm"
+
     - instana: 289
       CLICKHOUSE_OPERATOR_CHART_VERSION: "1.2.0"
 
@@ -145,6 +189,15 @@ datastores:
     images: ["ELASTICSEARCH_OPERATOR_IMG", "ELASTICSEARCH_IMG"]
 
     versions:
+    - instana: 293
+      ELASTICSEARCH_OPERATOR_CHART_VERSION: "2.16.1"
+
+      ELASTICSEARCH_OPERATOR_VERSION: "2.16.1"
+      ELASTICSEARCH_OPERATOR_IMG: 3rd-party/operator/elasticsearch:2.16.1_v0.18.0
+
+      ELASTICSEARCH_VERSION: "8.17.2"
+      ELASTICSEARCH_IMG: self-hosted-images/3rd-party/datastore/elasticsearch:8.17.2_v0.16.1
+
     - instana: 289
       ELASTICSEARCH_OPERATOR_CHART_VERSION: "2.16.1"
 
@@ -170,6 +223,14 @@ datastores:
     images: ["KAFKA_OPERATOR_IMG", "KAFKA_IMG"]
 
     versions:
+    - instana: 293
+      KAFKA_OPERATOR_CHART_VERSION: "0.45.0"
+
+      KAFKA_OPERATOR_VERSION: "0.45.0"
+      KAFKA_OPERATOR_IMG: self-hosted-images/3rd-party/operator/strimzi:0.45.0_v0.15.0
+
+      KAFKA_IMG: self-hosted-images/3rd-party/datastore/kafka:0.45.0-kafka-3.8.1_v0.15.0
+
     - instana: 289
       KAFKA_OPERATOR_CHART_VERSION: "0.45.0"
 
@@ -193,6 +254,14 @@ datastores:
     images: ["POSTGRES_OPERATOR_IMG", "POSTGRES_IMG"]
 
     versions:
+    - instana: 293
+      POSTGRES_OPERATOR_CHART_VERSION: "0.21.1"
+
+      POSTGRES_OPERATOR_VERSION: "1.21.1"
+      POSTGRES_OPERATOR_IMG: self-hosted-images/3rd-party/operator/cloudnative-pg:v1.21.1_v0.12.0
+
+      POSTGRES_IMG: self-hosted-images/3rd-party/datastore/cnpg-containers:15_v0.15.0
+
     - instana: 289
       POSTGRES_OPERATOR_CHART_VERSION: "0.20.0"
 
@@ -217,6 +286,15 @@ datastores:
     images: ["ZOOKEEPER_OPERATOR_IMG", "ZOOKEEPER_IMG", "ZOOKEEPER_KUBECTL_IMG"]
 
     versions:
+    - instana: 293
+      ZOOKEEPER_OPERATOR_CHART_VERSION: "1.0.0"
+
+      ZOOKEEPER_OPERATOR_VERSION: "0.2.15"
+      ZOOKEEPER_OPERATOR_IMG: self-hosted-images/3rd-party/operator/zookeeper:0.2.15_v0.16.0
+
+      ZOOKEEPER_IMG: self-hosted-images/3rd-party/datastore/zookeeper:3.9.3_v0.16.0
+      ZOOKEEPER_KUBECTL_IMG: self-hosted-images/k8s/kubectl:v1.31.4_v0.3.0
+
     - instana: 289
       ZOOKEEPER_OPERATOR_CHART_VERSION: "1.0.0"
 
@@ -242,6 +320,18 @@ datastores:
     images: ["BEEINSTANA_OPERATOR_IMG", "BEEINSTANA_AGGREGATOR_IMG", "BEEINSTANA_MONCONFIG_IMG", "BEEINSTANA_INGESTOR_IMG"]
 
     versions:
+    - instana: 293
+      BEEINSTANA_VERSION: "1.3.17"
+
+      BEEINSTANA_OPERATOR_CHART_VERSION: "v1.74.0"
+
+      BEEINSTANA_OPERATOR_VERSION: "v1.74.0"
+      BEEINSTANA_OPERATOR_IMG: beeinstana/operator:v1.74.0
+
+      BEEINSTANA_AGGREGATOR_IMG: beeinstana/aggregator:v1.85.56-release
+      BEEINSTANA_MONCONFIG_IMG: beeinstana/monconfig:v2.24.0
+      BEEINSTANA_INGESTOR_IMG: beeinstana/ingestor:v1.85.56-release
+
     - instana: 289
       BEEINSTANA_VERSION: "1.3.16"
 
