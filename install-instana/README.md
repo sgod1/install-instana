@@ -84,30 +84,35 @@ CORE_CONFIG_SP_KEY_PASSWORD(required) ... missing ...
 Set all `missing` required parameters and optional parameters that you need.<br/>
 
 
-## Steps 
-
-Copy `instana-env-template.env` file to the parent directory as `instana.env`:<br/>
-```
-cp instana-env-template.env ../instana.env
-```
-Update `../instana.env` file with your values.<br/>
+## Setting Instana version
+Instana version information is defined in the `release.yaml` file which is updated when new instana versions are released and older versions purged.<br>
 
 Run `show-version-combination.sh` script to view supported combinations<br/>
 of instana plugin and instana versions.<br/>
+
 ```
 show-version-combination.sh 
-instana plugin: 1.0.0, instana: 279(3.279.395-0)
-instana plugin: 1.1.0, instana: 281(3.281.446-0) 283(3.283.450-0)
+instana plugin: 1.3.0, instana: 293(3.293.425-0)
+instana plugin: 1.2.1, instana: 287(3.287.582-0) 289(3.289.617-0)
+instana plugin: 1.2.0, instana: 287(3.287.582-0) 289(3.289.617-0)
 instana plugin: 1.1.1, instana: 281(3.281.446-0) 283(3.283.450-0) 285(3.285.627-0)
-instana plugin: 1.2.0, instana: 287(3.287.582-0)
+instana plugin: 1.1.0, instana: 281(3.281.446-0) 283(3.283.450-0)
+instana plugin: 1.0.0, instana: 279(3.279.395-0)
 ```
-Set `INSTANA_PLUGIN_VERSION` and `INSTANA_VERSION` values to one of supported versions.<br/>
+Set `INSTANA_PLUGIN_VERSION` and `INSTANA_VERSION` values to one of supported versions in `instana.env` file.<br/>
+
+```
+INSTANA_PLUGIN_VERSION="1.3.0"
+INSTANA_VERSION="293"
+```
+
+## Steps 
 
 ### Install instana plugin and Instana license.
-Install Instana plugin and download Instana license.<br/>
+Install cli tools and download Instana license.<br/>
 ```
-0-wget-instana-plugin.sh
-0-install-instana-plugin.sh
+0-wget-cli-tools.sh
+0-install-cli-tools.sh
 download-instana-license.sh
 ```
 Plugin and license are installed into `gen/bin` subdirectory.<br/>
