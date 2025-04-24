@@ -27,7 +27,7 @@ elif [[ $qual == "sp" ]]; then
 
 elif [[ $qual == "ingress" ]]; then
 
-	keypass_file = ""
+	keypass_file=""
 
 else
 
