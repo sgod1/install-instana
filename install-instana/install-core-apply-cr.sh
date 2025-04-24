@@ -7,15 +7,16 @@ source ./install.env
 # extend path
 PATH=".:$PATH"
 
-# debug offline
-offline_mode=$1
+# crypto prefixes (qualifiers)
+sp_crypto_prefix=${1:-"sp"};
+ingress_crypto_prefix=${2:-"ingress"}
 
 # instana-core secret
-core-instana-core-secret.sh $offline_mode
+core-instana-core-secret.sh $sp_crypto_prefix
 check_return_code $?
 
 # core-tls secret
-core-instana-tls-secret.sh $offline_mode
+core-instana-tls-secret.sh $ingress_crypto_prefix
 check_return_code $?
 
 manifest_home=$(get_manifest_home)
@@ -32,21 +33,8 @@ if test ! -f $manifest; then
    exit 1
 fi
 
-# debug offline
-if test $offline_mode; then
-   online=""
-   offline="offline"
-
-else
-   online="online"
-fi
-
 # apply cr
-if test $online; then
-   $KUBECTL apply -n instana-core -f $manifest
-   check_return_code $?
-else
-   echo offline
-fi
+$KUBECTL apply -n instana-core -f $manifest
+check_return_code $?
 
 exit 0

@@ -133,14 +133,14 @@ check_for_key "CORE_RESOURCE_PROFILE" "${CORE_RESOURCE_PROFILE:-$missingval}"
 display_header "core config"
 check_for_key "CORE_CONFIG_RAW_SPANS_TYPE" "${CORE_CONFIG_RAW_SPANS_TYPE:-$missingval}"
 
-check_for_opt_key "CORE_CONFIG_EMAIL_ENABLE_SMTP" "${CORE_CONFIG_EMAIL_ENABLE_SMTP:-$missingval}"
-if test "$CORE_CONFIG_EMAIL_ENABLE_SMTP"; then
+check_for_opt_key "CORE_CONFIG_EMAIL_SMTP_ENABLE" "${CORE_CONFIG_EMAIL_SMTP_ENABLE:-$missingval}"
+if test "$CORE_CONFIG_EMAIL_SMTP_ENABLE"; then
 check_for_key "CORE_CONFIG_EMAIL_SMTP_USER" "{$CORE_CONFIG_EMAIL_SMTP_USER:-$missingval}"
 check_for_key "CORE_CONFIG_EMAIL_SMTP_PASSWORD" "${CORE_CONFIG_EMAIL_SMTP_PASSWORD:-$missingval}"
 fi
 
-check_for_opt_key "CORE_CONFIG_EMAIL_ENABLE_AWS_SES" "${CORE_CONFIG_EMAIL_ENABLE_AWS_SES:-$missingval}"
-if test "$CORE_CONFIG_EMAIL_ENABLE_AWS_SES"; then
+check_for_opt_key "CORE_CONFIG_EMAIL_AWS_SES_ENABLE" "${CORE_CONFIG_EMAIL_AWS_SES_ENABLE:-$missingval}"
+if test "$CORE_CONFIG_EMAIL_AWS_SES_ENABLE"; then
 check_for_key "CORE_CONFIG_AWS_IAM_ACCESS_KEY_ID" "${CORE_CONFIG_AWS_IAM_ACCESS_KEY_ID:-$missingval}"
 check_for_key "CORE_CONFIG_AWS_IAM_SECRET_KEY" "${CORE_CONFIG_AWS_IAM_SECRET_KEY:-$missingval}"
 fi

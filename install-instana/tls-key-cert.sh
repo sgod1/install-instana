@@ -141,6 +141,12 @@ openssl req -newkey rsa:2048 \
    -days 365 $keypass -config $csr_config_file 2>/dev/null
 check_return_code $?
 
+# do not sign custom cert
+if [[ $qual == "^custom.*" ]]; then
+  echo custom certificate will be signed by external ca, csr: $csr_file
+  exit 0
+fi
+
 #
 # use internal ca to issue cert
 #
