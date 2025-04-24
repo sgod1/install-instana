@@ -74,8 +74,8 @@ CORE_RESOURCE_PROFILE(required) ... missing ...
 
 -- core config:
 CORE_CONFIG_RAW_SPANS_TYPE(required) = pvc
-CORE_CONFIG_EMAIL_ENABLE_SMTP(optional) ... 
-CORE_CONFIG_EMAIL_ENABLE_AWS_SES(optional) ... 
+CORE_CONFIG_EMAIL_SMTP_ENABLE(optional) ... 
+CORE_CONFIG_EMAIL_AWS_SES_ENABLE(optional) ... 
 CORE_CONFIG_PROXY_ENABLE(optional) ... 
 CORE_CONFIG_TOKEN_SECRET)(required) ... hidden
 CORE_CONFIG_SP_KEY_PASSWORD(required) ... missing ... 
@@ -238,10 +238,36 @@ It creates output files:<br/>
 gen/tls/{qualifier}-conf-{instana-version}.conf - csr config file
 gen/tls/{qualifier}-csr-{instana-version}.pem - csr file
 gen/tls/{qualifier}-key-{instana-version}.pem - private key file encrypted by the password from input password file
-gen/tls/{qualifier}-cert-{instana-versino}.pem - public key cert singed by the root ca
+gen/tls/{qualifier}-cert-{instana-version}.pem - public key cert singed by the root ca
+
 gen/tls/{qualifier}-root-ca-key-{instana-version}.pem - root ca private key
 gen/tls/{qualifier}-root-ca-cert-{instana-version}.pem - root ca cert.
 ```
+
+### Certificates signed by external ca.
+
+If crypto file prefix (qualifier) starts with the pattern "custom", then csr is not signed by interal root ca<br/>
+and this csr must be submitted to external ca for signature.<br/>
+
+Create required crypto files by running `tls-key-cert-custom.sh` script with the custom qualifier as an agrument<br/>
+and then use the same custom qualifer for `core` configuration scripts.<br/>
+
+Example: custom qualifier `custom-sp`<br/>
+
+```
+tls-key-cert-custom.sh custom-sp
+```
+
+Output:<br/>
+```
+gen/tls/custom-sp-conf-{instana-version}.conf - csr config file
+gen/tls/custom-sp-csr-{instana-version}.pem - csr file
+gen/tls/custom-sp-key-{instana-version}.pem - private key file encrypted by the password from input password file
+```
+
+Submit `gen/tls/custom-sp-csr-{instana-version}.pem` to an external ca.<br/>
+
+Copy received certificate chain to `gen/tls/custom-sp-cert-{instana-version}.pem` file<br/>
 
 ## Steps 
 
@@ -404,21 +430,26 @@ Install Instana operator.<br/>
 ./install-instana-operator.sh
 ```
 #### Instana Core.
+Update `tls-csr-env.yaml` file with dn values.<br/>
 
-`instana-core` secret is a secret created from the config map.<br/>
+Set service provider key password:<br/>
 
-`instana-core` secret includes keychain to connect to oidc service provider.<br/>
+Update `instana.env` file:<br/>
+```
+CORE_CONFIG_SP_KEY_PASSWORD=password
+```
 
-Key pair for the service provider keychain is created internally by the `tls-key-cert.sh` script.<br/>
+Key pairs are created in gen/tls directory with the `sp` qualifier<br/>
+for oidc service provider keychain, and 'ingress' qualifier for Instana ingress.<br/>
 
+todo: custom ca bunlde<br/>
 
-Instana ingress key pair.<br/>
-`instana-tls` secret is key and public key certificate for instana ingress<br/>
-
+If you want to use external root ca, follow `Certificates signed by external ca` section.<br/>
+Pass custom qualifier names to the install script below.<br/>
 
 Apply Instana Core custom resource.<br/>
 ```
-install-core-apply-cr.sh
+install-core-apply-cr.sh [<custom-sp> <custom-ingress>]
 ```
 #### Instana Unit.
 Apply Instana Unit custom resource.<br/>

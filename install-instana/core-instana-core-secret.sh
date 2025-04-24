@@ -9,30 +9,6 @@ PATH=".:$PATH"
 
 rc_config=0
 
-function check_config_opt_param() {
-   local config_param="$1"
-   local config_value="$2"
-
-   local val=${config_value:-"optional"}
-   check_config_param $config_param $val
-}
-
-function check_config_param() {
-   local config_param="$1"
-   local config_value="$2"
-
-   if test "$config_value" = "optional"; then
-      log_msg ... $config_param ... $config_value
-
-   elif test -z $config_value; then
-      log_msg "   ... $config_param ... missing ..."
-      rc_config=1
-
-   else
-     log_msg ... $config_param ... ok
-   fi
-}
-
 function tls_file_path() {
    local filename=$1
    local profile=$2
@@ -41,124 +17,28 @@ function tls_file_path() {
    local ver=$INSTANA_VERSION
 
    format_file_path $tls_home $filename $profile $ver
-   #echo "$tls_home/${profile}-$filename"
-}
-
-function check_opt_file() {
-  local filename=$1
-  local filepath=$2
-  check_file $filename $filepath "optional"
-}
-
-function check_file() {
-  local filename=$1
-  local filepath=$2
-  local qualifier=$3
-
-  if test -f $filepath; then
-    echo "check file ... $filename: $filepath ... ok ..."
-
-  elif test "$qualifier" = "optional"; then
-    echo "check file ... $filename: $filepath ... optional ..."
-
-  else
-    echo "   check file ... $filename: $filepath ... missing ..."
-    rc_config=1
-  fi
-}
-
-function check_config() {
-   echo
-   log_msg $0 validating config
-   echo
-
-  check_config_param "INSTANA_VERSION" "$DOWNLOAD_KEY"
-  check_config_param "INSTANA_INSTALL_PROFILE" "$INSTANA_INSTALL_PROFILE"
-
-  check_config_param "DOWNLOAD_KEY" "$DOWNLOAD_KEY"
-  check_config_param "SALES_KEY" "$SALES_KEY"
-
-  check_config_param "CORE_CONFIG_TOKEN_SECRET" "$CORE_CONFIG_TOKEN_SECRET"
-  check_config_param "CORE_CONFIG_RAW_SPANS_TYPE" "$CORE_CONFIG_RAW_SPANS_TYPE"
-  check_config_param "CORE_CONFIG_SP_KEY_PASSWORD" "$CORE_CONFIG_SP_KEY_PASSWORD"
-
-  check_config_opt_param "CORE_CONFIG_PROXY_ENABLE" "$CORE_CONFIG_PROXY_ENABLE"
-  if test "$CORE_CONFIG_PROXY_ENABLE"; then
-    check_config_param "CORE_CONFIG_PROXY_USER" "$CORE_CONFIG_PROXY_USER"
-    check_config_param "CORE_CONFIG_PROXY_PASSWORD" "$CORE_CONFIG_PROXY_PASSWORD"
-  fi
-
-  check_config_opt_param "CORE_CONFIG_EMAIL_ENABLE_SMTP" "$CORE_CONFIG_EMAIL_ENABLE_SMTP"
-  if test "$CORE_CONFIG_EMAIL_ENABLE_SMTP"; then
-    check_config_param "CORE_CONFIG_EMAIL_SMTP_USER" "$CORE_CONFIG_EMAIL_SMTP_USER"
-    check_config_param "CORE_CONFIG_EMAIL_SMTP_PASSWORD" "$CORE_CONFIG_EMAIL_SMTP_PASSWORD"
-  fi
-
-  check_config_opt_param "CORE_CONFIG_EMAIL_ENABLE_AWS_SES" "$CORE_CONFIG_EMAIL_ENABLE_AWS_SES"
-  if test "$CORE_CONFIG_EMAIL_ENABLE_AWS_SES"; then
-    check_config_param "CORE_CONFIG_AWS_IAM_ACCESS_KEY_ID" "$CORE_CONFIG_AWS_IAM_ACCESS_KEY_ID"
-    check_config_param "CORE_CONFIG_AWS_IAM_SECRET_KEY" "$CORE_CONFIG_AWS_IAM_SECRET_KEY"
-  fi
-
-  check_config_param "CLICKHOUSE_ADMIN_PASS" "$CLICKHOUSE_ADMIN_PASS"
-  check_config_param "CLICKHOUSE_USER_PASS" "$CLICKHOUSE_USER_PASS"
-
-  # todo: check mutual exclusion
-
-  echo
-  check_opt_file "CORE_CONFIG_CUSTOM_SP_KEYCHAIN_FILE" $(tls_file_path $CORE_CONFIG_CUSTOM_SP_KEYCHAIN_FILE $INSTANA_INSTALL_PROFILE) 
-  check_opt_file "CORE_CONFIG_CUSTOM_CA_BUNDLE_FILE" $(tls_file_path $CORE_CONFIG_CUSTOM_CA_BUNDLE_FILE $INSTANA_INSTALL_PROFILE) 
-
-  if [ $rc_config -gt 0 ]; then
-     echo
-     log_msg $0 config validation falied, exiting...
-     echo
-
-     exit $rc_config
-  else
-     echo
-     log_msg $0 config validation passed...
-     echo
-  fi
 }
 
 #
 # main
 #
 
+# crypto prefix: sp or custom
+crypto_prefix=${1:-"sp"}
+
 install_home=$(get_install_home)
 manifest_home=$(get_manifest_home)
 
-# debug: turn off cluster calls
-offline_mode=$1
-
-check_config
-
 check_replace_manifest $config_file $replace_manifest
 
-#
 # service provider keychain
-# to copy custom keychain:
-# core-config-copy-custom-sp-keychain.sh keychain.pem
-#
-if test -f "$CORE_CONFIG_CUSTOM_SP_KEYCHAIN_FILE"; then
-   echo .... unsupported: core-config-custom-sp-keychain-file
-   exit 1
-
-else
-   core-sp-tls-keychain.sh
-   check_return_code $?
-fi
-
-#
-# to copy custom ca bundle:
-# core-config-copy-custom-ca-bundle.sh ca-bundle.pem
-#
+core-sp-tls-keychain.sh $crypto_prefix
+check_return_code $?
 
 CORE_CONFIG_FILE="core-config.yaml"
 outpath=$(format_file_path $manifest_home $CORE_CONFIG_FILE $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
-# create core-config.yaml
+# core-config.yaml
 echo
 echo ... writing core config to $outpath
 echo
@@ -213,34 +93,27 @@ EOF
 #
 # service provider keychain
 #
-sp_keychain_path=$(tls_file_path $CORE_CONFIG_SP_KEYCHAIN_FILE $INSTANA_INSTALL_PROFILE)
-custom_sp_keychain_path=$(tls_file_path $CORE_CONFIG_CUSTOM_SP_KEYCHAIN_FILE $INSTANA_INSTALL_PROFILE)
+sp_keychain_path=$(tls_file_path "${crypto_prefix}-${CORE_CONFIG_SP_KEYCHAIN_FILE}" $INSTANA_INSTALL_PROFILE)
 
-keychain_path=""
-if test -f "$custom_sp_keychain_path"; then
-   echo ... instana core config ... using custom sp keychain ... $custom_sp_keychain
-   keychain_path=$custom_keychain_path
+if test -f "$sp_keychain_path"; then
+echo ... instana core config ... using service provider keychain ... $sp_keychain_path
 
-elif test -f "$sp_keychain_path"; then
-   echo ... instana core config ... using sp keychain ... $sp_keychain_path
-   keychain_path=$sp_keychain_path;
-
-else
-   echo ... instana core config ... no service provider keychain
-fi
-
-if test "$keychain_path"; then
 cat << EOF >> $outpath
 
 # SAML/OIDC configuration
 serviceProviderConfig:
+
   # Password for the key/cert file
   keyPassword: $CORE_CONFIG_SP_KEY_PASSWORD
 
   # The combined key/cert file
   pem: |
-`cat $keychain_path | awk '$0 {sub(/^[ \t]+/, "", $0); sub(/[ \t]+$/, "", $0); printf("    %s\n", $0)}' -`
+`cat $sp_keychain_path | awk '$0 {sub(/^[ \t]+/, "", $0); sub(/[ \t]+$/, "", $0); printf("    %s\n", $0)}' -`
 EOF
+
+else
+echo ... instana core config ... no service provider keychain
+
 fi
 
 #
@@ -263,7 +136,7 @@ fi
 #
 # email smtp config
 #
-if test $CORE_CONFIG_EMAIL_ENABLE_SMTP; then
+if test $CORE_CONFIG_EMAIL_SMTP_ENABLE; then
 cat << EOF >> $outpath
 
 emailConfig:
@@ -277,7 +150,7 @@ fi
 #
 # email ses config
 #
-if test $CORE_CONFIG_EMAIL_ENABLE_SES; then
+if test $CORE_CONFIG_EMAIL_AWS_SES_ENABLE; then
 cat << EOF >> $outpath
 
   # Required if using for sending e-mail.
@@ -300,21 +173,13 @@ echo core config ... including custom ca bundle $ca_bundle
 cat << EOF >> $outpath
 # Optional: You can add one or more custom CA certificates to the component trust stores
 # in case internal systems (such as LDAP or alert receivers) which Instana talks to use a custom CA.
+
 customCACert: |
 `cat $ca_bundle | awk '$0 {}' -`
 EOF
 
 else
    echo ... instana core config ... no custom ca bundle
-fi
-
-# debug
-if test $offline_mode; then
-   online=""
-   offline="offline"
-
-else
-   online="online"
 fi
 
 #
@@ -326,28 +191,33 @@ datastoreConfigs:
   beeInstanaConfig:
     user: beeinstana-user
     password: "${BEEINSTANA_ADMIN_PASS}"
+
   kafkaConfig:
     adminUser: strimzi-kafka-user
-    adminPassword: "`if test $online; then ${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+    adminPassword: "`${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'`"
     consumerUser: strimzi-kafka-user
-    consumerPassword: "`if test $online; then ${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+    consumerPassword: "`${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'`"
     producerUser: strimzi-kafka-user
-    producerPassword: "`if test $online; then ${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+    producerPassword: "`${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'`"
+
   elasticsearchConfig:
     adminUser: elastic
-    adminPassword: "`if test $online; then ${KUBECTL} get secret instana-es-elastic-user -n instana-elasticsearch -o go-template='{{.data.elastic | base64decode}}'; else echo $offline; fi`"
+    adminPassword: "`${KUBECTL} get secret instana-es-elastic-user -n instana-elasticsearch -o go-template='{{.data.elastic | base64decode}}'`"
     user: elastic
-    password: "`if test $online; then ${KUBECTL} get secret instana-es-elastic-user -n instana-elasticsearch -o go-template='{{.data.elastic | base64decode}}'; else echo $offline; fi`"
+    password: "`${KUBECTL} get secret instana-es-elastic-user -n instana-elasticsearch -o go-template='{{.data.elastic | base64decode}}'`"
+
   postgresConfigs:
     - user: instanaadmin
-      password: "`if test $online; then ${KUBECTL} get secret instanaadmin -n instana-postgres --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+      password: "`${KUBECTL} get secret instanaadmin -n instana-postgres --template='{{index .data.password | base64decode}}'`"
       adminUser: instanaadmin
-      adminPassword: "`if test $online; then ${KUBECTL} get secret instanaadmin -n instana-postgres --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+      adminPassword: "`${KUBECTL} get secret instanaadmin -n instana-postgres --template='{{index .data.password | base64decode}}'`"
+
   cassandraConfigs:
     - user: instana-superuser
-      password: "`if test $online; then ${KUBECTL} get secret instana-superuser -n instana-cassandra --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+      password: "`${KUBECTL} get secret instana-superuser -n instana-cassandra --template='{{index .data.password | base64decode}}'`"
       adminUser: instana-superuser
-      adminPassword: "`if test $online; then ${KUBECTL} get secret instana-superuser -n instana-cassandra --template='{{index .data.password | base64decode}}'; else echo $offline; fi`"
+      adminPassword: "`${KUBECTL} get secret instana-superuser -n instana-cassandra --template='{{index .data.password | base64decode}}'`"
+
   clickhouseConfigs:
     - user: "clickhouse-user"
       password: "${CLICKHOUSE_USER_PASS}"
@@ -357,16 +227,10 @@ EOF
 
 echo
 echo deleting instana-core secret, namespace instana-core
-if test $online; then
-   $KUBECTL delete secret instana-core --namespace instana-core
-else
-   echo $offline
-fi
+
+$KUBECTL delete secret instana-core --namespace instana-core
 
 echo
 echo creating instana-core secret from $outpath, namespace instana-core
-if test $online; then
-   $KUBECTL create secret generic instana-core --namespace instana-core --from-file=config.yaml=$outpath
-else
-   echo $offline
-fi
+
+$KUBECTL create secret generic instana-core --namespace instana-core --from-file=config.yaml=$outpath
