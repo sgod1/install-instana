@@ -273,6 +273,12 @@ tls-export-csr.sh ingress <export-csr-file-name>
 tls-import-cert-chain.sh <cert-chain-file> ingress
 ```
 
+### Custom ca bundle for instana-core
+To import custom ca bundle for instana-core, run `core-import-ca-bundle.sh` and pass bundle path to the script<br/>
+```
+core-import-ca-bundle.sh bundle-file
+```
+
 ## Steps 
 
 ### Install instana plugin and Instana license.
