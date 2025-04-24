@@ -31,9 +31,6 @@ cert_chain_file=$(format_file_path $tls_home "${qualifier}-${CERT_CHAIN_FILE_NAM
 #cert_file=$(format_file_path $tls_home "${qualifier}-cert.pem" $profile $version)
 #ca_file=$(format_file_path $tls_home "${qualifier}-root-ca-cert.pem" $profile $version)
 
-if [[ -f $ca_file ]]; then
-   # root cert file
-
 $KUBECTL create secret tls instana-tls --namespace instana-core \
       --cert=$cert_chain_file \
       --key=$key_file
