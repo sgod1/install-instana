@@ -257,11 +257,13 @@ Submit `gen/tls/ingress-csr-{instana-version}.pem` to an external ca.<br/>
 tls-export-csr.sh ingress <export-csr-file-name>
 ```
 
-Copy received certificate chain to `gen/tls/ingress-cert-chain-{instana-version}.pem` file<br/>
+Copy received certificate chain to `gen/tls/{qual}-cert-chain-{instana-version}.pem` file<br/>
 
 ```
 tls-import-cert-chain.sh <cert_chain_file> ingress|sp
 ```
+
+Note: no checks are done at this time by the import script to validate external certificate.<br/>
 
 Example:<br/>
 
