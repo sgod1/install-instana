@@ -449,11 +449,10 @@ for oidc service provider keychain, and 'ingress' qualifier for Instana ingress.
 todo: custom ca bunlde<br/>
 
 If you want to use external root ca, follow `Certificates signed by external ca` section.<br/>
-Pass custom qualifier names to the install script below.<br/>
 
 Apply Instana Core custom resource.<br/>
 ```
-install-core-apply-cr.sh [<custom-sp> <custom-ingress>]
+install-core-apply-cr.sh
 ```
 #### Instana Unit.
 Apply Instana Unit custom resource.<br/>
