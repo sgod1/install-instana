@@ -452,9 +452,12 @@ CORE_CONFIG_SP_KEY_PASSWORD=password
 Key pairs are created in gen/tls directory with the `sp` qualifier<br/>
 for oidc service provider keychain, and 'ingress' qualifier for Instana ingress.<br/>
 
-todo: custom ca bunlde<br/>
+To use external root ca, follow `Certificates signed by external ca` section.<br/>
 
-If you want to use external root ca, follow `Certificates signed by external ca` section.<br/>
+To add custom trust, import custom ca bundle:<br/>
+```
+core-import-ca-bundle.sh ca-bundle-path
+```
 
 Apply Instana Core custom resource.<br/>
 ```
