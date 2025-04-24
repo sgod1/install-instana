@@ -235,14 +235,14 @@ csr is immediately signed by the internal ca.<br/>
 
 It creates output files:<br/>
 ```
-gen/tls/{qualifier}-conf-{instana-version}.conf - csr config file
-gen/tls/{qualifier}-csr-{instana-version}.pem - csr file
-gen/tls/{qualifier}-key-{instana-version}.pem - private key file encrypted by the password from input password file
-gen/tls/{qualifier}-cert-{instana-version}.pem - public key cert singed by the root ca
-gen/tls/{qualifier}-cert-chain-{instana-version}.pem - public key cert chain singed by the root ca
+gen/tls/{qualifier}-conf.conf - csr config file
+gen/tls/{qualifier}-csr.pem - csr file
+gen/tls/{qualifier}-key.pem - private key file encrypted by the password from input password file
+gen/tls/{qualifier}-cert.pem - public key cert singed by the root ca
+gen/tls/{qualifier}-cert-chain.pem - public key cert chain singed by the root ca
 
-gen/tls/{qualifier}-root-ca-key-{instana-version}.pem - root ca private key
-gen/tls/{qualifier}-root-ca-cert-{instana-version}.pem - root ca cert.
+gen/tls/{qualifier}-root-ca-key.pem - root ca private key
+gen/tls/{qualifier}-root-ca-cert.pem - root ca cert.
 ```
 
 ### Certificates signed by external ca.
@@ -252,12 +252,12 @@ Create required crypto files by running `tls-key-cert-external.sh` script with t
 tls-key-cert-external.sh ingress|sp
 ```
 
-Submit `gen/tls/ingress-csr-{instana-version}.pem` to an external ca.<br/>
+Submit `gen/tls/ingress-csr.pem` to an external ca.<br/>
 ```
 tls-export-csr.sh ingress <export-csr-file-name>
 ```
 
-Copy received certificate chain to `gen/tls/{qual}-cert-chain-{instana-version}.pem` file<br/>
+Copy received certificate chain to `gen/tls/{qual}-cert-chain.pem` file<br/>
 
 ```
 tls-import-cert-chain.sh <cert_chain_file> ingress|sp

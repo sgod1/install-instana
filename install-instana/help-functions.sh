@@ -169,8 +169,14 @@ function format_file_path() {
 
   #echo "${home}/${name}-${profile}-${instana_version}.${ext}"
 
-  # name-version.ext
-  echo "${home}/${name}-${instana_version}.${ext}"
+  if [[ -z $instana_version ]]; then
+   # name.ext
+   echo "${home}/${name}.${ext}"
+
+  else
+   # name-version.ext
+   echo "${home}/${name}-${instana_version}.${ext}"
+  fi
 }
 
 function instana_tenant_domain() {

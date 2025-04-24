@@ -25,11 +25,8 @@ log_msg0 $0 "deleting tls secret instana-tls"
 $KUBECTL delete secret instana-tls --namespace instana-core
 
 log_msg0 $0 "creating tls secret instana-tls"
-key_file=$(format_file_path $tls_home "${qualifier}-${KEY_FILE_NAME}" $profile $version)
-cert_chain_file=$(format_file_path $tls_home "${qualifier}-${CERT_CHAIN_FILE_NAME}" $profile $version)
-
-#cert_file=$(format_file_path $tls_home "${qualifier}-cert.pem" $profile $version)
-#ca_file=$(format_file_path $tls_home "${qualifier}-root-ca-cert.pem" $profile $version)
+key_file=$(format_file_path $tls_home "${qualifier}-${KEY_FILE_NAME}" $profile)
+cert_chain_file=$(format_file_path $tls_home "${qualifier}-${CERT_CHAIN_FILE_NAME}" $profile)
 
 $KUBECTL create secret tls instana-tls --namespace instana-core \
       --cert=$cert_chain_file \

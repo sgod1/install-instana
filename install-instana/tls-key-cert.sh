@@ -19,7 +19,7 @@ function prefix_file_name() {
   local prof=$2
   local home=$(get_tls_home)
 
-  format_file_path $home $filename $prof $INSTANA_VERSION
+  format_file_path $home $filename $prof
 }
 
 function write_dn_config() {

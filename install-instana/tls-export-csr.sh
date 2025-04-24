@@ -41,7 +41,7 @@ else
 	exit 1
 fi
 
-csr_file=$(format_file_path $tls_home "${qual}-${CSR_FILE_NAME}" $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+csr_file=$(format_file_path $tls_home "${qual}-${CSR_FILE_NAME}" $INSTANA_INSTALL_PROFILE)
 
 if [[ ! -f $csr_file ]]; then
 	echo "csr file not found... $csr_file"

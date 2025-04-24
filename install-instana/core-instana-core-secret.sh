@@ -16,7 +16,7 @@ function tls_file_path() {
    local tls_home=$(get_tls_home)
    local ver=$INSTANA_VERSION
 
-   format_file_path $tls_home $filename $profile $ver
+   format_file_path $tls_home $filename $profile
 }
 
 #
@@ -36,7 +36,7 @@ core-sp-tls-keychain.sh $crypto_prefix
 check_return_code $?
 
 CORE_CONFIG_FILE="core-config.yaml"
-outpath=$(format_file_path $manifest_home $CORE_CONFIG_FILE $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+outpath=$(format_file_path $manifest_home $CORE_CONFIG_FILE $INSTANA_INSTALL_PROFILE)
 
 # core-config.yaml
 echo

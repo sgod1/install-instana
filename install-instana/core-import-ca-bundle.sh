@@ -20,7 +20,7 @@ elif [ ! -f $input_ca_bundle ]; then
 fi
 
 # import ca bundle
-ca_bundle=$(format_file_path $tls_home $CORE_CONFIG_CUSTOM_CA_BUNDLE_FILE $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+ca_bundle=$(format_file_path $tls_home $CORE_CONFIG_CUSTOM_CA_BUNDLE_FILE $INSTANA_INSTALL_PROFILE)
 
 echo copying $input_ca_bundle to $ca_bundle
 echo ""

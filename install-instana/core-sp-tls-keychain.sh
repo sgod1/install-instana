@@ -20,23 +20,10 @@ function concat_keychain() {
    #
    # create keychain: encr(key)/cert/ca-cert
    #
-   key_file=$(format_file_path $tls_home "${prefix}-${KEY_FILE_NAME}" $profile $version)
-   cert_chain_file=$(format_file_path $tls_home "${prefix}-${CERT_CHAIN_FILE_NAME}" $profile $version)
+   key_file=$(format_file_path $tls_home "${prefix}-${KEY_FILE_NAME}" $profile)
+   cert_chain_file=$(format_file_path $tls_home "${prefix}-${CERT_CHAIN_FILE_NAME}" $profile)
 
-   #cert_file=$(format_file_path $tls_home "${prefix}-cert.pem" $profile $version)
-   #ca_file=$(format_file_path $tls_home "${prefix}-root-ca-cert.pem" $profile $version)
-
-   #key_file="$tls_home/$qual-key-$profile-$version.pem"
-   #cert_file="$tls_home/$qual-cert-$profile-$version.pem"
-   #ca_file="$tls_home/$qual-root-ca-cert-$profile-$version.pem"
-
-   keychain=$(format_file_path $tls_home "${prefix}-${CORE_CONFIG_SP_KEYCHAIN_FILE}" $profile $version)
-
-   #echo
-   #echo ... concat $key_file $cert_file $ca_file into $keychain
-   #echo
-
-   #cat $key_file $cert_file $ca_file > $keychain
+   keychain=$(format_file_path $tls_home "${prefix}-${CORE_CONFIG_SP_KEYCHAIN_FILE}" $profile)
 
    echo
    echo ... writing $key_file $cert_chain_file into $keychain

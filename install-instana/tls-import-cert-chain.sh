@@ -48,7 +48,7 @@ else
 	exit 1
 fi
 
-cert_chain_file=$(format_file_path $tls_home "${qual}-${CERT_CHAIN_FILE_NAME}" $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
+cert_chain_file=$(format_file_path $tls_home "${qual}-${CERT_CHAIN_FILE_NAME}" $INSTANA_INSTALL_PROFILE)
 
 if [[ -f $cert_chain_file ]]; then
 	echo "backing up existing cert chain file to ... ${cert_chain_file}.bak"
