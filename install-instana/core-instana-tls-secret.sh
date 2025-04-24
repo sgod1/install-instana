@@ -34,6 +34,7 @@ cert_chain_file=$(format_file_path $tls_home "${qualifier}-${CERT_CHAIN_FILE_NAM
 $KUBECTL create secret tls instana-tls --namespace instana-core \
       --cert=$cert_chain_file \
       --key=$key_file
+rc=$?
 
 check_return_code $rc
 
