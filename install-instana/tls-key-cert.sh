@@ -199,7 +199,7 @@ check_return_code $?
 #
 # create cert chain
 #
-cert_chain_file_name=$"{qual}-${CERT_CHAIN_FILE_NAME}"
+cert_chain_file_name="${qual}-${CERT_CHAIN_FILE_NAME}"
 cert_chain_file=$(prefix_file_name $cert_chain_file_name $prof)
 
 echo ... writing cert chain ... $cert_chain_file
