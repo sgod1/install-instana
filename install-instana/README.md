@@ -260,7 +260,7 @@ tls-export-csr.sh ingress <export-csr-file-name>
 Copy received certificate chain to `gen/tls/ingress-cert-chain-{instana-version}.pem` file<br/>
 
 ```
-tls-import-external-cert-chain.sh <cert_chain_file> ingress|sp
+tls-import-cert-chain.sh <cert_chain_file> ingress|sp
 ```
 
 Example:<br/>
@@ -268,7 +268,7 @@ Example:<br/>
 ```
 tls-key-cert-external.sh ingress
 tls-export-csr.sh ingress <export-csr-file-name>
-tls-import-external-cert-chain.sh <external-cert-chain-file> ingress
+tls-import-cert-chain.sh <cert-chain-file> ingress
 ```
 
 ## Steps 
