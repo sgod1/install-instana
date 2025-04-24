@@ -239,6 +239,7 @@ gen/tls/{qualifier}-conf-{instana-version}.conf - csr config file
 gen/tls/{qualifier}-csr-{instana-version}.pem - csr file
 gen/tls/{qualifier}-key-{instana-version}.pem - private key file encrypted by the password from input password file
 gen/tls/{qualifier}-cert-{instana-version}.pem - public key cert singed by the root ca
+gen/tls/{qualifier}-cert-chain-{instana-version}.pem - public key cert chain singed by the root ca
 
 gen/tls/{qualifier}-root-ca-key-{instana-version}.pem - root ca private key
 gen/tls/{qualifier}-root-ca-cert-{instana-version}.pem - root ca cert.
@@ -246,28 +247,29 @@ gen/tls/{qualifier}-root-ca-cert-{instana-version}.pem - root ca cert.
 
 ### Certificates signed by external ca.
 
-If crypto file prefix (qualifier) starts with the pattern "custom", then csr is not signed by interal root ca<br/>
-and this csr must be submitted to external ca for signature.<br/>
-
-Create required crypto files by running `tls-key-cert-custom.sh` script with the custom qualifier as an agrument<br/>
-and then use the same custom qualifer for `core` configuration scripts.<br/>
-
-Example: custom qualifier `custom-sp`<br/>
-
+Create required crypto files by running `tls-key-cert-external.sh` script with the qualifier (sp|ingress) as an agrument.<br/>
 ```
-tls-key-cert-custom.sh custom-sp
+tls-key-cert-external.sh ingress|sp
 ```
 
-Output:<br/>
+Submit `gen/tls/ingress-csr-{instana-version}.pem` to an external ca.<br/>
 ```
-gen/tls/custom-sp-conf-{instana-version}.conf - csr config file
-gen/tls/custom-sp-csr-{instana-version}.pem - csr file
-gen/tls/custom-sp-key-{instana-version}.pem - private key file encrypted by the password from input password file
+tls-export-csr.sh ingress <export-csr-file-name>
 ```
 
-Submit `gen/tls/custom-sp-csr-{instana-version}.pem` to an external ca.<br/>
+Copy received certificate chain to `gen/tls/ingress-cert-chain-{instana-version}.pem` file<br/>
 
-Copy received certificate chain to `gen/tls/custom-sp-cert-{instana-version}.pem` file<br/>
+```
+tls-copy-external-cert-chain.sh <cert_chain_file> ingress|sp
+```
+
+Example:<br/>
+
+```
+tls-key-cert-external.sh ingress
+tls-export-csr.sh ingress <export-csr-file-name>
+tls-import-external-cert-chain.sh <external-cert-chain-file> ingress
+```
 
 ## Steps 
 

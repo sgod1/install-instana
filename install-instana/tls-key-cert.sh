@@ -141,12 +141,6 @@ openssl req -newkey rsa:2048 \
    -days 365 $keypass -config $csr_config_file 2>/dev/null
 check_return_code $?
 
-# do not sign custom cert
-if [[ $qual == "^custom.*" ]]; then
-  echo custom certificate will be signed by external ca, csr: $csr_file
-  exit 0
-fi
-
 #
 # use internal ca to issue cert
 #
@@ -202,3 +196,12 @@ openssl x509 -req -days 365 -in $csr_file \
    -out $cert_file
 check_return_code $?
 
+#
+# create cert chain
+#
+cert_chain_file_name=$"{qual}-${CERT_CHAIN_FILE_NAME}"
+cert_chain_file=$(prefix_file_name $cert_chain_file_name $prof)
+
+echo ... writing cert chain ... $cert_chain_file
+
+cat $cert_file $root_ca_cert_file > $cert_chain_file
