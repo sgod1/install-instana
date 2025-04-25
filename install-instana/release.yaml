@@ -193,7 +193,7 @@ datastores:
       ELASTICSEARCH_OPERATOR_CHART_VERSION: "2.16.1"
 
       ELASTICSEARCH_OPERATOR_VERSION: "2.16.1"
-      ELASTICSEARCH_OPERATOR_IMG: 3rd-party/operator/elasticsearch:2.16.1_v0.18.0
+      ELASTICSEARCH_OPERATOR_IMG: self-hosted-images/3rd-party/operator/elasticsearch:2.16.1_v0.18.0
 
       ELASTICSEARCH_VERSION: "8.17.2"
       ELASTICSEARCH_IMG: self-hosted-images/3rd-party/datastore/elasticsearch:8.17.2_v0.16.1
