@@ -288,9 +288,6 @@ If you have image repository configured as a proxy for Instana image repository,
 
 Optionally, set `INSTANA_REGISTRY_PROXY_USER` and `INSTANA_REGISTRY_PROXY_PASSWORD` for proxy repository authentication.<br/>
 
-If proxy repository is configured, private docker server is ignored.<br/>
-
-
 ## Steps 
 
 ### Install instana plugin and Instana license.
