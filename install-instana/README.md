@@ -279,7 +279,7 @@ To import custom ca bundle for instana-core, run `core-import-ca-bundle.sh` and 
 core-import-ca-bundle.sh bundle-file
 ```
 
-### Instana Registry and Instana Registry Proxy
+### Private Registry and Instana Registry Proxy
 Set `PRIVATE_DOCKER_SERVER` and optionally `PRIVATE_REGISTRY_SUBPATH` to push images into private repository.<br/>
 
 Set `PRIVATE_REGISTRY_USER` and `PRIVATE_REGISTRY_PASSWORD` for authentication.<br/>
