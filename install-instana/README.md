@@ -280,13 +280,13 @@ core-import-ca-bundle.sh bundle-file
 ```
 
 ### Instana Registry and Instana Registry Proxy
-Set `PRIVATE_DOCKER_SERVER` and optionally `PRIVATE_REGISTRY_SUBPATH` to push images into `${PRIVATE_REGISTRY_SERVER}$/{PRIVATE_REGISTRY_SUBPATH}` repository.<br/>
+Set `PRIVATE_DOCKER_SERVER` and optionally `PRIVATE_REGISTRY_SUBPATH` to push images into private repository.<br/>
 
 Set `PRIVATE_REGISTRY_USER` and `PRIVATE_REGISTRY_PASSWORD` for authentication.<br/>
 
 If you have image repository configured as a proxy for Instana image repository, set `INSTANA_REGISTRY_PROXY` to pull images into proxy repository.<br/>
 
-Set `INSTANA_REGISTRY_PROXY_USER` and `INSTANA_REGISTRY_PROXY_PASSWORD` for authentication.<br/>
+Optionally, set `INSTANA_REGISTRY_PROXY_USER` and `INSTANA_REGISTRY_PROXY_PASSWORD` for proxy repository authentication.<br/>
 
 If proxy repository is configured, private docker server is ignored.<br/>
 
