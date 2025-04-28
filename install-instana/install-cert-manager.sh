@@ -67,5 +67,6 @@ helm ${helm_action} cert-manager $CHART \
 
    rc=$?
 
+   check_return_code $rc
+
    exit $rc
-   
