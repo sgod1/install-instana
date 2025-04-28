@@ -8,6 +8,11 @@ env:
   values:
     uat: 10
     prod: 14
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: cpu-limits
   path: >
@@ -15,6 +20,11 @@ env:
   values:
     uat: 10
     prod: 14
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: memory-requests
   path: >
@@ -22,6 +32,11 @@ env:
   values:
     uat: 40Gi
     prod: 42Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: memory-limits
   path: >
@@ -29,6 +44,11 @@ env:
   values:
     uat: 40Gi
     prod: 56Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # storage requests
@@ -40,6 +60,11 @@ env:
     default: 100Gi
     uat: 3000Gi
     prod: 14500Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # size
@@ -50,6 +75,11 @@ env:
   values:
     uat: 3
     prod: 7
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # container images

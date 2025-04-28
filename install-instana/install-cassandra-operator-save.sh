@@ -14,12 +14,12 @@ PATH=".:$bin_home:$PATH"
 # pass "disable_webhook" argument to disable webhook
 DISABLE_WEBHOOK="disable_webhook"
 ENABLE_WEBHOOK="enable_webhook"
-webhook_startup=${1:-"$ENABLE_WEBHOOK"}
+webhook_startup=${2:-"$ENABLE_WEBHOOK"}
 
 # pass custom_webhook_cert to use custom cert
 CUSTOM_WEBHOOK_CERT="custom_webhook_cert"
 NO_CUSTOM_WEBHOOK_CERT="no_custom_cert"
-custom_webhook_cert=${1:-$NO_CUSTOM_WEBHOOK_CERT}
+custom_webhook_cert=${3:-$NO_CUSTOM_WEBHOOK_CERT}
 
 CHART_HOME=$(get_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
