@@ -67,7 +67,7 @@ else
 fi
 
 if [[ -z $skip_install_beeinstana ]]; then
-echo installing beeinstana
+   echo installing beeinstana
    install-beeinstana.sh; check_return_code $?
 else
    echo skip install beeinstana

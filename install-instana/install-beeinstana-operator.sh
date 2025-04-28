@@ -26,10 +26,17 @@ if is_platform_ocp "$PLATFORM"; then
       --set image.registry=$PRIVATE_REGISTRY \
       --set imagePullSecrets[0].name="instana-registry" \
       --wait --timeout=60m0s
+   rc=$?
 else
    helm ${helm_action} beeinstana-operator -n beeinstana $CHART \
       --set image.registry=$PRIVATE_REGISTRY \
       --set imagePullSecrets[0].name="instana-registry" \
       --wait --timeout=60m0s
+   rc=$?
 fi
 
+check_return_code $rc
+
+# todo: check helm status
+
+exit $rc
