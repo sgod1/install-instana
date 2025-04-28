@@ -17,6 +17,13 @@ else
    echo skip init namespaces
 fi
 
+if [[ -z $skip_install_certmgr ]]; then
+   echo "installing cert manager"
+   install-cert-manager.sh; check_return_code $?
+else
+   echo skip install cert manager
+fi
+
 if [[ -z $skip_install_zookeeper ]]; then
    echo installing zookeeper
    install-zookeeper.sh; check_return_code $?

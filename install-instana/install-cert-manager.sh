@@ -65,3 +65,7 @@ helm ${helm_action} cert-manager $CHART \
    --set webhook.resources.requests.cpu=500m \
    --set webhook.resources.requests.memory=512Mi
 
+   rc=$?
+
+   exit $rc
+   
