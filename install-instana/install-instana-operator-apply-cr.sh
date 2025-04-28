@@ -21,3 +21,8 @@ echo ""
 
 set -x
 $KUBECTL apply -f $MANIFEST_DIR
+rc=$?
+
+check_return_code $rc
+
+exit $rc
