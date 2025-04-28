@@ -60,6 +60,13 @@ env:
     .count
   values:
     default: 3
+    #uat:
+    #prod:
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # elasticsearch cpu requests and limits
@@ -73,6 +80,11 @@ env:
     default: 4
     uat: 8
     prod: 8
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: elasticsearch-cpu-limits
   path: >
@@ -83,6 +95,11 @@ env:
     default: 4
     uat: 8
     prod: 8
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: elasticsearch-memory-requests
   path: >
@@ -93,6 +110,11 @@ env:
     default: 16Gi
     uat: 32Gi
     prod: 32Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: elasticsearch-memory-limits
   path: >
@@ -103,6 +125,11 @@ env:
     default: 16Gi
     uat: 32Gi
     prod: 32Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # elasticsearch data volume
@@ -116,6 +143,11 @@ env:
     default: 20Gi
     uat: 400Gi
     prod: 400Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # storage class

@@ -29,3 +29,10 @@ helm ${helm_action} elastic-operator -n instana-elasticsearch $CHART \
    --set image.tag=$elasticsearch_operator_image_tag \
    --set imagePullSecrets[0].name="instana-registry" \
    --wait --timeout 60m0s
+rc=$?
+
+check_return_code $rc
+
+# todo: check helm status
+
+exit $rc
