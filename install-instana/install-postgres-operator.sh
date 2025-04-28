@@ -40,6 +40,7 @@ if is_platform_ocp "$PLATFORM"; then
      --set containerSecurityContext.runAsUser=$uid_range_start \
      --set containerSecurityContext.runAsGroup=$uid_range_start \
      --wait --timeout 60m0s
+   rc=$?
 
 else
    # k8s
@@ -48,5 +49,11 @@ else
      --set image.tag=${postgres_operator_img_tag} \
      --set imagePullSecrets[0].name="instana-registry" \
      --wait --timeout 60m0s
+   rc=$?
 fi
 
+check_return_code $rc
+
+# todo: check helm status
+
+exit $rc

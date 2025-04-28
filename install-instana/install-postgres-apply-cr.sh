@@ -43,7 +43,9 @@ fi
 
 # deploy postgres cr
 $KUBECTL -n instana-postgres apply -f $MANIFEST
-check_return_code $?
+rc=$?
+
+check_return_code $rc
 
 #conditions:
 #    - lastTransitionTime: "2025-03-24T20:20:53Z"
@@ -52,4 +54,6 @@ check_return_code $?
 #      status: "True"
 #      type: Ready
 
-exit 0
+# todo: check for cr conditions
+
+exit $rc

@@ -46,7 +46,7 @@ else
 fi
 
 if [[ -z $skip_install_postgres ]]; then
-echo installing postgres
+   echo installing postgres
    install-postgres.sh; check_return_code $?
 else
    echo skip install postgres

@@ -30,6 +30,13 @@ env:
   path: .spec.instances
   values:
     default: 3
+    #uat:
+    #prod:
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # cpu and memory requests and limits
@@ -40,6 +47,11 @@ env:
     default: 2
     uat: 2
     prod: 2
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: postgres-cpu-limit
   path: .spec.resources.requests.cpu
@@ -47,6 +59,11 @@ env:
     default: 2
     uat: 2
     prod: 2
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: postgres-memory-request
   path: .spec.resources.requests.memory
@@ -54,6 +71,11 @@ env:
     default: 4Gi
     uat: 8Gi
     prod: 8Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: postgres-memory-limit
   path: .spec.resources.limits.memory
@@ -61,6 +83,11 @@ env:
     default: 4Gi
     uat: 8Gi
     prod: 8Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # storage size
@@ -71,6 +98,11 @@ env:
     default: 1Gi
     uat: 100Gi
     prod: 100Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # storage class
