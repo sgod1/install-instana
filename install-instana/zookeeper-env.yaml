@@ -51,6 +51,11 @@ env:
     default: 10Gi
     uat: 100Gi
     prod: 100Gi
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # cpu requests and limits
@@ -60,12 +65,26 @@ env:
     .spec.pod.resources.requests.cpu
   values:
     default: 2
+    #uat:
+    #prod:
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: zookeeper-pod-limits-cpu
   path: >
     .spec.pod.resources.limits.cpu
   values:
     default: 2
+    #uat:
+    #prod:
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # memory requests and limits
@@ -75,12 +94,26 @@ env:
     .spec.pod.resources.requests.memory
   values:
     default: 8Gi
+    #uat:
+    #prod:
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: zookeeper-pod-limits-memory
   path: >
     .spec.pod.resources.limits.memory
   values:
     default: 8Gi
+    #uat:
+    #prod:
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # pod security context fsGroup, runAsUser
@@ -106,3 +139,10 @@ env:
     .spec.replicas
   values:
     default: 3
+    #uat:
+    #prod:
+    #small: 
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
