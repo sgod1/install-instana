@@ -16,4 +16,10 @@ if test ! -f $MANIFEST; then
 fi
 
 $KUBECTL apply -f $MANIFEST -n instana-clickhouse
+rc=$?
 
+check_return_code $rc
+
+# todo check cr status
+
+return $rc

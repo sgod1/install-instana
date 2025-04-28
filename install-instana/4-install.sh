@@ -60,7 +60,7 @@ else
 fi
 
 if [[ -z $skip_install_clickhouse ]]; then
-echo installing clickhouse
+   echo installing clickhouse
    install-clickhouse.sh; check_return_code $?
 else
    echo skip install clickhouse

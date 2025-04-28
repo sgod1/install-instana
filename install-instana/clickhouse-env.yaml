@@ -8,8 +8,14 @@ env:
     .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.cpu
   values:
+    default: 1000m
     uat: 1000m
     prod: 2000m
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #- name: clickhouse-container-lim-cpu
 #  path: >
@@ -17,8 +23,14 @@ env:
 #    .spec.containers.[] | select(.name == "instana-clickhouse") |
 #    .resources.limits.cpu
 #  values:
+#    default: 1000m
 #    uat: 1000m
 #    prod: 2000m
+#    #small:
+#    #medium:
+#    #large:
+#    #xlarge:
+#    #xxlarge:
 
 - name: clickhouse-container-req-mem
   path: >
@@ -26,8 +38,14 @@ env:
     .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.memory
   values:
+    default: 4Gi
     uat: 4Gi
     prod: 8Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #- name: clickhouse-container-lim-mem
 #  path: >
@@ -35,8 +53,14 @@ env:
 #    .spec.containers.[] | select(.name == "instana-clickhouse") |
 #    .resources.limits.memory
 #  values:
+#    default: 4Gi
 #    uat: 4Gi
 #    prod: 8Gi
+#    #small:
+#    #medium:
+#    #large:
+#    #xlarge:
+#    #xxlarge:
 
 #
 # storage requests
@@ -46,24 +70,42 @@ env:
     .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-data-volume") |
     .spec.resources.requests.storage
   values:
+    default: 500Gi
     uat: 500Gi
     prod: 1000Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: clickhouse-cold-volume-request
   path: >
     .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-cold-volume") |
     .spec.resources.requests.storage
   values:
+    default: 500Gi
     uat: 500Gi
     prod: 1000Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 - name: clickhouse-log-volume-request
   path: >
     .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.resources.requests.storage
   values:
+    default: 100Gi
     uat: 100Gi
     prod: 100Gi
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # shards count
@@ -77,6 +119,11 @@ env:
     default: 2
     uat: 4
     prod: 4
+    #small:
+    #medium:
+    #large:
+    #xlarge:
+    #xxlarge:
 
 #
 # container images

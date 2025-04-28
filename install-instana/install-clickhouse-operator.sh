@@ -46,3 +46,10 @@ helm ${helm_action} clickhouse-operator -n instana-clickhouse $CHART \
    --set operator.image.tag=$clickhouse_operator_image_tag \
    --set imagePullSecrets[0].name="instana-registry" \
    --wait --timeout 60m0s
+rc=$?
+
+check_return_code $rc
+
+# todo check cr status
+
+exit $rc
