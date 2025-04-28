@@ -16,3 +16,10 @@ if test ! -f $MANIFEST; then
 fi
 
 $KUBECTL apply -f $MANIFEST -n instana-kafka
+rc=$?
+
+check_return_code $rc
+
+# todo: check cr status
+
+exit $rc
