@@ -1,0 +1,71 @@
+apiVersion: instana.io/v1beta2
+kind: Core
+metadata:
+  namespace: instana-core
+  name: instana-core
+
+spec:
+  imageConfig:
+    registry: artifact-public.instana.io
+    repository: backend
+    tag: tag
+
+  imagePullPolicy: IfNotPresent
+
+  imagePullSecrets:
+    - name: image-pull-secret
+
+  serviceAccountAnnotations:
+    keys: ""
+    values: ""
+
+  priorityClassName: default
+
+  baseDomain: base.domain
+
+  # + 293
+  acceptors:
+
+  # + 293
+  # https://community.ibm.com/community/user/blogs/rishikesh-nair/2025/04/17/
+  # migrating-from-nginx-to-envoy-in-instana-self-host
+  gatewayConfig:
+
+  # + 293, beta
+  autoscalingEnabled: false
+
+  resourceProfile: small
+
+  storageConfigs:
+
+  heapDumpsPVC:
+
+  datastoreConfigs:
+
+  componentConfigs:
+
+  deploymentStrategyType: RollingUpdate
+
+  emailConfig:
+
+  serviceProviderConfig:
+
+  proxyConfig:
+
+  geoDbUrl: https://geodb.url.com
+
+  agentAcceptorConfig:
+
+  featureFlags:
+
+  env:
+
+  properties:
+
+  nodeSelector:
+    keys: ""
+    values: ""
+
+  tolerations: []
+
+  operationMode: normal
