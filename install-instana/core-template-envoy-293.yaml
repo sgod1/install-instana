@@ -1,5 +1,6 @@
 apiVersion: instana.io/v1beta2
 kind: Core
+
 metadata:
   namespace: instana-core
   name: instana-core
@@ -15,11 +16,11 @@ spec:
   imagePullSecrets:
     - name: image-pull-secret
 
-  serviceAccountAnnotations:
-    keys: ""
-    values: ""
+#  serviceAccountAnnotations:
+#    keys: ""
+#    values: ""
 
-  priorityClassName: default
+#  priorityClassName: default
 
   baseDomain: base.domain
 
@@ -37,35 +38,245 @@ spec:
   resourceProfile: small
 
   storageConfigs:
+    rawSpans:
+      pvcConfig:
+              pvcConfig:
+        accessModes: 
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: rwx_storageclass
+
+    synthetics:
+            pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: rwx_storageclass
+
+    syntheticsKeystore:
+      pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: rwx_storageclass
+
+    eumSourceMaps:
+      pvcConfig:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: rwx_storageclass
 
   heapDumpsPVC:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: rwx_storageclass
 
   datastoreConfigs:
+    cassandraConfigs:
+      - hosts:
+          - instana-cassandra-service.instana-cassandra.svc
+        ports:
+          - name: tcp
+            port: 9042
+        #properties: {}
+        authEnabled: true
+        #keyspaces: []
+        datacenter: cassandra
+        replicationFactor: 1
 
-  componentConfigs:
+    clickhouseConfigs:
+      - hosts: []
+        ports:
+          - name: tcp
+            port: 9000
+          - name: http
+            port: 8123
+        #properties: {}
+        authEnabled: true
+        #schemas: []
+        clusterName: local
+
+    elasticsearchConfig:
+      hosts:
+        - instana-es-http.instana-elasticsearch.svc
+      ports: 
+        - name: tcp
+          port: 9300
+        - name: http
+          port: 9200
+      #properties: {}
+      authEnabled: true
+      clusterName: instana
+      defaultIndexShards: 5
+      defaultIndexReplicas: 0
+      defaultIndexRoutingPartitionSize: 2
+      #indexConfigs: []
+
+    kafkaConfig:
+      hosts:
+        - instana-kafka-bootstrap.instana-kafka.svc
+      ports: 
+        - name: tcp
+          port: 9092
+      #properties: {}
+      authEnabled: true
+      replicationFactor: 1
+      # PLAIN, SCRAM-SHA-256, SCRAM-SHA-512
+      saslMechanism: SCRAM-SHA-512
+
+    beeInstanaConfig:
+      hosts:
+        - aggregators.beeinstana.svc
+      ports:
+        - name: tcp
+          port: 9998
+      #properties:
+      authEnabled: true
+      clustered: true
+
+    postgresConfigs:
+      - hosts:
+          - postgres-rw.instana-postgres.svc
+        ports:
+          - name: tcp
+            port: 5432
+        #properties: {}
+        authEnabled: true
+        #databases: []
+
+#  componentConfigs:
+#    - name: name
+#      disabled: false
+#      imageTag: tagoverwrite
+#      replicas: 1
+#      envs: []
+#      resources:
+#        limits:
+#        requests:
+#      autoscalingConfig: {}
+#      affinity: {}
+#      nodeSelector: {}
+#      tolerations: []
+#      priorityClassName: default
+#      properties: {}
 
   deploymentStrategyType: RollingUpdate
 
   emailConfig:
+    smtpConfig:
+      from: from
+      host: host
+      port: port
+      useSSL: true
+      startTLS: true
+      check_server_identity: false
+
+#    sesConfig:
+#      from: from
+#      returnPath: path
+#      region: region
 
   serviceProviderConfig:
+    basePath: "/auth"
+    maxIDPMetadataSizeInBytes: 200000
+    maxAuthenticationLifetimeSeconds: 604800
 
   proxyConfig:
+    host: host
+    port: port
+    nonProxyHosts: []
 
   geoDbUrl: https://geodb.url.com
 
   agentAcceptorConfig:
+    host: host
+    port: port
 
+  # optional features
   featureFlags:
 
-  env:
+    - name: feature.beeinstana.infra.metrics.enabled
+      enabled: true
+
+    - name: feature.infra.smart.alerts.enabled
+      enabled: true
+
+    - name: feature.logging.enabled
+      # logging uses clickhouse schema "logs". use a separate clickhose cluster or host
+      # smart alerts for logs from instana tracers
+      # unbounded analytics for logs from instana tracers
+      # licensed logging features: extended log retention,
+      # general log ingestion, log volume ingestion
+      enabled: true
+
+    - name: feature.automation.enabled
+      enabled: true
+
+    - name: feature.synthetics.enabled
+      # configure: synthetics, syntheticsKeystore
+      enabled: true
+
+    - name: feature.kubecost.enabled
+      # kubecost infra dashboard
+      enabled: false
+
+    - name: feature.pcf.enabled
+      # tanzu infra dashboard
+      enabled: false
+
+    - name: feature.vsphere.enabled
+      # vshpere infra dashboard
+      enabled: false
+
+    - name feature.openstack.enabled
+      # openstack infra dashboard
+      enabled: false
+
+    - name: feature.phmc.enabled
+      # ibm power hmc infra dashboard
+      enabled: false
+
+    - name: feature.powervc.enabled
+      # ibm power vc infra dashboard
+      enabled: false
+
+    - name: feature.zhmc.enabled
+      # ibm z hmc infra dashboard
+      enabled: false
+
+    - name: feature.business.observability.enabled
+      enabled: false
+
+    - name: feature.assistme.enabled
+      # get answers button
+      enabled: false
+
+    - name: feature.kubernetes.horizontal.pod.autoscaler.enable
+      # enabled by default
+      enabled: true
+
+#  env:
 
   properties:
+    - name: retention.metrics.rollup5
+      value: 86400
 
-  nodeSelector:
-    keys: ""
-    values: ""
+#  nodeSelector:
+#    keys: ""
+#    values: ""
 
-  tolerations: []
+#  tolerations: []
 
   operationMode: normal

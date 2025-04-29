@@ -181,8 +181,6 @@ spec:
     port: 443
 
   featureFlags:
-    - name: beeinstana
-      enabled: true
 
     - name: feature.beeinstana.infra.metrics.enabled
       enabled: true
@@ -191,46 +189,58 @@ spec:
       enabled: true
 
     - name: feature.logging.enabled
-      enabled: false
+      # logging uses clickhouse schema "logs". use a separate clickhose cluster or host
+      # smart alerts for logs from instana tracers
+      # unbounded analytics for logs from instana tracers
+      # licensed logging features: extended log retention,
+      # general log ingestion, log volume ingestion
+      enabled: true
 
     - name: feature.automation.enabled
       enabled: true
 
     - name: feature.synthetics.enabled
+      # configure: synthetics, syntheticsKeystore
       enabled: true
 
-    - name: feature.sap.enabled
-      enabled: false
-
     - name: feature.kubecost.enabled
+      # kubecost infra dashboard
       enabled: false
 
     - name: feature.pcf.enabled
+      # tanzu infra dashboard
       enabled: false
 
     - name: feature.vsphere.enabled
-      enabled: true
+      # vshpere infra dashboard
+      enabled: false
 
-    - name: feature.openstack.enabled
+    - name feature.openstack.enabled
+      # openstack infra dashboard
       enabled: false
 
     - name: feature.phmc.enabled
+      # ibm power hmc infra dashboard
       enabled: false
 
     - name: feature.powervc.enabled
+      # ibm power vc infra dashboard
       enabled: false
 
     - name: feature.zhmc.enabled
+      # ibm z hmc infra dashboard
       enabled: false
 
     - name: feature.business.observability.enabled
       enabled: false
 
     - name: feature.assistme.enabled
+      # get answers button
       enabled: false
 
-    #- name: feature.kubernetes.horizontal.pod.autoscaler.enable
-    #enabled: true
+    - name: feature.kubernetes.horizontal.pod.autoscaler.enable
+      # enabled by default
+      enabled: true
 
   #env: {}
 

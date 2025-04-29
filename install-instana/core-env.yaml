@@ -216,11 +216,6 @@ env:
   values:
     default: true
 
-- name: feature.sap.enabled
-  path: .spec.featureFlags.[]|select(.name == "feature.sap.enabled")|.enabled
-  values:
-    default: false
-
 - name: feature.kubecost.enabled
   path: .spec.featureFlags.[]|select(.name == "feature.kubecost.enabled")|.enabled
   values:
