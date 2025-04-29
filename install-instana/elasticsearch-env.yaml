@@ -65,8 +65,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # elasticsearch cpu requests and limits
@@ -83,8 +81,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: elasticsearch-cpu-limits
   path: >
@@ -98,8 +94,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: elasticsearch-memory-requests
   path: >
@@ -113,8 +107,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: elasticsearch-memory-limits
   path: >
@@ -128,8 +120,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # elasticsearch data volume
@@ -146,8 +136,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # storage class

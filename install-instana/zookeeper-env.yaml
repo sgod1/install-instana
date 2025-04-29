@@ -54,8 +54,6 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # cpu requests and limits
@@ -70,8 +68,6 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: zookeeper-pod-limits-cpu
   path: >
@@ -83,8 +79,6 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # memory requests and limits
@@ -99,8 +93,6 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: zookeeper-pod-limits-memory
   path: >
@@ -112,8 +104,6 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # pod security context fsGroup, runAsUser
@@ -144,5 +134,3 @@ env:
     #small: 
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:

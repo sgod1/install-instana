@@ -11,8 +11,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: cpu-limits
   path: >
@@ -23,8 +21,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: memory-requests
   path: >
@@ -35,8 +31,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: memory-limits
   path: >
@@ -47,8 +41,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # storage requests
@@ -63,8 +55,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # size
@@ -78,8 +68,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # container images

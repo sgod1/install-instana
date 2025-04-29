@@ -46,8 +46,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # kafka cpu requests and limits
@@ -61,8 +59,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: kafka-limits-cpu
   path: .spec.kafka.resources.limits.cpu
@@ -73,8 +69,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # kafka memory requests and limits
@@ -88,8 +82,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: kafka-limits-memory
   path: .spec.kafka.resources.limits.memory
@@ -100,8 +92,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # kafka storage volumes
@@ -116,8 +106,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # zookeeper replicas
@@ -131,8 +119,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # zookeeper storage class
@@ -154,5 +140,3 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:

@@ -35,8 +35,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # cpu and memory requests and limits
@@ -50,8 +48,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: postgres-cpu-limit
   path: .spec.resources.requests.cpu
@@ -62,8 +58,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: postgres-memory-request
   path: .spec.resources.requests.memory
@@ -74,8 +68,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: postgres-memory-limit
   path: .spec.resources.limits.memory
@@ -86,8 +78,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # storage size
@@ -101,8 +91,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # storage class

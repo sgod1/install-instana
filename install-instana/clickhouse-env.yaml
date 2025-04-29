@@ -14,8 +14,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #- name: clickhouse-container-lim-cpu
 #  path: >
@@ -29,8 +27,6 @@ env:
 #    #small:
 #    #medium:
 #    #large:
-#    #xlarge:
-#    #xxlarge:
 
 - name: clickhouse-container-req-mem
   path: >
@@ -44,8 +40,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #- name: clickhouse-container-lim-mem
 #  path: >
@@ -59,8 +53,6 @@ env:
 #    #small:
 #    #medium:
 #    #large:
-#    #xlarge:
-#    #xxlarge:
 
 #
 # storage requests
@@ -76,8 +68,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: clickhouse-cold-volume-request
   path: >
@@ -90,8 +80,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 - name: clickhouse-log-volume-request
   path: >
@@ -104,8 +92,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # shards count
@@ -122,8 +108,6 @@ env:
     #small:
     #medium:
     #large:
-    #xlarge:
-    #xxlarge:
 
 #
 # container images
