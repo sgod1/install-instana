@@ -193,12 +193,12 @@ spec:
     maxIDPMetadataSizeInBytes: 200000
     maxAuthenticationLifetimeSeconds: 604800
 
-  proxyConfig:
-    host: host
-    port: port
-    nonProxyHosts: []
+#  proxyConfig:
+#    host: host
+#    port: port
+#    nonProxyHosts: []
 
-  geoDbUrl: https://geodb.url.com
+#  geoDbUrl: https://geodb.url.com
 
   agentAcceptorConfig:
     host: host
