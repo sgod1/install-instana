@@ -607,6 +607,11 @@ install-cert-manager.sh upgrade
 
 ### Instana Agent ###
 
+To mirror agent images, run:<br/>
+```
+mirror-agent-images.sh
+```
+
 #### Deploying Instana Agent with the yaml file ####
 
 Yaml file is the simpliest way to deploy Instana agent.<br/>
@@ -650,6 +655,11 @@ updated agent manifest ./gen/instana-agent-<cluster>-<zone>-<instana-version>.ya
 ```
 
 ### Deploying Instana Agent with the helm chart ###
+
+To mirror agent images, run:<br/>
+```
+mirror-agent-images.sh
+```
 
 With the helm chart we need to keep track of the chart version, operator version, and images.<br/>
 
