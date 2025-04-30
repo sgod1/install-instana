@@ -26,11 +26,55 @@ spec:
 
   # + 293
   acceptors:
+    agent:
+      host: agent-acceptor.base.domain
+      port: 443
+    eum:
+      host: base.domain
+      port: 443
+    otlp:
+      grpc:
+        host: otlp-grpc.base.domain
+        port: 443
+      http:
+        host: otlp-http.base.domain
+        port: 443
+    serverless:
+      host: base.domain
+      port: 443
+    synthetics:
+      host: base.domain
+      port: 443
 
   # + 293
   # https://community.ibm.com/community/user/blogs/rishikesh-nair/2025/04/17/
   # migrating-from-nginx-to-envoy-in-instana-self-host
   gatewayConfig:
+    enabled: true
+
+    controller:
+      config: {}
+      imageConfig:
+        registry: artifact-public.instana.io
+        repository: infrastructure
+        tag: 1.3.0
+      replicas: 1
+      tlsCipherSuites: []
+
+    gateway:
+      adminListener: 127.0.0.1
+      circuitBreakers:
+        maxConnections: 50000
+        maxPendingRequests: 50000
+        maxRequests: 50000
+        maxRetries: 4
+      config: {}
+      imageConfig:
+        registry: artifact-public.instana.io
+        repository: self-hosted-images/k8s
+        tag: 1.33.1_v0.7.0
+      logLevel: error
+      replicas: 1
 
   # + 293, beta
   autoscalingEnabled: false
@@ -202,7 +246,7 @@ spec:
 
   agentAcceptorConfig:
     host: host
-    port: port
+#    port: port
 
   # optional features
   featureFlags:
