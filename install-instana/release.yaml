@@ -70,7 +70,7 @@ agent:
   images: ["AGENT_IMG", "K8S_CENSOR_IMG", "AGENT_OPERATOR_IMG"]
   versions:
   - instana: 293
-    AGENT_HELM_CHART_VERSION: "2.0.18"
+    AGENT_HELM_CHART_VERSION: "2.0.19"
     AGENT_HELM_APP_VERSION: "1.292.0"
 
     AGENT_IMG: instana/agent
@@ -80,7 +80,7 @@ agent:
     K8S_CENSOR_IMG_TAG: "latest"
 
     AGENT_OPERATOR_IMG: instana/instana-agent-operator
-    AGENT_OPERATOR_TAG: "2.1.22"
+    AGENT_OPERATOR_TAG: "2.1.23"
 
 #
 # certificate manager

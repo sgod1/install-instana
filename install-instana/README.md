@@ -649,34 +649,40 @@ Output is written to the `gen` directory and agent file name is qualified by the
 updated agent manifest ./gen/instana-agent-<cluster>-<zone>-<instana-version>.yaml, profile default
 ```
 
+### Deploying Instana Agent with the helm chart ###
 
+With the helm chart we need to keep track of the chart version, operator version, and images.<br/>
 
+Chart is customized with the `values` file.<br/>
 
+```
+helm repo add agent https://agents.instana.io/helm
 
+helm repo list
 
+NAME      URL                                                          
+agent     https://agents.instana.io/helm
+instana   https://helm.instana.io/artifactory/rel-helm-customer-virtual
+```
 
+```
+helm search repo instana-agent
 
+NAME                  CHART VERSION APP VERSION DESCRIPTION                 
+agent/instana-agent   2.0.19        1.292.0     Instana Agent for Kubernetes
+instana/instana-agent 2.0.19        1.292.0     Instana Agent for Kubernetes
+```
 
+It is recommended to work with the 'agent' helm repo.<br/>
 
+Pull helm chart:<br/>
+```
+helm pull agent/instana-agent --version=2.0.19 -d gen/charts/293
+```
 
+Update `values` file in `install-agent-operator.sh` script.<br/>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Install agent helm chart:<br/>
+```
+./install-agent-operator.sh <cluster> <zone> [install|upgrade]
+```

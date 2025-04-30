@@ -12,7 +12,7 @@ K8S_CENSOR_IMG="instana/k8sensor"
 K8S_CENSOR_IMG_TAG="latest"
 
 AGENT_OPERATOR_IMG="instana/instana-agent-operator"
-AGENT_OPERATOR_TAG="2.1.22"
+AGENT_OPERATOR_TAG="2.1.23"
 
 __agent_image_list=("${AGENT_IMG}:${AGENT_IMG_TAG}" "${K8S_CENSOR_IMG}:${K8S_CENSOR_IMG_TAG}" "${AGENT_OPERATOR_IMG}:${AGENT_OPERATOR_TAG}")
 
