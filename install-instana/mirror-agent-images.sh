@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 source ../instana.env
 source ./install.env
 source ./help-functions.sh
