@@ -32,7 +32,7 @@ echo "# Agent images, Instana version: $INSTANA_VERSION" > ${OUTFILE}
 
 for img in ${__agent_image_list[@]}
 do
-   echo "${IMG_PLATFORM} ${ICR_IO}/${img}" >> ${OUTFILE}
+   echo "${ICR_IO}/${img}" >> ${OUTFILE}
 done
 
 #
