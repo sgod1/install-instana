@@ -64,6 +64,25 @@ release:
       semver: 3.279.395-0
 
 #
+# instana agent
+#
+agent:
+  images: ["AGENT_IMG", "K8S_CENSOR_IMG", "AGENT_OPERATOR_IMG"]
+  versions:
+  - instana: 293
+    AGENT_HELM_CHART_VERSION: "2.0.18"
+    AGENT_HELM_APP_VERSION: "1.292.0"
+
+    AGENT_IMG: instana/agent
+    AGENT_IMG_TAG: "latest"
+
+    K8S_CENSOR_IMG: instana/k8sensor
+    K8S_CENSOR_IMG_TAG: "latest"
+
+    AGENT_OPERATOR_IMG: instana/instana-agent-operator
+    AGENT_OPERATOR_TAG: "2.1.22"
+
+#
 # certificate manager
 #
 certmanager:

@@ -17,7 +17,7 @@ function write_pull_image_script() {
       print "#!/bin/bash" 
       print "source ../../../install.env"
       print "source ../../../../instana.env"
-      if (REG == IREG) print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY failed, rc=$rc; exit $rc; fi"
+      if (REG == IREG) print "$PODMAN login --username _ --password $DOWNLOAD_KEY $INSTANA_REGISTRY; rc=$?; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY failed, rc=$rc; exit $rc; fi"
       if (REG != IREG && PROXY_USER != "") print "$PODMAN login $PODMAN_TLS_VERIFY --username $INSTANA_REGISTRY_PROXY_USER --password $INSTANA_REGISTRY_PROXY_PASSWORD $INSTANA_REGISTRY_RPOXY; if [[ $rc > 0 ]]; then echo error: login to $INSTANA_REGISTRY_PROXY failed, rc=$rc; exit $rc; fi" 
       print "set -x"
    }

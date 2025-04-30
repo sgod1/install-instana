@@ -604,3 +604,79 @@ To upgrade certmgr, run:<br/>
 ```
 install-cert-manager.sh upgrade
 ```
+
+### Instana Agent ###
+
+#### Deploying Instana Agent with the yaml file ####
+
+Yaml file is the simpliest way to deploy Instana agent.<br/>
+
+We refer to 2 images, agent image and sensor image by the `latest` tag.<br/>
+
+Agent image is modified (out of band) to inject custom jvm trust store.<br/>
+Agent image tag is left to the agent image implementor.<br/>
+
+```
+agent_image="$PRIVATE_REGISTRY/instana/agent:latest"
+agent_sensor_image="$PRIVATE_REGISTRY/instana/k8sensor:latest"
+```
+
+Agent file template is different for `k8s` platforms and `openshift`.<br/>
+
+```
+agent-template-k8s.yaml 
+agent-template-ocp.yaml
+```
+
+Agent file is customized with the `agent-env.yaml` file.<br/>
+
+Customization works the same way as with other components.<br/>
+
+`yq` expression points to an element in the template we want to modify,<br/>
+and `values` contain a list of profile specific values.<br/>
+
+The only difference that profile name is agent deployment specific and is passed on the command line.<br/>
+
+This is because you can deploy many agents to many clusters to many zones.<br/>
+
+Generate agent file:<br/>
+```
+cr-agent.env ocp|k8s <cluster> <zone> [profile]
+```
+
+Output is written to the `gen` directory and agent file name is qualified by the cluster, zone and Instana version<br/>
+```
+updated agent manifest ./gen/instana-agent-<cluster>-<zone>-<instana-version>.yaml, profile default
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
