@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./help-functions.sh
+
 if [[ -f ../instana.env ]]; then
    source ../instana.env
 else
@@ -12,6 +14,19 @@ rc=0
 
 # missing value
 missingval="_"
+
+check_for_cli_bin() {
+  local cli=$1
+
+  local bin_home=$(get_bin_home)
+
+  if [[ -f $bin_home/$cli ]]; then
+    display_key_val "required" "$cli" "$bin_home/$cli"
+
+  else
+    display_key_val "required" "$cli" "$missingval"
+  fi
+}
 
 check_for_opt_key() {
 
@@ -156,6 +171,11 @@ fi
 check_for_key "CORE_CONFIG_TOKEN_SECRET" "${CORE_CONFIG_TOKEN_SECRET:-$missingval}"
 
 check_for_key "CORE_CONFIG_SP_KEY_PASSWORD" "${CORE_CONFIG_SP_KEY_PASSWORD:-$missingval}"
+
+display_header "cli binaries"
+check_for_cli_bin "yq"
+check_for_cli_bin "helm"
+check_for_cli_bin "kubectl-instana"
 
 echo
 if [ $rc -gt 0 ]; then echo "validation failed..."; else echo "validation passed..."; fi
