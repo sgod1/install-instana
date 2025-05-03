@@ -4,6 +4,9 @@ source ../instana.env
 source ./help-functions.sh
 source ./certmgr-images.env
 
+bin_home=$(get_bin_home)
+export PATH=.:$bin_home:$PATH
+
 # install, upgrade
 helm_action=${1:-"install"}
 
