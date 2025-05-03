@@ -1,6 +1,6 @@
 env:
 #
-# cpu and memory requests and limits
+# cpu and memory requests
 #
 - name: clickhouse-container-req-cpu
   path: >
@@ -8,25 +8,12 @@ env:
     .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.cpu
   values:
-    default: 1000m
-    uat: 1000m
-    prod: 2000m
+    default: 1500m
+    uat: 11
+    prod: 23
     #small:
     #medium:
     #large:
-
-#- name: clickhouse-container-lim-cpu
-#  path: >
-#    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-#    .spec.containers.[] | select(.name == "instana-clickhouse") |
-#    .resources.limits.cpu
-#  values:
-#    default: 1000m
-#    uat: 1000m
-#    prod: 2000m
-#    #small:
-#    #medium:
-#    #large:
 
 - name: clickhouse-container-req-mem
   path: >
@@ -35,24 +22,11 @@ env:
     .resources.requests.memory
   values:
     default: 4Gi
-    uat: 4Gi
-    prod: 8Gi
+    uat: 44Gi
+    prod: 92Gi
     #small:
     #medium:
     #large:
-
-#- name: clickhouse-container-lim-mem
-#  path: >
-#    .spec.templates.podTemplates.[] | select(.name == "clickhouse") |
-#    .spec.containers.[] | select(.name == "instana-clickhouse") |
-#    .resources.limits.memory
-#  values:
-#    default: 4Gi
-#    uat: 4Gi
-#    prod: 8Gi
-#    #small:
-#    #medium:
-#    #large:
 
 #
 # storage requests
@@ -63,8 +37,8 @@ env:
     .spec.resources.requests.storage
   values:
     default: 500Gi
-    uat: 500Gi
-    prod: 1000Gi
+    uat: 750Gi
+    prod: 2950Gi
     #small:
     #medium:
     #large:
@@ -75,8 +49,8 @@ env:
     .spec.resources.requests.storage
   values:
     default: 500Gi
-    uat: 500Gi
-    prod: 1000Gi
+    uat: 750Gi
+    prod: 2950Gi
     #small:
     #medium:
     #large:
@@ -86,9 +60,9 @@ env:
     .spec.templates.volumeClaimTemplates.[] | select(.name == "instana-clickhouse-log-volume") |
     .spec.resources.requests.storage
   values:
-    default: 100Gi
-    uat: 100Gi
-    prod: 100Gi
+    default: 500Gi
+    uat: 750Gi
+    prod: 2950Gi
     #small:
     #medium:
     #large:
@@ -102,9 +76,9 @@ env:
     .spec.configuration.clusters.[] | select(.name == "local") |
     .layout.shardsCount
   values:
-    default: 2
+    default: 1
     uat: 4
-    prod: 4
+    prod: 10
     #small:
     #medium:
     #large:

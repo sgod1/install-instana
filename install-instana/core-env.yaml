@@ -260,11 +260,3 @@ env:
   path: .spec.featureFlags.[]|select(.name == "feature.assistme.enabled")|.enabled
   values:
     default: true
-
-# enabled by default
-# check feature name spelling
-#
-#- name: feature.kubernetes.horizontal.pod.autoscaler.enable
-#  path: .spec.featureFlags.[]|select(.name == "feature.kubernetes.horizontal.pod.autoscaler.enable")|.enabled
-#  values:
-#    default: true

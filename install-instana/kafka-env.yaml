@@ -41,8 +41,8 @@ env:
   path: .spec.kafka.replicas
   values:
     default: 3
-    #uat:
-    #prod:
+    uat: 3
+    prod: 3
     #small:
     #medium:
     #large:
@@ -53,9 +53,9 @@ env:
 - name: kafka-requests-cpu
   path: .spec.kafka.resources.requests.cpu
   values:
-    default: 4
+    default: 1
     uat: 4
-    prod: 4
+    prod: 22
     #small:
     #medium:
     #large:
@@ -63,9 +63,9 @@ env:
 - name: kafka-limits-cpu
   path: .spec.kafka.resources.limits.cpu
   values:
-    default: 4
+    default: 1
     uat: 4
-    prod: 4
+    prod: 22
     #small:
     #medium:
     #large:
@@ -78,7 +78,7 @@ env:
   values:
     default: 8Gi
     uat: 16Gi
-    prod: 16Gi
+    prod: 88Gi
     #small:
     #medium:
     #large:
@@ -88,7 +88,7 @@ env:
   values:
     default: 8Gi
     uat: 16Gi
-    prod: 16Gi
+    prod: 88Gi
     #small:
     #medium:
     #large:
@@ -102,7 +102,7 @@ env:
   values:
     default: 100Gi
     uat: 400Gi
-    prod: 400Gi
+    prod: 3934Gi
     #small:
     #medium:
     #large:
@@ -113,9 +113,9 @@ env:
 - name: zookeeper-replicas
   path: .spec.zookeeper.replicas
   values:
-    default: 3
-    #uat:
-    #prod:
+    default: 1
+    uat: 3
+    prod: 3
     #small:
     #medium:
     #large:
@@ -134,9 +134,9 @@ env:
 - name: zookeeper-storage-volume
   path: .spec.zookeeper.storage.size
   values:
-    default: 5Gi
-    #uat:
-    #prod:
+    default: 100Gi
+    uat: 100Gi
+    prod: 500Gi
     #small:
     #medium:
     #large:

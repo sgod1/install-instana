@@ -6,8 +6,9 @@ env:
   path: >
     .spec.resources.requests.cpu
   values:
+    default: 1
     uat: 10
-    prod: 14
+    prod: 24
     #small:
     #medium:
     #large:
@@ -16,8 +17,9 @@ env:
   path: >
     .spec.resources.limits.cpu
   values:
+    default: 1
     uat: 10
-    prod: 14
+    prod: 24
     #small:
     #medium:
     #large:
@@ -26,8 +28,9 @@ env:
   path: >
     .spec.resources.requests.memory
   values:
+    default: 4Gi
     uat: 40Gi
-    prod: 42Gi
+    prod: 96Gi
     #small:
     #medium:
     #large:
@@ -36,8 +39,9 @@ env:
   path: >
     .spec.resources.limits.memory
   values:
+    default: 4Gi
     uat: 40Gi
-    prod: 56Gi
+    prod: 96Gi
     #small:
     #medium:
     #large:
@@ -50,8 +54,8 @@ env:
     .spec.storageConfig.cassandraDataVolumeClaimSpec.resources.requests.storage
   values:
     default: 100Gi
-    uat: 3000Gi
-    prod: 14500Gi
+    uat: 1000Gi
+    prod: 4215Gi
     #small:
     #medium:
     #large:
@@ -63,6 +67,7 @@ env:
   path: >
     .spec.size
   values:
+    default: 1
     uat: 3
     prod: 7
     #small:

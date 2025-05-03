@@ -48,9 +48,9 @@ env:
   path: >
     .spec.persistence.spec.resources.requests.storage
   values:
-    default: 10Gi
+    default: 100Gi
     uat: 100Gi
-    prod: 100Gi
+    prod: 984Gi
     #small: 
     #medium:
     #large:
@@ -63,8 +63,8 @@ env:
     .spec.pod.resources.requests.cpu
   values:
     default: 2
-    #uat:
-    #prod:
+    uat: 2
+    prod: 11
     #small: 
     #medium:
     #large:
@@ -74,8 +74,8 @@ env:
     .spec.pod.resources.limits.cpu
   values:
     default: 2
-    #uat:
-    #prod:
+    uat: 2
+    prod: 11
     #small: 
     #medium:
     #large:
@@ -88,8 +88,8 @@ env:
     .spec.pod.resources.requests.memory
   values:
     default: 8Gi
-    #uat:
-    #prod:
+    uat: 8Gi
+    prod: 44Gi
     #small: 
     #medium:
     #large:
@@ -99,8 +99,8 @@ env:
     .spec.pod.resources.limits.memory
   values:
     default: 8Gi
-    #uat:
-    #prod:
+    uat: 8Gi
+    prod: 44Gi
     #small: 
     #medium:
     #large:
@@ -129,8 +129,8 @@ env:
     .spec.replicas
   values:
     default: 3
-    #uat:
-    #prod:
+    uat: 3
+    prod: 3
     #small: 
     #medium:
     #large:

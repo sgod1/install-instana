@@ -6,7 +6,7 @@ env:
   path: >
     .spec.ingestor.cpu
   values:
-    default: 8
+    default: 4
     # 250k metrics
     small: 4
     # 250k - 750k metrics
@@ -51,7 +51,7 @@ env:
   path: >
     .spec.aggregator.cpu
   values:
-    default: 8
+    default: 4
     # 250k metrics
     small: 4
     # 250k - 750k metrics
@@ -117,7 +117,7 @@ env:
   path: >
     .spec.aggregator.volumes.live.size
   values:
-    default: 2000Gi
+    default: 1000Gi
     # 250k metrics
     small: 1000Gi
     # 250k - 750k metrics
@@ -125,7 +125,7 @@ env:
     # 750k - 9m metrics
     large: 5000Gi
     uat: 1000Gi
-    prod: 5000Gi
+    prod: 1000Gi
 
 #
 # storage classes

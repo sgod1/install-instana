@@ -30,8 +30,8 @@ env:
   path: .spec.instances
   values:
     default: 3
-    #uat:
-    #prod:
+    uat: 3
+    prod: 3
     #small:
     #medium:
     #large:
@@ -44,7 +44,7 @@ env:
   values:
     default: 2
     uat: 2
-    prod: 2
+    prod: 11
     #small:
     #medium:
     #large:
@@ -54,7 +54,7 @@ env:
   values:
     default: 2
     uat: 2
-    prod: 2
+    prod: 11
     #small:
     #medium:
     #large:
@@ -64,7 +64,7 @@ env:
   values:
     default: 4Gi
     uat: 8Gi
-    prod: 8Gi
+    prod: 44Gi
     #small:
     #medium:
     #large:
@@ -74,7 +74,7 @@ env:
   values:
     default: 4Gi
     uat: 8Gi
-    prod: 8Gi
+    prod: 44Gi
     #small:
     #medium:
     #large:
@@ -85,9 +85,9 @@ env:
 - name: postgres-storage-size
   path: .spec.storage.size
   values:
-    default: 1Gi
+    default: 100Gi
     uat: 100Gi
-    prod: 100Gi
+    prod: 3934Gi
     #small:
     #medium:
     #large:
