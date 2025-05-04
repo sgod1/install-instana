@@ -7,6 +7,8 @@ source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
 
+export PATH=.:$(get_bin_home):$PATH
+
 CHART_HOME=$(get_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
 mkdir -p ${CHART_HOME}
@@ -25,6 +27,16 @@ set -x
 postgres_operator_img_repo=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 1 -`
 postgres_operator_img_tag=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 2 -`
 
+values_yaml="$(get_install_home)/postgres-helm-values-${INSTANA_VERSION}.yaml"
+cat <<EOF > $values_yaml
+image:
+  repository: $PRIVATE_REGISTRY/${postgres_operator_img_repo}
+  tag: ${postgres_operator_img_tag}
+
+imagePullSecrets:
+  - name: instana-registry
+EOF
+
 if is_platform_ocp "$PLATFORM"; then
    #
    # openshift
@@ -33,10 +45,7 @@ if is_platform_ocp "$PLATFORM"; then
    # uid range
    uid_range_start=`$KUBECTL get namespace instana-postgres -o jsonpath='{.metadata.annotations.openshift\.io\/sa\.scc\.uid-range}' | cut -d/ -f 1`
 
-   helm ${helm_action} postgres-operator -n instana-postgres $CHART \
-     --set image.repository=$PRIVATE_REGISTRY/${postgres_operator_img_repo} \
-     --set image.tag=${postgres_operator_img_tag} \
-     --set imagePullSecrets[0].name="instana-registry" \
+   helm ${helm_action} postgres-operator -n instana-postgres $CHART -f $values_yaml \
      --set containerSecurityContext.runAsUser=$uid_range_start \
      --set containerSecurityContext.runAsGroup=$uid_range_start \
      --wait --timeout 60m0s
@@ -44,10 +53,7 @@ if is_platform_ocp "$PLATFORM"; then
 
 else
    # k8s
-   helm ${helm_action} postgres-operator -n instana-postgres $CHART \
-     --set image.repository=$PRIVATE_REGISTRY/${postgres_operator_img_repo} \
-     --set image.tag=${postgres_operator_img_tag} \
-     --set imagePullSecrets[0].name="instana-registry" \
+   helm ${helm_action} postgres-operator -n instana-postgres $CHART -f $values_yaml \
      --wait --timeout 60m0s
    rc=$?
 fi

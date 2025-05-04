@@ -8,20 +8,20 @@ env:
     default: strenv(postgres_image)
 
 #
-# image pull secret (passed to operator heml)
+# image pull secret
 #
-#- name: image-pull-secret
-#  path: .spec.imagePullSecrets[0].name
-#  values:
-#    default: instana-registry
+- name: image-pull-secret
+  path: .spec.imagePullSecrets[0].name
+  values:
+    default: instana-registry
  
 #
-# image pull policy (passed to operator helm)
+# image pull policy
 #
-#- name: image-pull-policy
-#  path: .spec.imagePullPolicy
-#  values:
-#    default: IfNotPresent
+- name: image-pull-policy
+  path: .spec.imagePullPolicy
+  values:
+    default: IfNotPresent
 
 #
 # instance count

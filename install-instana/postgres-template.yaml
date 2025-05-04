@@ -9,9 +9,9 @@ spec:
   instances: 3
   imageName: <internal-image-registry>/datastore/cnpg-containers:15_v0.13.0
   imagePullPolicy: IfNotPresent
- # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
- # imagePullSecrets:
- #   - name: <internal-image-registry-pull-secret>
+  # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
+  imagePullSecrets:
+    - name: <internal-image-registry-pull-secret>
   postgresql:
     parameters:
       shared_buffers: 32MB
