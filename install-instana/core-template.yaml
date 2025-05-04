@@ -6,27 +6,24 @@ metadata:
 
 spec:
   imageConfig:
-    registry: <registry>
-    #repository: <repository>
-    tag: <tag>
+    registry: registry
+    tag: tag
 
   imagePullPolicy: IfNotPresent
+
   imagePullSecrets:
-    - name: image-pull-secret
+  - name: pullsecret
 
-  # assign iam roles on eks
-  #serviceAccountAnnotations: {} 
-  
-  #priorityClassName: global-pri-class-for-all-pods-by-operator
+  serviceAccountAnnotations:
 
-  baseDomain: base-domain
-  # cpu and memory: small/medium-large
+  priorityClassName:
+
+  baseDomain: baseDomain
+
   resourceProfile: small
 
   storageConfigs:
     rawSpans:
-      #s3Config:
-      #gcloudConfig:
       pvcConfig:
         accessModes: 
           - ReadWriteMany
@@ -34,6 +31,8 @@ spec:
           requests:
             storage: 100Gi
         storageClassName: rwx_storageclass
+      s3Config:
+      gcloudConfig:
 
     synthetics:
       pvcConfig:
@@ -43,6 +42,8 @@ spec:
           requests:
             storage: 50Gi
         storageClassName: rwx_storageclass
+      s3Config:
+      gcloudConfig:
 
     syntheticsKeystore:
       pvcConfig:
@@ -52,8 +53,10 @@ spec:
           requests:
             storage: 10Gi
         storageClassName: rwx_storageclass
+      s3Config:
+      gcloudConfig:
 
-    eumSourceMaps: 
+    eumSourceMaps:
       pvcConfig:
         accessModes:
           - ReadWriteMany
@@ -61,15 +64,10 @@ spec:
           requests:
             storage: 10Gi
         storageClassName: rwx_storageclass
+      s3Config:
+      gcloudConfig:
 
-  #heapDumpsPVC:
-  #  pvcConfig:
-  #    accessModes:
-  #      - ReadWriteMany
-  #    resources:
-  #      requests:
-  #        storage: 10Gi
-  #    storageClassName: rwx_storageclass
+  heapDumpsPVC:
 
   datastoreConfigs:
     cassandraConfigs:
@@ -78,7 +76,7 @@ spec:
         ports:
           - name: tcp
             port: 9042
-        #properties: {}
+        #properties: 
         authEnabled: true
         #keyspaces: []
         datacenter: cassandra
@@ -91,9 +89,9 @@ spec:
             port: 9000
           - name: http
             port: 8123
-        #properties: {}
+        #properties:
         authEnabled: true
-        #schemas: []
+        #schemas:
         clusterName: local
 
     elasticsearchConfig:
@@ -104,7 +102,7 @@ spec:
           port: 9300
         - name: http
           port: 9200
-      #properties: {}
+      #properties:
       authEnabled: true
       clusterName: instana
       defaultIndexShards: 5
@@ -118,7 +116,7 @@ spec:
       ports: 
         - name: tcp
           port: 9092
-      #properties: {}
+      #properties:
       authEnabled: true
       replicationFactor: 1
       # PLAIN, SCRAM-SHA-256, SCRAM-SHA-512
@@ -144,16 +142,7 @@ spec:
         authEnabled: true
         #databases: []
 
-  # override resourceProfile
-  #componentConfigs:
-  #  - name: component
-  #    resources:
-  #      requests:
-  #        cpu: 1
-  #        memory: 1Gi
-  #      limits:
-  #        cpu: 1
-  #        memory: 1Gi
+  componentConfigs:
 
   deploymentStrategyType: RollingUpdate
 
@@ -165,93 +154,57 @@ spec:
       useSSL: false
       startTLS: false
       check_server_identity: false
+    sesConfig:
 
-  # saml|oidc
   serviceProviderConfig:
     basePath: "/auth"
     maxIDPMetadataSizeInBytes: 200000
     maxAuthenticationLifetimeSeconds: 604800
 
-  #proxyConfig: {}
+  proxyConfig:
 
-  #geoDbUrl:
+  geoDbUrl:
 
   agentAcceptorConfig:
     host: agent-acceptor.instana.monitoring.<...>
     port: 443
 
   featureFlags:
-
-    - name: feature.beeinstana.infra.metrics.enabled
-      enabled: true
-
-    - name: feature.infra.smart.alerts.enabled
-      enabled: true
-
     - name: feature.logging.enabled
-      # logging uses clickhouse schema "logs". use a separate clickhose cluster or host
-      # smart alerts for logs from instana tracers
-      # unbounded analytics for logs from instana tracers
-      # licensed logging features: extended log retention,
-      # general log ingestion, log volume ingestion
-      enabled: true
-
+      enabled: false
+    - name: feature.beeinstana.infra.metrics.enabled
+      enabled: false
+    - name: feature.infra.smart.alerts.enabled
+      enabled: false
     - name: feature.automation.enabled
-      enabled: true
-
+      enabled: false
     - name: feature.synthetics.enabled
-      # configure: synthetics, syntheticsKeystore
-      enabled: true
-
+      enabled: false
     - name: feature.kubecost.enabled
-      # kubecost infra dashboard
       enabled: false
-
     - name: feature.pcf.enabled
-      # tanzu infra dashboard
       enabled: false
-
     - name: feature.vsphere.enabled
-      # vshpere infra dashboard
       enabled: false
-
-    - name feature.openstack.enabled
-      # openstack infra dashboard
+    - name: feature.openstack.enabled
       enabled: false
-
     - name: feature.phmc.enabled
-      # ibm power hmc infra dashboard
       enabled: false
-
     - name: feature.powervc.enabled
-      # ibm power vc infra dashboard
       enabled: false
-
     - name: feature.zhmc.enabled
-      # ibm z hmc infra dashboard
       enabled: false
-
     - name: feature.business.observability.enabled
       enabled: false
-
     - name: feature.assistme.enabled
-      # get answers button
       enabled: false
 
-    - name: feature.kubernetes.horizontal.pod.autoscaler.enable
-      # enabled by default
-      enabled: true
-
-  #env: {}
+  env:
 
   properties:
-    - name: retention.metrics.rollup5
-      value: 86400
 
-  #nodeSelector:
-  #tolerations:
+  nodeSelector:
+
+  tolerations:
 
   operationMode: normal
-
-  # saas only
-  #operationScopes: []
