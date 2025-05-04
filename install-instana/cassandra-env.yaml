@@ -6,7 +6,7 @@ env:
   path: >
     .spec.resources.requests.cpu
   values:
-    default: 1
+    default: 4
     uat: 10
     prod: 24
     #small:
@@ -17,7 +17,7 @@ env:
   path: >
     .spec.resources.limits.cpu
   values:
-    default: 1
+    default: 4
     uat: 10
     prod: 24
     #small:
@@ -28,7 +28,7 @@ env:
   path: >
     .spec.resources.requests.memory
   values:
-    default: 4Gi
+    default: 16Gi
     uat: 40Gi
     prod: 96Gi
     #small:
@@ -39,7 +39,7 @@ env:
   path: >
     .spec.resources.limits.memory
   values:
-    default: 4Gi
+    default: 16Gi
     uat: 40Gi
     prod: 96Gi
     #small:
@@ -67,7 +67,7 @@ env:
   path: >
     .spec.size
   values:
-    default: 1
+    default: 3
     uat: 3
     prod: 7
     #small:

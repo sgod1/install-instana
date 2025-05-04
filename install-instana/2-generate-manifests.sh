@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ../instana.env
 source ./help-functions.sh
 
 bin_home=$(get_bin_home)
@@ -11,10 +12,13 @@ echo ""
 
 replace_manifest=${1:-"noreplace"}
 
-cr-beeinstana-env.sh $replace_manifest; check_return_code $?
-#cr-cassandra-scc.sh $replace_manifest; check_return_code $?
-cr-cassandra-env.sh $replace_manifest; check_return_code $?
+if [[ $PLATFORM == "ocp" ]]; then
+cr-cassandra-scc.sh $replace_manifest; check_return_code $?
 #cr-clickhouse-scc.sh $replace_manifest; check_return_code $?
+fi
+
+cr-beeinstana-env.sh $replace_manifest; check_return_code $?
+cr-cassandra-env.sh $replace_manifest; check_return_code $?
 cr-clickhouse-env.sh $replace_manifest; check_return_code $?
 cr-elasticsearch-env.sh $replace_manifest; check_return_code $?
 cr-kafka-env.sh $replace_manifest; check_return_code $?

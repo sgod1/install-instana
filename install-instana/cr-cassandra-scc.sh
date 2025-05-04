@@ -38,6 +38,6 @@ allowHostIPC: true
 allowHostPID: true
 readOnlyRootFilesystem: false
 users:
-  - system:serviceaccount:instana-cassandra:cass-operator
+  - system:serviceaccount:instana-cassandra:cassandra-operator-cass-operator
   - system:serviceaccount:instana-cassandra:default
 EOF
