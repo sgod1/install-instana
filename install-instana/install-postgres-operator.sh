@@ -27,7 +27,7 @@ set -x
 postgres_operator_img_repo=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 1 -`
 postgres_operator_img_tag=`echo ${POSTGRES_OPERATOR_IMG} | cut -d : -f 2 -`
 
-values_yaml="$(get_install_home)/postgres-helm-values-${INSTANA_VERSION}.yaml"
+values_yaml="$(get_install_home)/postgres-operator-values-${INSTANA_VERSION}.yaml"
 cat <<EOF > $values_yaml
 image:
   repository: $PRIVATE_REGISTRY/${postgres_operator_img_repo}
