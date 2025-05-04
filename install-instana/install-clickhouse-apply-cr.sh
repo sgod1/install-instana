@@ -22,4 +22,4 @@ check_return_code $rc
 
 # todo check cr status
 
-return $rc
+exit $rc

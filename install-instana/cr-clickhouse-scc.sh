@@ -2,10 +2,11 @@
 
 source ../instana.env
 source ./help-functions.sh
+source ./install.env
 
 OUT_DIR=$(get_make_manifest_home)
-MANIFEST=$OUT_DIR/$MANIFEST_FILENAME_CLICKHOUSE_SCC
-MANIFEST=gen/clickhouse-scc.yaml
+
+MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_CLICKHOUSE_SCC $INSTANA_INSTALL_PROFILE $INSTANA_VERSION)
 
 if ! is_platform_ocp $PLATFORM; then
    echo clickhouse scc is openshift specific, does not apply to $PLATFORM

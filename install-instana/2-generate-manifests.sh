@@ -14,7 +14,7 @@ replace_manifest=${1:-"noreplace"}
 
 if [[ $PLATFORM == "ocp" ]]; then
 cr-cassandra-scc.sh $replace_manifest; check_return_code $?
-#cr-clickhouse-scc.sh $replace_manifest; check_return_code $?
+cr-clickhouse-scc.sh $replace_manifest; check_return_code $?
 fi
 
 cr-beeinstana-env.sh $replace_manifest; check_return_code $?
