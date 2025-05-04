@@ -29,5 +29,9 @@ check_return_code $?
 # post gen
 
 # remove security context if openshift
+if [[ $PLATFORM == "ocp" ]]; then
+  echo "ocp ... deleting .spec.nodeSets.[]|select(.name == "default")|.podTemplate.spec.securityContext from $MANIFEST"
+  $(get_bin_home)/yq -i 'del(.spec.nodeSets.[]|select(.name == "default")|.podTemplate.spec.securityContext)' $MANIFEST
+fi
 
 echo updated elasticsearch manifest $MANIFEST, profile $profile
