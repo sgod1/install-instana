@@ -30,5 +30,9 @@ check_return_code $?
 
 # post gen update, delete pod security context for ocp
 # yq -i 'del(.spec.pod.securityContext)' $MANIFEST
+if [[ $PLATFORM == "ocp" ]]; then
+  echo "ocp ... deleting .spec.pod.securityContext from $MANIFEST"
+  $(get_bin_home)/yq -i 'del(.spec.pod.securityContext)' $MANIFEST
+fi
 
 echo updated zookeeper manifest $MANIFEST, profile $profile
