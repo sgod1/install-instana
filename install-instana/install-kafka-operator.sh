@@ -7,6 +7,8 @@ source ../instana.env
 source ./help-functions.sh
 source ./datastore-images.env
 
+export PATH=.:$(get_bin_home):$PATH
+
 CHART_HOME=$(get_chart_home)
 CHART_HOME=${CHART_HOME}/${INSTANA_VERSION}
 mkdir -p ${CHART_HOME}

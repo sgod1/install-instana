@@ -29,6 +29,10 @@ check_return_code $?
 
 # platform-specific
 # delete pod security context if openshift
+if [[ $PLATFORM == "ocp" ]]; then
+  echo "ocp ... deleting .spec.entityOperator.template.pod.securityContext from $MANIFEST"
+  $(get_bin_home)/yq -i 'del(.spec.entityOperator.template.pod.securityContext)' $MANIFEST
+fi
 
 #
 # write kafka user
