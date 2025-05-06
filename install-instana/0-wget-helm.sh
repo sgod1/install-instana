@@ -2,6 +2,12 @@
 
 source ./help-functions.sh
 
+# https://helm.sh/docs/topics/version_skew/#supported-version-skew
+# 3.17.x	1.32.x - 1.29.x
+# 3.16.x	1.31.x - 1.28.x
+# 3.15.x	1.30.x - 1.27.x
+# 3.14.x	1.29.x - 1.26.x
+
 helm_version="v3.17.2"
 TAR_DARWIN_AMD64="helm-${helm_version}-darwin-amd64.tar.gz"
 TAR_DARWIN_ARM64="helm-${helm_version}-darwin-arm64.tar.gz"
