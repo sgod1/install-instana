@@ -36,3 +36,184 @@ env:
   path: .spec.resourceProfile
   values:
     default: strenv(resource_profile)
+
+#
+# appdata legacy converter
+#
+- name: appdata-legacy-converter-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-legacy-converter")
+    .replicas
+  values:
+    default: 3
+    uat: 9
+    prod: 16
+
+- name: appdata-legacy-converter-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-legacy-converter")
+    .resources.requests.memory
+  values:
+    default: 3962Mi
+    uat: 4027Mi
+    prod: 4338Mi
+
+- name: appdata-legacy-converter-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-legacy-converter")
+    .resources.requests.cpu
+  values:
+    default: 877m
+    uat: 892m
+    prod: 958m
+
+#
+# appdata-processor
+#
+- name: appdata-processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-processor")
+    .replicas
+  values:
+    default: 4
+    uat: 11
+    prod: 21
+
+- name: appdata-processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-processor")
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
+- name: appdata-processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-processor")
+    .resources.requests.cpu
+  values:
+    default: 1754m
+    uat: 1946m
+    prod: 1947m
+
+#
+# filler
+#
+- name: filler-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "filler")
+    .replicas
+  values:
+    default: 4
+    uat: 11
+    prod: 21
+
+- name: filler-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "filler")
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
+- name: filler-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "filler")
+    .resources.requests.cpu
+  values:
+    default: 1754m
+    uat: 1946m
+    prod: 1947m
+
+#
+# issuer tracker
+#
+- name: issue-tracker-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "issue-tracker")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: issue-tracker-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "issue-tracker")
+    .resources.requests.memory
+  values:
+    default: 2174Mi
+    uat: 2210Mi
+    prod: 2308Mi
+
+- name: issue-tracker-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "issue-tracker")
+    .resources.requests.cpu
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# processor
+#
+- name: processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "processor")
+    .replicas
+  values:
+    default: 4
+    uat: 11
+    prod: 21
+
+- name: processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "processor")
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
+- name: processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "processor")
+    .resources.requests.cpu
+  values:
+    default: 1754m
+    uat: 1946m
+    prod: 1947m
+
+#
+# ui backend
+#
+- name: ui-backend-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-backend")
+    .replicas
+  values:
+    default: 4
+    uat: 11
+    prod: 21
+
+- name: ui-backend-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-backend")
+    .resources.requests.memory
+  values:
+    default: 2210Mi
+    uat: 2451Mi
+    prod: 2459Mi
+
+- name: ui-backend-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-backend")
+    .resources.requests.cpu
+  values:
+    default: 877m
+    uat: 973m
+    prod: 973m
+

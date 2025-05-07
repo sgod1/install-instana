@@ -14,9 +14,9 @@ spec:
   imagePullSecrets:
   - name: pullsecret
 
-  serviceAccountAnnotations:
+  #serviceAccountAnnotations:
 
-  priorityClassName:
+  #priorityClassName:
 
   baseDomain: baseDomain
 
@@ -31,8 +31,8 @@ spec:
           requests:
             storage: 100Gi
         storageClassName: rwx_storageclass
-      s3Config:
-      gcloudConfig:
+      #s3Config:
+      #gcloudConfig:
 
     synthetics:
       pvcConfig:
@@ -42,8 +42,8 @@ spec:
           requests:
             storage: 50Gi
         storageClassName: rwx_storageclass
-      s3Config:
-      gcloudConfig:
+      #s3Config:
+      #gcloudConfig:
 
     syntheticsKeystore:
       pvcConfig:
@@ -53,8 +53,8 @@ spec:
           requests:
             storage: 10Gi
         storageClassName: rwx_storageclass
-      s3Config:
-      gcloudConfig:
+      #s3Config:
+      #gcloudConfig:
 
     eumSourceMaps:
       pvcConfig:
@@ -64,10 +64,10 @@ spec:
           requests:
             storage: 10Gi
         storageClassName: rwx_storageclass
-      s3Config:
-      gcloudConfig:
+      #s3Config:
+      #gcloudConfig:
 
-  heapDumpsPVC:
+  #heapDumpsPVC:
 
   datastoreConfigs:
     cassandraConfigs:
@@ -80,7 +80,7 @@ spec:
         authEnabled: true
         #keyspaces: []
         datacenter: cassandra
-        replicationFactor: 1
+        #replicationFactor: 1
 
     clickhouseConfigs:
       - hosts: []
@@ -105,9 +105,9 @@ spec:
       #properties:
       authEnabled: true
       clusterName: instana
-      defaultIndexShards: 5
-      defaultIndexReplicas: 0
-      defaultIndexRoutingPartitionSize: 2
+      #defaultIndexShards: 5
+      #defaultIndexReplicas: 0
+      #defaultIndexRoutingPartitionSize: 2
       #indexConfigs: []
 
     kafkaConfig:
@@ -118,7 +118,7 @@ spec:
           port: 9092
       #properties:
       authEnabled: true
-      replicationFactor: 1
+      #replicationFactor: 1
       # PLAIN, SCRAM-SHA-256, SCRAM-SHA-512
       saslMechanism: SCRAM-SHA-512
 
@@ -138,11 +138,155 @@ spec:
         ports:
           - name: tcp
             port: 5432
-        #properties: {}
+        #properties:
         authEnabled: true
         #databases: []
 
   componentConfigs:
+  - name: acceptor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 7124Mi
+      requests:
+        cpu: 877m
+        memory: 7060Mi
+  - name: accountant
+    replicas: 1
+    resources:
+      #limits:
+      #  memory: 4348Mi
+      requests:
+        cpu: 351m
+        memory: 4348Mi
+  - name: appdata-health-aggregator
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: appdata-health-processor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 702m
+        memory: 4371Mi
+  - name: appdata-reader
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: appdata-writer
+    replicas: 4
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 1316m
+        memory: 4371Mi
+  - name: butler
+    replicas: 1
+    resources:
+      #limits:
+      #  memory: 4348Mi
+      requests:
+        cpu: 351m
+        memory: 4348Mi
+  - name: cashier-ingest
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: cashier-rollup
+    replicas: 2 
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: eum-acceptor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: eum-health-processor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 702m
+        memory: 4371Mi
+  - name: eum-processor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 702m
+        memory: 4371Mi
+  - name: gateway
+    replicas: 1
+    resources:
+      #limits:
+      #  memory: 4348Mi
+      requests:
+        cpu: 702m
+        memory: 4348Mi
+  - name: groundskeeper
+    replicas: 1
+    resources:
+      #limits:
+      #  memory: 4348Mi
+      requests:
+        cpu: 702m
+        memory: 4348Mi
+  - name: js-stack-trace-translator
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: serverless-acceptor
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 877m
+        memory: 4371Mi
+  - name: sli-evaluator
+    replicas: 2
+    resources:
+      #limits:
+      #  memory: 4421Mi
+      requests:
+        cpu: 702m
+        memory: 4371Mi
+  - name: ui-client
+    replicas: 1
+    resources:
+      #limits:
+      #  memory: 955Mi
+      requests:
+        cpu: 351m
+        memory: 841Mi
 
   deploymentStrategyType: RollingUpdate
 
@@ -154,16 +298,16 @@ spec:
       useSSL: false
       startTLS: false
       check_server_identity: false
-    sesConfig:
+    #sesConfig:
 
   serviceProviderConfig:
     basePath: "/auth"
     maxIDPMetadataSizeInBytes: 200000
     maxAuthenticationLifetimeSeconds: 604800
 
-  proxyConfig:
+  #proxyConfig:
 
-  geoDbUrl:
+  #geoDbUrl:
 
   agentAcceptorConfig:
     host: agent-acceptor.instana.monitoring.<...>
@@ -199,12 +343,12 @@ spec:
     - name: feature.assistme.enabled
       enabled: false
 
-  env:
+  #env:
 
-  properties:
+  #properties:
 
-  nodeSelector:
+  #nodeSelector:
 
-  tolerations:
+  #tolerations:
 
   operationMode: normal

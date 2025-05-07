@@ -46,23 +46,23 @@ env:
   values:
     default: instana
 
-- name: elasticsearch-index-partition-size
-  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexRoutingPartitionSize
-  values:
-    default: 2
+#- name: elasticsearch-index-partition-size
+#  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexRoutingPartitionSize
+#  values:
+#    default: 2
 
-- name: elasticsearch-index-shards
-  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexShards
-  values:
-    default: 5
+#- name: elasticsearch-index-shards
+#  path: .spec.datastoreConfigs.elasticsearchConfig.defaultIndexShards
+#  values:
+#    default: 5
 
 #
 # kafka config
 #
-- name: kafka-replication-factor
-  path: .spec.datastoreConfigs.kafkaConfig.replicationFactor
-  values:
-    default: 1
+#- name: kafka-replication-factor
+#  path: .spec.datastoreConfigs.kafkaConfig.replicationFactor
+#  values:
+#    default: 1
 
 - name: kafka-sasl-mechanism
   path: .spec.datastoreConfigs.kafkaConfig.saslMechanism
@@ -184,6 +184,541 @@ env:
   path: .spec.agentAcceptorConfig.host
   values:
     default: strenv(agent_acceptor_host)
+
+- name: acceptor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "acceptor")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: acceptor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "acceptor")
+    .resources.requests.memory
+  values:
+    default: 7124Mi
+    uat: 7274Mi
+    prod: 7564Mi
+
+- name: acceptor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "acceptor")
+    .resources.requests.cpu
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# accountant
+#
+- name: accountant-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "accountant")
+    .replicas
+  values:
+    default: 1
+    uat: 2
+    prod: 3
+
+- name: accountant-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "accountant")
+    .resources.requests.memory
+  default: 4348Mi
+  uat: 6631Mi
+  prod: 8464Mi
+
+- name: accountant-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "accountant")
+    .resources.requests.cpu
+  default: 351m
+  uat: 535m
+  prod: 681m
+
+#
+# appdata health aggregator
+#
+- name: appdata-health-aggregator-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-aggregator")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: appdata-health-aggregator-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-aggregator")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: appdata-health-aggregator-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-aggregator")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# appdata-health-processor
+#
+- name: appdata-health-processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-processor")
+    .replicas
+  values:
+    default: 2
+    uat: 5
+    prod: 9
+
+- name: appdata-health-processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-processor")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: appdata-health-processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-processor")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 856m
+    prod: 908m
+
+#
+# appdata reader
+#
+- name: appdata-reader-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-reader")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: appdata-reader-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-reader")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: appdata-reader-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-reader")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# appdata writer
+#
+- name: appdata-writer-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-writer")
+    .replicas
+  values:
+    default: 4
+    uat: 11
+    prod: 21
+
+- name: appdata-writer-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-writer")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4617Mi
+
+- name: appdata-writer-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-writer")
+    .resources.requests.cpu 
+  values:
+    default: 1316m
+    uat: 1459m
+    prod: 1460m
+
+#
+# butler
+#
+- name: butler-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "butler")
+    .replicas
+  values:
+    default: 1
+    uat: 2
+    prod: 3
+
+- name: butler-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "butler")
+    .resources.requests.memory 
+  values:
+    default: 4348Mi
+    uat: 6631Mi
+    prod: 8464Mi
+
+- name: butler-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "butler")
+    .resources.requests.cpu 
+  values:
+    default: 351m
+    uat: 535m
+    prod: 681m
+
+#
+# cashier ingest
+#
+- name: cashier-ingest-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-ingest")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: cashier-ingest-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-ingest")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: cashier-ingest-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-ingest")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# cashier rollup
+#
+- name: cashier-rollup-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-rollup")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: cashier-rollup-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-rollup")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: cashier-rollup-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-rollup")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# eum acceptor
+#
+- name: eum-acceptor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-acceptor")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: eum-acceptor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-acceptor")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: eum-acceptor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-acceptor")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# eum health processor
+#
+- name: eum-health-processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-health-processor")
+    .replicas
+  values:
+    default: 2
+    uat: 5
+    prod: 9
+
+- name: eum-health-processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-health-processor")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: eum-health-processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-health-processor")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 856m
+    prod: 908m
+
+#
+# eum processor
+#
+- name: eum-processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-processor")
+    .replicas
+  values:
+    default: 2
+    uat: 5
+    prod: 9
+
+- name: eum-processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-processor")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: eum-processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-processor")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 856m
+    prod: 908m
+
+#
+# gateway
+#
+- name: gateway-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "gateway")
+    .replicas
+  values:
+    default: 1
+    uat: 3
+    prod: 5
+
+- name: gateway-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "gateway")
+    .resources.requests.memory 
+  values:
+    default: 4348Mi
+    uat: 4421Mi
+    prod: 5078Mi
+
+- name: gateway-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "gateway")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 713m
+    prod: 818m
+
+#
+# groundskeeper
+#
+- name: groundskeeper-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "groundskeeper")
+    .replicas
+  values:
+    default: 1
+    uat: 3
+    prod: 5
+
+- name: groundskeeper-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "groundskeeper")
+    .resources.requests.memory 
+  values:
+    default: 4348Mi
+    uat: 4421Mi
+    prod: 5078Mi
+
+- name: groundskeeper-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "groundskeeper")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 713m
+    prod: 818m
+
+#
+# js-stack-trace-translator
+#
+- name: js-stack-trace-translator-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "js-stack-trace-translator")
+    .replicas
+  values:
+    default: 2
+    uat: 6
+    prod: 11
+
+- name: js-stack-trace-translator-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "js-stack-trace-translator")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: js-stack-trace-translator-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "js-stack-trace-translator")
+    .resources.requests.cpu 
+  values:
+    default: 877m
+    uat: 892m
+    prod: 929m
+
+#
+# serverless-acceptor
+#
+- name: serverless-acceptor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "serverless-acceptor")
+    .replicas
+  values:
+    default: 2
+    uat: 4
+    prod: 8
+
+- name: serverless-acceptor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "serverless-acceptor")
+    .resources.requests.memory 
+  values:
+    default: 2899Mi
+    uat: 4421Mi
+    prod: 4232Mi
+
+- name: serverless-acceptor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "serverless-acceptor")
+    .resources.requests.cpu 
+  values:
+    default: 614m
+    uat: 936m
+    prod: 894m
+
+#
+# sli-evaluator
+#
+- name: sli-evaluator-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "sli-evaluator")
+    .replicas
+  values:
+    default: 2
+    uat: 5
+    prod: 9
+
+- name: sli-evaluator-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "sli-evaluator")
+    .resources.requests.memory 
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: sli-evaluator-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "sli-evaluator")
+    .resources.requests.cpu 
+  values:
+    default: 702m
+    uat: 856m
+    prod: 908m
+
+#
+# ui-client
+#
+- name: ui-client-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-client")
+    .replicas
+  values:
+    default: 1
+    uat: 2
+    prod: 3
+
+- name: ui-client-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-client")
+    .resources.requests.memory 
+  values:
+    default: 955Mi
+    uat: 1457Mi
+    prod: 1859Mi
+
+- name: ui-client-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-client")
+    .resources.requests.cpu 
+  values:
+    default: 351m
+    uat: 535m
+    prod: 681m
 
 #
 # optional features
