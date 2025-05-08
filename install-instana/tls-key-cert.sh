@@ -204,4 +204,4 @@ cert_chain_file=$(prefix_file_name $cert_chain_file_name $prof)
 
 echo ... writing cert chain ... $cert_chain_file
 
-cat $cert_file $root_ca_cert_file > $cert_chain_file
+cat $cert_file > $cert_chain_file
