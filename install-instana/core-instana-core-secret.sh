@@ -29,7 +29,7 @@ crypto_prefix=${1:-"sp"}
 install_home=$(get_install_home)
 manifest_home=$(get_manifest_home)
 
-check_replace_manifest $config_file $replace_manifest
+#check_replace_manifest $config_file $replace_manifest
 
 # service provider keychain
 core-sp-tls-keychain.sh $crypto_prefix
@@ -65,7 +65,7 @@ EOF
 # todo: s3 raw spans unsuppored
 #
 #if compare_values "$CORE_CONFIG_RAW_SPANS_TYPE" "s3"; then
-#cat << EOF >> $config_file
+#cat << EOF >> $outpath
 #    # Required if using S3 or compatible storage bucket.
 #    # Credentials should be configured.
 #    # Not required if IRSA on EKS is used.
@@ -80,7 +80,7 @@ EOF
 # todo: gcp raw spans unsupported
 #
 #if compare_values "$CORE_CONFIG_RAW_SPANS_TYPE" "gcp"; then
-#cat << EOF >> $CORE_CONFIG_FILE
+#cat << EOF >> $outpath
 #    # Required if using Google Cloud Storage.
 #    # Credentials should be configured.
 #    # Not required if GKE with workload identity is used.
@@ -221,8 +221,8 @@ datastoreConfigs:
   clickhouseConfigs:
     - user: "clickhouse-user"
       password: "${CLICKHOUSE_USER_PASS}"
-      adminUser: "default"
-      adminPassword: "${CLICKHOUSE_ADMIN_PASS}"
+      adminUser: "clickhouse-user"
+      adminPassword: "${CLICKHOUSE_USER_PASS}"
 EOF
 
 echo

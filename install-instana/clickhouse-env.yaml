@@ -127,16 +127,42 @@ env:
     default: strenv(rwo_storageclass)
 
 #
-# passwords
+# user passwords
 #
 - name: clickhouse-admin-password
   path: >
-    .spec.configuration.users."default/password"
+    .spec.configuration.users
+    ."default/password"
   values:
     default: strenv(clickhouse_admin_pass)
 
 - name: clickhouse-user-password
   path: >
-    .spec.configuration.users."clickhouse-user/password"
+    .spec.configuration.users
+    ."clickhouse-user/password"
+  values:
+    default: strenv(clickhouse_user_pass)
+
+#
+# remote servers secrets
+#
+- name: remote-servers-all-replicated-secret
+  path: >
+    .spec.configuration.settings
+    ."remote_servers/all-replicated/secret"
+  values:
+    default: strenv(clickhouse_user_pass)
+
+- name: remote-servers-all-sharded-secret
+  path: >
+    .spec.configuration.settings
+    ."remote_servers/all-sharded/secret"
+  values:
+    default: strenv(clickhouse_user_pass)
+
+- name: remote-servers-local-secret
+  path: >
+    .spec.configuration.settings
+    ."remote_servers/local/secret"
   values:
     default: strenv(clickhouse_user_pass)
