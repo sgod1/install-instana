@@ -26,48 +26,48 @@ spec:
   - name: appdata-legacy-converter
     replicas: 3
     resources:
-      #limits:
-      #  memory: 3962Mi
+      limits:
+        memory: 3962Mi
       requests:
         cpu: 877m
         memory: 3962Mi
   - name: appdata-processor
     replicas: 4
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 1754m
         memory: 4371Mi
   - name: filler
     replicas: 4
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 1754m
         memory: 4371Mi
   - name: issue-tracker
     replicas: 2
     resources:
-      #limits:
-      #  memory: 2174Mi
+      limits:
+        memory: 2174Mi
       requests:
         cpu: 877m
         memory: 2174Mi
   - name: processor
     replicas: 4
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 1754m
         memory: 4371Mi
   - name: ui-backend
     replicas: 4
     resources:
-      #limits:
-      #  memory: 2210Mi
+      limits:
+        memory: 2210Mi
       requests:
         cpu: 877m
         memory: 2186Mi

@@ -58,6 +58,15 @@ env:
     uat: 4027Mi
     prod: 4338Mi
 
+- name: appdata-legacy-converter-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-legacy-converter")
+    .resources.limits.memory
+  values:
+    default: 3962Mi
+    uat: 4027Mi
+    prod: 4338Mi
+
 - name: appdata-legacy-converter-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-legacy-converter")
@@ -83,6 +92,15 @@ env:
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-processor")
     .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
+- name: appdata-processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-processor")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4903Mi
@@ -118,6 +136,15 @@ env:
     uat: 4903Mi
     prod: 4917Mi
 
+- name: filler-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "filler")
+    .resources.limits.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
 - name: filler-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "filler")
@@ -143,6 +170,15 @@ env:
   path: >
     .spec.componentConfigs.[]|select(.name == "issue-tracker")
     .resources.requests.memory
+  values:
+    default: 2174Mi
+    uat: 2210Mi
+    prod: 2308Mi
+
+- name: issue-tracker-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "issue-tracker")
+    .resources.limits.memory
   values:
     default: 2174Mi
     uat: 2210Mi
@@ -178,6 +214,15 @@ env:
     uat: 4903Mi
     prod: 4917Mi
 
+- name: processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "processor")
+    .resources.limits.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4917Mi
+
 - name: processor-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "processor")
@@ -203,6 +248,15 @@ env:
   path: >
     .spec.componentConfigs.[]|select(.name == "ui-backend")
     .resources.requests.memory
+  values:
+    default: 2210Mi
+    uat: 2451Mi
+    prod: 2459Mi
+
+- name: ui-backend-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-backend")
+    .resources.limits.memory
   values:
     default: 2210Mi
     uat: 2451Mi
