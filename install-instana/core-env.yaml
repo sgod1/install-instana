@@ -32,11 +32,11 @@ env:
   values:
     default: cassandra
 
-- name: cassandra-replication-factor
-  path: >
-    .spec.datastoreConfigs.cassandraConfigs[0].datacenter
-  values:
-    default: 1
+#- name: cassandra-replication-factor
+#  path: >
+#    .spec.datastoreConfigs.cassandraConfigs[0].replicationFactor
+#  values:
+#    default: 1
 
 #
 # elasticsearch config
@@ -203,6 +203,15 @@ env:
     uat: 7274Mi
     prod: 7564Mi
 
+- name: acceptor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "acceptor")
+    .resources.limits.memory
+  values:
+    default: 7124Mi
+    uat: 7274Mi
+    prod: 7564Mi
+
 - name: acceptor-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "acceptor")
@@ -228,6 +237,14 @@ env:
   path: >
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.requests.memory
+  default: 4348Mi
+  uat: 6631Mi
+  prod: 8464Mi
+
+- name: accountant-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "accountant")
+    .resources.limits.memory
   default: 4348Mi
   uat: 6631Mi
   prod: 8464Mi
@@ -261,6 +278,15 @@ env:
     uat: 4494Mi
     prod: 4694Mi
 
+- name: appdata-health-aggregator-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-aggregator")
+    .resources.limits.memory 
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
 - name: appdata-health-aggregator-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-health-aggregator")
@@ -285,7 +311,16 @@ env:
 - name: appdata-health-processor-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-health-processor")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: appdata-health-processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-health-processor")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 5393Mi
@@ -315,7 +350,16 @@ env:
 - name: appdata-reader-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-reader")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: appdata-reader-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-reader")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4494Mi
@@ -345,7 +389,16 @@ env:
 - name: appdata-writer-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "appdata-writer")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4903Mi
+    prod: 4617Mi
+
+- name: appdata-writer-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "appdata-writer")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4903Mi
@@ -375,7 +428,16 @@ env:
 - name: butler-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "butler")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4348Mi
+    uat: 6631Mi
+    prod: 8464Mi
+
+- name: butler-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "butler")
+    .resources.limits.memory
   values:
     default: 4348Mi
     uat: 6631Mi
@@ -405,7 +467,16 @@ env:
 - name: cashier-ingest-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "cashier-ingest")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: cashier-ingest-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-ingest")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4494Mi
@@ -435,7 +506,16 @@ env:
 - name: cashier-rollup-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "cashier-rollup")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: cashier-rollup-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "cashier-rollup")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4494Mi
@@ -465,7 +545,16 @@ env:
 - name: eum-acceptor-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "eum-acceptor")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: eum-acceptor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-acceptor")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4494Mi
@@ -495,7 +584,16 @@ env:
 - name: eum-health-processor-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "eum-health-processor")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: eum-health-processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-health-processor")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 5393Mi
@@ -525,7 +623,16 @@ env:
 - name: eum-processor-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "eum-processor")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: eum-processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "eum-processor")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 5393Mi
@@ -555,7 +662,16 @@ env:
 - name: gateway-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "gateway")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4348Mi
+    uat: 4421Mi
+    prod: 5078Mi
+
+- name: gateway-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "gateway")
+    .resources.limits.memory
   values:
     default: 4348Mi
     uat: 4421Mi
@@ -585,7 +701,16 @@ env:
 - name: groundskeeper-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "groundskeeper")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4348Mi
+    uat: 4421Mi
+    prod: 5078Mi
+
+- name: groundskeeper-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "groundskeeper")
+    .resources.limits.memory
   values:
     default: 4348Mi
     uat: 4421Mi
@@ -615,7 +740,16 @@ env:
 - name: js-stack-trace-translator-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "js-stack-trace-translator")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 4494Mi
+    prod: 4694Mi
+
+- name: js-stack-trace-translator-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "js-stack-trace-translator")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 4494Mi
@@ -645,7 +779,16 @@ env:
 - name: serverless-acceptor-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "serverless-acceptor")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 2899Mi
+    uat: 4421Mi
+    prod: 4232Mi
+
+- name: serverless-acceptor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "serverless-acceptor")
+    .resources.limits.memory
   values:
     default: 2899Mi
     uat: 4421Mi
@@ -675,7 +818,16 @@ env:
 - name: sli-evaluator-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "sli-evaluator")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 4421Mi
+    uat: 5393Mi
+    prod: 5737Mi
+
+- name: sli-evaluator-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "sli-evaluator")
+    .resources.limits.memory
   values:
     default: 4421Mi
     uat: 5393Mi
@@ -705,7 +857,16 @@ env:
 - name: ui-client-req-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "ui-client")
-    .resources.requests.memory 
+    .resources.requests.memory
+  values:
+    default: 955Mi
+    uat: 1457Mi
+    prod: 1859Mi
+
+- name: ui-client-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "ui-client")
+    .resources.limits.memory
   values:
     default: 955Mi
     uat: 1457Mi

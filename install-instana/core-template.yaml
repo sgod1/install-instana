@@ -146,144 +146,144 @@ spec:
   - name: acceptor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 7124Mi
+      limits:
+        memory: 7124Mi
       requests:
         cpu: 877m
         memory: 7060Mi
   - name: accountant
     replicas: 1
     resources:
-      #limits:
-      #  memory: 4348Mi
+      limits:
+        memory: 4348Mi
       requests:
         cpu: 351m
         memory: 4348Mi
   - name: appdata-health-aggregator
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: appdata-health-processor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 702m
         memory: 4371Mi
   - name: appdata-reader
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: appdata-writer
     replicas: 4
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 1316m
         memory: 4371Mi
   - name: butler
     replicas: 1
     resources:
-      #limits:
-      #  memory: 4348Mi
+      limits:
+        memory: 4348Mi
       requests:
         cpu: 351m
         memory: 4348Mi
   - name: cashier-ingest
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: cashier-rollup
     replicas: 2 
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: eum-acceptor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: eum-health-processor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 702m
         memory: 4371Mi
   - name: eum-processor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 702m
         memory: 4371Mi
   - name: gateway
     replicas: 1
     resources:
-      #limits:
-      #  memory: 4348Mi
+      limits:
+        memory: 4348Mi
       requests:
         cpu: 702m
         memory: 4348Mi
   - name: groundskeeper
     replicas: 1
     resources:
-      #limits:
-      #  memory: 4348Mi
+      limits:
+        memory: 4348Mi
       requests:
         cpu: 702m
         memory: 4348Mi
   - name: js-stack-trace-translator
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: serverless-acceptor
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 877m
         memory: 4371Mi
   - name: sli-evaluator
     replicas: 2
     resources:
-      #limits:
-      #  memory: 4421Mi
+      limits:
+        memory: 4421Mi
       requests:
         cpu: 702m
         memory: 4371Mi
   - name: ui-client
     replicas: 1
     resources:
-      #limits:
-      #  memory: 955Mi
+      limits:
+        memory: 955Mi
       requests:
         cpu: 351m
         memory: 841Mi
