@@ -66,6 +66,9 @@ function display_key_val() {
 
     fi
 
+  elif [[ $key =~ ARG$ ]]; then
+    echo "$key($keytype) = $val"
+
   elif [[ $key =~ KEY ]]; then
     echo "$key($keytype) ... hidden"
 
@@ -171,6 +174,9 @@ fi
 check_for_key "CORE_CONFIG_TOKEN_SECRET" "${CORE_CONFIG_TOKEN_SECRET:-$missingval}"
 
 check_for_key "CORE_CONFIG_SP_KEY_PASSWORD" "${CORE_CONFIG_SP_KEY_PASSWORD:-$missingval}"
+
+display_header "openssl"
+check_for_key "OPENSSL_KEYPASS_ARG" "${OPENSSL_KEYPASS_ARG:-$missingval}" "-nodes|-noenc"
 
 display_header "cli binaries"
 check_for_cli_bin "yq"

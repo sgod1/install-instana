@@ -133,7 +133,7 @@ if test "$passfile" && test -f "$passfile"; then
    keypass="-passout file:$passfile"
 else
    echo "... no password file, key unencrypted"
-   keypass="-noenc"
+   keypass="${OPENSSL_KEYPASS_ARG}"
 fi
 
 openssl req -newkey rsa:2048 \
