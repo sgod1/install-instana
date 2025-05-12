@@ -27,16 +27,26 @@ set -x
 kafka_operator_img_tag=`echo ${KAFKA_OPERATOR_IMG} | cut -d : -f 2 -`
 kafka_img_tag=`echo ${KAFKA_IMG} | cut -d : -f 2 -`
 
-helm ${helm_action} kafka-operator -n instana-kafka $CHART \
-   --set image.registry=$PRIVATE_REGISTRY  \
-   --set image.repository=self-hosted-images/3rd-party/operator \
-   --set image.name=strimzi  \
-   --set image.tag=${kafka_operator_img_tag} \
-   --set kafka.image.registry=$PRIVATE_REGISTRY \
-   --set kafka.image.repository=self-hosted-images/3rd-party/datastore \
-   --set kafka.image.name=kafka \
-   --set kafka.image.tag=${kafka_img_tag} \
-   --set image.imagePullSecrets[0].name="instana-registry" \
+values_yaml="$(get_install_home)/kafka-operator-values-${INSTANA_VERSION}.yaml"
+cat <<EOF > $values_yaml
+image:
+  registry: $PRIVATE_REGISTRY
+  repository: self-hosted-images/3rd-party/operator
+  name: strimzi
+  tag: ${kafka_operator_img_tag}
+
+  imagePullSecrets:
+    - name: "instana-registry"
+
+  kafka:
+    image:
+      registry: $PRIVATE_REGISTRY
+      repository: self-hosted-images/3rd-party/datastore
+      name: kafka
+      tag: ${kafka_img_tag}
+EOF
+
+helm ${helm_action} kafka-operator -n instana-kafka $CHART -f $values_yaml \
    --wait --timeout 60m0s
 rc=$?
 

@@ -31,13 +31,24 @@ zookeeper_operator_img_tag=`echo ${ZOOKEEPER_OPERATOR_IMG} | cut -d : -f 2 -`
 zookeeper_hooks_img_repo=`echo ${ZOOKEEPER_KUBECTL_IMG} | cut -d : -f 1 -`
 zookeeper_hooks_img_tag=`echo ${ZOOKEEPER_KUBECTL_IMG} | cut -d : -f 2 -`
 
-helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART \
-   --set image.repository=${PRIVATE_REGISTRY}/${zookeeper_operator_img_repo} \
-   --set image.tag=${zookeeper_operator_img_tag} \
-   --set image.pullPolicy=Always \
-   --set hooks.image.repository=${PRIVATE_REGISTRY}/${zookeeper_hooks_img_repo} \
-   --set hooks.image.tag=${zookeeper_hooks_img_tag} \
-   --set global.imagePullSecrets={"instana-registry"} \
+values_yaml="$(get_install_home)/zookeeper-operator-values-${INSTANA_VERSION}.yaml"
+cat <<EOF > $values_yaml
+image:
+  repository: ${PRIVATE_REGISTRY}/${zookeeper_operator_img_repo}
+  tag: ${zookeeper_operator_img_tag}
+  pullPolicy: Always
+
+hooks:
+  image:
+    repository: ${PRIVATE_REGISTRY}/${zookeeper_hooks_img_repo}
+    tag: ${zookeeper_hooks_img_tag}
+
+global:
+  imagePullSecrets:
+    - name: instana-registry
+EOF
+
+helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART -f $values_yaml \
    --wait --timeout 60m0s
 rc=$?
 

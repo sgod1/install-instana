@@ -26,10 +26,17 @@ set -x
 
 elasticsearch_operator_image_tag=`echo $ELASTICSEARCH_OPERATOR_IMG | cut -d : -f 2 -`
 
-helm ${helm_action} elastic-operator -n instana-elasticsearch $CHART \
-   --set image.repository=$PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/elasticsearch \
-   --set image.tag=$elasticsearch_operator_image_tag \
-   --set imagePullSecrets[0].name="instana-registry" \
+values_yaml="$(get_install_home)/elasticsearch-operator-values-${INSTANA_VERSION}.yaml"
+cat <<EOF > $values_yaml
+image:
+  repository: $PRIVATE_REGISTRY/self-hosted-images/3rd-party/operator/elasticsearch
+  tag: $elasticsearch_operator_image_tag
+
+imagePullSecrets:
+  - name: "instana-registry"
+EOF
+
+helm ${helm_action} elastic-operator -n instana-elasticsearch $CHART -f $values_yaml \
    --wait --timeout 60m0s
 rc=$?
 
