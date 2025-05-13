@@ -31,11 +31,12 @@ image:
 imagePullSecrets:
   - name: "instana-registry"
 
-tolerations:
-  - effect: NoSchedule
-    key: dedicated
-    operator: Equal
-    value: appng
+operator:
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: appng
 EOF
 
 if is_platform_ocp "$PLATFORM"; then
