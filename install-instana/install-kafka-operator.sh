@@ -44,6 +44,12 @@ image:
       repository: self-hosted-images/3rd-party/datastore
       name: kafka
       tag: ${kafka_img_tag}
+
+tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: appng
 EOF
 
 helm ${helm_action} kafka-operator -n instana-kafka $CHART -f $values_yaml \

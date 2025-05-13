@@ -53,6 +53,12 @@ operator:
 
 imagePullSecrets:
    - name: "instana-registry"
+
+tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: appng
 EOF
 
 helm ${helm_action} clickhouse-operator -n instana-clickhouse $CHART -f $values_yaml \

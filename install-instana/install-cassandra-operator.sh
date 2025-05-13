@@ -78,6 +78,12 @@ appVersion: "$CASSANDRA_OPERATOR_CHART_APP_VERSION"
 imageConfig:
   systemLogger: "$PRIVATE_REGISTRY/$CASSANDRA_SYSTEM_LOGGER_IMG"
   k8ssandraClient: "$PRIVATE_REGISTRY/$CASSANDRA_K8S_CLIENT_IMG"
+
+tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: appng
 EOF
 
 helm ${helm_action} cassandra-operator -n instana-cassandra $CHART -f $values_yaml \

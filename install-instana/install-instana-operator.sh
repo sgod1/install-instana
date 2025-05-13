@@ -24,6 +24,12 @@ image:
 
 imagePullSecrets:
 - name: instana-registry
+
+tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: appng
 EOF
 
 # install instana operator

@@ -46,6 +46,12 @@ hooks:
 global:
   imagePullSecrets:
     - name: instana-registry
+
+tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: appng
 EOF
 
 helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART -f $values_yaml \
