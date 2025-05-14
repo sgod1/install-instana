@@ -99,6 +99,11 @@ spec:
     podTemplates:
     - name: clickhouse
       spec:
+        tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: appng
         containers:
         - command:
           - clickhouse-server
