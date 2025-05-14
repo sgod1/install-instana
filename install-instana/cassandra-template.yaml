@@ -25,7 +25,11 @@ spec:
       - name: <internal-image-registry-pull-secret>
       containers:
       - name: cassandra
-      tolerations: []
+      tolerations:
+        - effect: NoSchedule
+          key: dedicated
+          operator: Equal
+          value: appng
   managementApiAuth:
     insecure: {}
   size: 3
