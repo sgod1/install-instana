@@ -18,6 +18,12 @@ spec:
         node.store.allow_mmap: false
       podTemplate:
         spec:
+          #affinity: {}
+          tolerations:
+            - effect: NoSchedule
+              key: dedicated
+              operator: Equal
+              value: appng
           # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
           imagePullSecrets:
             - name: <internal-image-registry-pull-secret>
