@@ -50,7 +50,7 @@ env:
     #large:
 
 - name: postgres-cpu-limit
-  path: .spec.resources.requests.cpu
+  path: .spec.resources.limits.cpu
   values:
     default: 2
     uat: 2
