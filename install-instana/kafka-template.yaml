@@ -39,6 +39,9 @@ spec:
           type: persistent-claim
           size: 50Gi
           deleteClaim: true
+    template:
+      pod:
+        tolerations: []
   zookeeper:
     replicas: 3
     storage:
@@ -46,6 +49,9 @@ spec:
       type: persistent-claim
       size: 5Gi
       deleteClaim: true
+    template:
+      pod:
+        tolerations: []
   entityOperator:
     template:
       pod:
@@ -54,5 +60,10 @@ spec:
         securityContext:
           runAsUser: 1000
           fsGroup: 1000
+        tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: appng
     userOperator:
       image: <internal-image-registry>/operator/strimzi:0.45.0_v0.14.0
