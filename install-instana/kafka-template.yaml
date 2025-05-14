@@ -41,7 +41,12 @@ spec:
           deleteClaim: true
     template:
       pod:
-        tolerations: []
+        tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: appng
+
   zookeeper:
     replicas: 3
     storage:
@@ -51,7 +56,12 @@ spec:
       deleteClaim: true
     template:
       pod:
-        tolerations: []
+        tolerations:
+          - effect: NoSchedule
+            key: dedicated
+            operator: Equal
+            value: appng
+
   entityOperator:
     template:
       pod:
