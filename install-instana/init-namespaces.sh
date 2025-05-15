@@ -42,8 +42,8 @@ EOF
   $KUBECTL apply -f $NS_YAML
   check_return_code $?
 
-  $KUBECTL wait --for=jsonpath='{.status.phase}'=Active ns/$ns
-  check_return_code $?
+#  $KUBECTL wait --for=jsonpath='{.status.phase}'=Active ns/$ns
+#  check_return_code $?
 
   echo ... namespace $ns status Active ...
 }
