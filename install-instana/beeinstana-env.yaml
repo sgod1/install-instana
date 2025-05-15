@@ -73,8 +73,7 @@ env:
     # 750k - 9m metrics
     large: 128Gi
     uat: 32Gi
-    # taking 16 gb form 128
-    prod: 112Gi
+    prod: 128Gi
 
 - name: aggregator-shards
   path: >
