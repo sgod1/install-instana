@@ -38,7 +38,9 @@ env:
   values:
     default: 500Gi
     uat: 750Gi
-    prod: 2950Gi
+    #prod: 2950Gi
+    # reducing, must monitor
+    prod: 1500Gi
     #small:
     #medium:
     #large:
@@ -50,7 +52,9 @@ env:
   values:
     default: 500Gi
     uat: 750Gi
-    prod: 2950Gi
+    #prod: 2950Gi
+    # reducing, must monitor
+    prod: 1500Gi
     #small:
     #medium:
     #large:
@@ -62,7 +66,9 @@ env:
   values:
     default: 500Gi
     uat: 750Gi
-    prod: 2950Gi
+    #prod: 2950Gi
+    # reducing, must monitor
+    prod: 1500Gi
     #small:
     #medium:
     #large:
