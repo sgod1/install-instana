@@ -393,7 +393,7 @@ env:
   values:
     default: 4421Mi
     uat: 4903Mi
-    prod: 4617Mi
+    prod: 8192Mi
 
 - name: appdata-writer-lim-mem
   path: >
@@ -402,7 +402,7 @@ env:
   values:
     default: 4421Mi
     uat: 4903Mi
-    prod: 4617Mi
+    prod: 8192Mi
 
 - name: appdata-writer-req-cpu
   path: >
