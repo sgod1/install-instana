@@ -49,9 +49,9 @@ global:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${ZOOKEEPER_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${ZOOKEEPER_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 helm ${helm_action} zookeeper-operator -n instana-zookeeper $CHART -f $values_yaml \

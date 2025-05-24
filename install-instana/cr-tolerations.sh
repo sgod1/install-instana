@@ -46,7 +46,7 @@ echo
 for tolpath in ${args[@]:3}; do
 
   if [[ `./gen/bin/yq eval "$tolpath" $tolyaml` == null ]]; then
-    echo adding toleration value $tolvalue at $tolpath
+    echo adding toleration key $tolkey, value $tolvalue at $tolpath
     ./gen/bin/yq -i "$tolpath += (load(\"$toldef\"))" $tolyaml
 
   else
