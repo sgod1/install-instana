@@ -6,6 +6,8 @@ source ./datastore-images.env
 source ./help-functions.sh
 source ./cr-env.sh
 
+export PATH=.:$PATH
+
 replace_manifest=${1:-"noreplace"}
 
 export kafka_operator_image=${PRIVATE_REGISTRY}/${KAFKA_OPERATOR_IMG}
@@ -24,6 +26,16 @@ MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_KAFKA $profile $INSTANA_
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
+# tolerations
+tolpaths=".spec.kafka.template.pod.tolerations .spec.zookeeper.template.pod.tolerations .spec.entityOperator.template.pod.tolerations"
+
+export kafka_toleration_key=${KAFKA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+export kafka_toleration_value=${KAFKA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+cr-tolerations.sh $MANIFEST $kafka_toleration_key $kafka_toleration_value $tolpaths
+check_return_code $?
+
+# env
 cr_env $template_cr $env_file $MANIFEST $profile
 check_return_code $?
 
