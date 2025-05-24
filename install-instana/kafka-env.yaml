@@ -144,35 +144,35 @@ env:
 #
 # tolerations
 #
-- name: kafka-pod-toleration_key
+- name: kafka-pod-toleration-key
   path: .spec.kafka.template.pod.tolerations[0].key
   values:
     default: strenv(kafka_toleration_key)
     #uat: dedicated
     #prod: dedicated
 
-- name: kafka-pod-toleration_value
+- name: kafka-pod-toleration-value
   path: .spec.kafka.template.pod.tolerations[0].value
   values:
     default: strenv(kafka_toleration_value)
     #uat: appng
     #prod: appng
 
-- name: zookeeper-pod-toleration_key
+- name: zookeeper-pod-toleration-key
   path: .spec.zookeeper.template.pod.tolerations[0].key
   values:
     default: strenv(kafka_toleration_key)
     #uat: dedicated
     #prod: dedicated
 
-- name: zookeeper-pod-toleration_value
+- name: zookeeper-pod-toleration-value
   path: .spec.zookeeper.template.pod.tolerations[0].value
   values:
     default: strenv(kafka_toleration_value)
     #uat: appng
     #prod: appng
 
-- name: entity-operator-pod-toleration_key
+- name: entity-operator-pod-toleration-key
   path: .spec.entityOperator.template.pod.tolerations[0].key
   values:
     default: strenv(kafka_toleration_key)
