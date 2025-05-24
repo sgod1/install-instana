@@ -171,3 +171,48 @@ env:
     .spec.config.image.tag
   values:
     default: strenv(beeinstana_monconfig_img_tag)
+
+#
+# tolerations
+#
+- name: config-toleration-key
+  path: .spec.config.tolerations[0].key
+  values:
+    default: strenv(beeinstana_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: config-toleration-value
+  path: .spec.config.tolerations[0].value
+  values:
+    default: strenv(beeinstana_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: ingestor-toleration-key
+  path: .spec.ingestor.tolerations[0].key
+  values:
+    default: strenv(beeinstana_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: ingestor-toleration-value
+  path: .spec.ingestor.tolerations[0].value
+  values:
+    default: strenv(beeinstana_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: aggregator-toleration-key
+  path: .spec.aggregator.tolerations[0].key
+  values:
+    default: strenv(beeinstana_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: aggregator-toleration-value
+  path: .spec.aggregator.tolerations[0].value
+  values:
+    default: strenv(beeinstana_toleration_value)
+    #uat: appng
+    #prod: appng

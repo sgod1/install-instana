@@ -26,11 +26,6 @@ spec:
     image:
       name: beeinstana/monconfig
       tag: v2.19.0
-    tolerations:
-      - effect: NoSchedule
-        key: dedicated
-        operator: Equal
-        value: appng
   ingestor:
     cpu: 8
     memory: 4Gi
@@ -41,22 +36,12 @@ spec:
     image:
       name: beeinstana/ingestor
       tag: v1.85.36-release
-    tolerations:
-      - effect: NoSchedule
-        key: dedicated
-        operator: Equal
-        value: appng
   aggregator:
     cpu: 4
     memory: 16Gi
     limitMemory: true
     mirrors: 2
     shards: 1
-    tolerations:
-      - effect: NoSchedule
-        key: dedicated
-        operator: Equal
-        value: appng
     volumes:
       live:
         size: 2000Gi
