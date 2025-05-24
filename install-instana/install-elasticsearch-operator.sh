@@ -37,9 +37,9 @@ imagePullSecrets:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${ELASTICSEARCH_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${ELASTICSEARCH_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 helm ${helm_action} elastic-operator -n instana-elasticsearch $CHART -f $values_yaml \

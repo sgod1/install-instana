@@ -6,6 +6,8 @@ source ./datastore-images.env
 source ./help-functions.sh
 source ./cr-env.sh
 
+export PATH=".:$PATH"
+
 replace_manifest=${1:-"noreplace"}
 
 export elasticsearch_version=${ELASTICSEARCH_VERSION}
@@ -23,6 +25,17 @@ MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_ELASTICSEARCH $profile $
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
+# tolerations
+idx=$(./gen/bin/yq '.spec.nodeSets.[]|select(.name=="default")|path|.[-1]' $MANIFEST)
+tolpaths=".spec.nodeSets[$idx].podTemplate.spec.tolerations"
+
+export elasticsearch_toleration_key=${ELASTICSEARCH_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+export elasticsearch_toleration_value=${ELASTICSEARCH_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+cr-tolerations.sh $MANIFEST $elasticsearch_toleration_key $elasticsearch_toleration_value $tolpaths
+check_return_code $?
+
+# env
 cr_env $template_cr $env_file $MANIFEST $profile
 check_return_code $?
 

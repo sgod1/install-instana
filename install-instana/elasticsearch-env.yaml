@@ -147,3 +147,20 @@ env:
     .spec.storageClassName
   values:
     default: strenv(rwo_storageclass)
+
+#
+# tolerations
+#
+- name: elasticsearch-pod-toleration-key
+  path: .spec.nodeSets.[]|select(.name=="default")|.podTemplate.spec.tolerations[0].key
+  values:
+    default: strenv(elasticsearch_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: elasticsearch-pod-toleration-value
+  path: .spec.nodeSets.[]|select(.name=="default")|.podTemplate.spec.tolerations[0].value
+  values:
+    default: strenv(elasticsearch_toleration_value)
+    #uat: appng
+    #prod: appng
