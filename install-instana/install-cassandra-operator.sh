@@ -81,9 +81,9 @@ imageConfig:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${CASSANDRA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${CASSANDRA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 helm ${helm_action} cassandra-operator -n instana-cassandra $CHART -f $values_yaml \

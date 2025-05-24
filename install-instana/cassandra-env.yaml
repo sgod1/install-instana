@@ -103,3 +103,34 @@ env:
     .spec.podTemplateSpec.spec.imagePullSecrets[0].name
   values:
     default: instana-registry
+
+#
+# tolerations
+#
+- name: spec-toleration-key
+  path: .spec.tolerations[0].key
+  values:
+    default: strenv(cassandra_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: spec-toleration-value
+  path: .spec.tolerations[0].value
+  values:
+    default: strenv(cassandra_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: pod-template-spec-toleration-key
+  path: .spec.podTemplateSpec.spec.tolerations[0].key
+  values:
+    default: strenv(cassandra_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: pod-template-spec-toleration-value
+  path: .spec.podTemplateSpec.spec.tolerations[0].value
+  values:
+    default: strenv(cassandra_toleration_value)
+    #uat: appng
+    #prod: appng

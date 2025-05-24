@@ -13,11 +13,6 @@ spec:
   k8ssandraClientImage: <internal-image-registry>/datastore/k8ssandra-client:0.6.0_v0.9.0
   serverVersion: "4.1.4"
   imagePullPolicy: Always
-  tolerations:
-    - effect: NoSchedule
-      key: dedicated
-      operator: Equal
-      value: appng
   podTemplateSpec:
     spec:
       # Optional: if you created an image pull secret for your internal registry, uncomment the following lines and update the image pull secret information.
@@ -25,11 +20,6 @@ spec:
       - name: <internal-image-registry-pull-secret>
       containers:
       - name: cassandra
-      tolerations:
-        - effect: NoSchedule
-          key: dedicated
-          operator: Equal
-          value: appng
   managementApiAuth:
     insecure: {}
   size: 3
