@@ -172,3 +172,24 @@ env:
     ."remote_servers/local/secret"
   values:
     default: strenv(clickhouse_user_pass)
+
+#
+# tolerations
+#
+- name: clickhouse-pod-template-toleration-key
+  path: >
+    .spec.templates.podTemplates.[] | select(.name=="clickhouse") |
+    .spec.tolerations[0].key
+  values:
+    default: strenv(clickhouse_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: clickhouse-pod-template-toleration-value
+  path: >
+    .spec.templates.podTemplates.[] | select(.name=="clickhouse") |
+    .spec.tolerations[0].value
+  values:
+    default: strenv(clickhouse_toleration_value)
+    #uat: appng
+    #prod: appng

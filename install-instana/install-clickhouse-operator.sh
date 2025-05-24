@@ -56,9 +56,9 @@ imagePullSecrets:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${CLICKHOUSE_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${CLICKHOUSE_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 helm ${helm_action} clickhouse-operator -n instana-clickhouse $CHART -f $values_yaml \
