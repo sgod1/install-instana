@@ -47,9 +47,9 @@ image:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${KAFKA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${KAFKA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 helm ${helm_action} kafka-operator -n instana-kafka $CHART -f $values_yaml \
