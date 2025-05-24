@@ -99,3 +99,20 @@ env:
   path: .spec.storage.storageClass
   values:
     default: strenv(rwo_storageclass)
+
+#
+# tolerations
+#
+- name: postgres-pod-toleration-key
+  path: .spec.affinity.tolerations[0].key
+  values:
+    default: strenv(postgres_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: postgres-pod-toleration-value
+  path: .spec.affinity.tolerations[0].value
+  values:
+    default: strenv(postgres_toleration_value)
+    #uat: appng
+    #prod: appng

@@ -38,9 +38,9 @@ imagePullSecrets:
 
 tolerations:
   - effect: NoSchedule
-    key: dedicated
+    key: ${POSTGRES_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
     operator: Equal
-    value: appng
+    value: ${POSTGRES_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 EOF
 
 if is_platform_ocp "$PLATFORM"; then
