@@ -3,6 +3,8 @@
 source ../instana.env
 source ./help-functions.sh
 
+export PATH=".:$PATH"
+
 INSTALL_HOME=$(get_install_home)
 BIN_HOME=$(get_bin_home)
 
@@ -38,5 +40,26 @@ EOF
 echo Generating Instana operator manifests in $MANIFEST_DIR directory
 echo ""
 
-set -x
+#set -x
 $INSTANA_KUBECTL operator template --namespace instana-operator --values $VALUES_FILE --output-dir $MANIFEST_DIR
+
+# tolerations operator
+MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator.yaml
+
+idx=$(./gen/bin/yq '.spec.template.spec.containers.[]|select(.name=="instana-enterprise-operator")|path|.[-1]' $MANIFEST)
+tolpaths=".spec.template.spec.containers.[$idx].tolerations"
+
+instana_toleration_key=${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+instana_toleration_value=${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
+check_return_code $?
+
+# tolerations operator webhook
+MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator-webhook.yaml
+
+idx=$(./gen/bin/yq '.spec.template.spec.containers.[]|select(.name=="instana-enterprise-operator-webhook")|path|.[-1]' $MANIFEST)
+tolpaths=".spec.template.spec.containers.[$idx].tolerations"
+
+cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
+check_return_code $?
