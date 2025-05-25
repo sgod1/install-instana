@@ -956,3 +956,385 @@ env:
   path: .spec.featureFlags.[]|select(.name == "feature.assistme.enabled")|.enabled
   values:
     default: true
+
+#
+# tolerations
+#
+- name: acceptor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="acceptor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: acceptor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="acceptor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: accountant-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="accountant")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: accountant-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="accountant")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: appdata-health-aggregator-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-health-aggregator")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-health-aggregator-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-health-aggregator")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: appdata-health-processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-health-processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-health-processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-health-processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: appdata-reader-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-reader")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-reader-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-reader")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: appdata-writer-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-writer")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-writer-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-writer")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: butler-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="butler")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: butler-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="butler")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: cashier-ingest-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="cashier-ingest")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: cashier-ingest-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="cashier-ingest")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: cashier-rollup-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="cashier-rollup")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: cashier-rollup-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="cashier-rollup")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: eum-acceptor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-acceptor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: eum-acceptor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-acceptor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: eum-health-processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-health-processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: eum-health-processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-health-processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: eum-processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: eum-processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="eum-processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: gateway-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="gateway")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: gateway-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="gateway")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: groundskeeper-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="groundskeeper")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: groundskeeper-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="groundskeeper")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: js-stack-trace-translator-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="js-stack-trace-translator")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: js-stack-trace-translator-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="js-stack-trace-translator")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: serverless-acceptor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="serverless-acceptor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: serverless-acceptor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="serverless-acceptor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: sli-evaluator-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="sli-evaluator")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: sli-evaluator-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="sli-evaluator")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: ui-client-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="ui-client")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: ui-client-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="ui-client")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: log-processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: log-processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: log-reader-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-reader")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: log-reader-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-reader")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: log-writer-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-writer")|
+    .tolerations[0].key
+  values:
+    default: strenv(core_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: log-writer-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="log-writer")|
+    .tolerations[0].value
+  values:
+    default: strenv(core_toleration_value)
+    #uat: appng
+    #prod: appng
+

@@ -287,6 +287,9 @@ spec:
       requests:
         cpu: 351m
         memory: 841Mi
+  - name: log-processor
+  - name: log-reader
+  - name: log-writer
 
   deploymentStrategyType: RollingUpdate
 

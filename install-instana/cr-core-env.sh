@@ -6,6 +6,8 @@ source ./help-functions.sh
 source ./cr-env.sh
 source ./release.env
 
+export PATH=".:$PATH"
+
 function update_clickhouse_hosts() {
    local coreyaml=$1
    local profile=${2:-"profile value expected"}
@@ -95,6 +97,78 @@ MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_CORE $profile $INSTANA_V
 
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
+
+# tolerations
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="acceptor")|path|.[-1]' $MANIFEST)
+tolpaths=".spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="accountant")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="appdata-health-aggregator")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="appdata-health-processor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="appdata-reader")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="appdata-writer")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="butler")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="cashier-ingest")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="cashier-rollup")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="eum-acceptor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="eum-health-processor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="eum-processor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="gateway")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="groundskeeper")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="js-stack-trace-translator")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="serverless-acceptor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="sli-evaluator")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="ui-client")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="log-processor")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="log-reader")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="log-writer")|path|.[-1]' $MANIFEST)
+tolpaths="$tolpaths .spec.componentConfigs[$idx].tolerations"
+
+export core_toleration_key=${CORE_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+export core_toleration_value=${CORE_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+cr-tolerations.sh $MANIFEST $core_toleration_key $core_toleration_value $tolpaths
+check_return_code $?
+
+# env
 
 cr_env $template_cr $env_file $MANIFEST $profile
 check_return_code $?
