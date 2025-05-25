@@ -271,3 +271,114 @@ env:
     uat: 973m
     prod: 973m
 
+#
+# tolerations
+#
+- name: appdata-legacy-converter-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-legacy-converter")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-legacy-converter-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-legacy-converter")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: appdata-processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: appdata-processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="appdata-processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: filler-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="filler")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: filler-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="filler")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: issue-tracker-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="issue-tracker")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: issue-tracker-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="issue-tracker")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: processor-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="processor")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: processor-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="processor")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+
+- name: ui-backend-pod-toleration-key
+  path: >
+    .spec.componentConfigs.[]|select(.name=="ui-backend")|
+    .tolerations[0].key
+  values:
+    default: strenv(unit_toleration_key)
+    #uat: dedicated
+    #prod: dedicated
+
+- name: ui-backend-pod-toleration-value
+  path: >
+    .spec.componentConfigs.[]|select(.name=="ui-backend")|
+    .tolerations[0].value
+  values:
+    default: strenv(unit_toleration_value)
+    #uat: appng
+    #prod: appng
+

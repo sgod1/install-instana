@@ -169,7 +169,6 @@ cr-tolerations.sh $MANIFEST $core_toleration_key $core_toleration_value $tolpath
 check_return_code $?
 
 # env
-
 cr_env $template_cr $env_file $MANIFEST $profile
 check_return_code $?
 
