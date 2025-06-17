@@ -287,6 +287,15 @@ spec:
       requests:
         cpu: 351m
         memory: 841Mi
+  - name: tag-processor
+    replicas: 1
+    resources:
+      limits:
+        memory: 4500Mi
+      requests:
+        cpu: 1
+        memory: 4500Mi
+      
   - name: log-processor
   - name: log-reader
   - name: log-writer

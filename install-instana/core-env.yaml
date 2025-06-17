@@ -882,6 +882,45 @@ env:
     prod: 681m
 
 #
+# tag processor
+#
+- name: tag-processor-replicas
+  path: >
+    .spec.componentConfigs.[]|select(.name == "tag-processor")
+    .replicas
+  values:
+    default: 1
+    uat: 1
+    prod: 1
+
+- name: tag-processor-req-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "tag-processor")
+    .resources.requests.memory
+  values:
+    default: 4500Mi
+    uat: 9000Mi
+    prod: 12000Mi
+
+- name: tag-processor-lim-mem
+  path: >
+    .spec.componentConfigs.[]|select(.name == "tag-processor")
+    .resources.limits.memory
+  values:
+    default: 4500Mi
+    uat: 9000Mi
+    prod: 12000Mi
+
+- name: tag-processor-req-cpu
+  path: >
+    .spec.componentConfigs.[]|select(.name == "tag-processor")
+    .resources.requests.cpu 
+  values:
+    default: 1
+    uat: 1
+    prod: 1
+
+#
 # optional features
 #
 
