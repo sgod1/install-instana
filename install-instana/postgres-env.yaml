@@ -30,6 +30,7 @@ env:
   path: .spec.instances
   values:
     default: 3
+    dev: 1
     uat: 3
     prod: 3
     #small:
@@ -43,6 +44,7 @@ env:
   path: .spec.resources.requests.cpu
   values:
     default: 2
+    dev: 2
     uat: 2
     prod: 11
     #small:
@@ -53,6 +55,7 @@ env:
   path: .spec.resources.limits.cpu
   values:
     default: 2
+    dev: 2
     uat: 2
     prod: 11
     #small:
@@ -63,6 +66,7 @@ env:
   path: .spec.resources.requests.memory
   values:
     default: 4Gi
+    dev: 4Gi
     uat: 8Gi
     prod: 44Gi
     #small:
@@ -73,6 +77,7 @@ env:
   path: .spec.resources.limits.memory
   values:
     default: 4Gi
+    dev: 4Gi
     uat: 8Gi
     prod: 44Gi
     #small:
@@ -86,7 +91,8 @@ env:
   path: .spec.storage.size
   values:
     default: 100Gi
-    uat: 100Gi
+    dev: 100Gi
+    uat: 300Gi
     prod: 3934Gi
     #small:
     #medium:

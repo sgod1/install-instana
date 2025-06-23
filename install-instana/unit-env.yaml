@@ -36,6 +36,7 @@ env:
   path: .spec.resourceProfile
   values:
     default: strenv(resource_profile)
+    dev: strenv(resource_profile)
 
 #
 # appdata legacy converter
@@ -46,6 +47,7 @@ env:
     .replicas
   values:
     default: 3
+    dev: 1
     uat: 9
     prod: 16
 
@@ -55,6 +57,7 @@ env:
     .resources.requests.memory
   values:
     default: 3962Mi
+    dev: 4Gi
     uat: 4027Mi
     prod: 4338Mi
 
@@ -64,6 +67,7 @@ env:
     .resources.limits.memory
   values:
     default: 3962Mi
+    dev: 4Gi
     uat: 4027Mi
     prod: 4338Mi
 
@@ -73,6 +77,7 @@ env:
     .resources.requests.cpu
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 958m
 
@@ -85,6 +90,7 @@ env:
     .replicas
   values:
     default: 4
+    dev: 1
     uat: 11
     prod: 21
 
@@ -94,6 +100,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -103,6 +110,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -112,6 +120,7 @@ env:
     .resources.requests.cpu
   values:
     default: 1754m
+    dev: 2
     uat: 1946m
     prod: 1947m
 
@@ -124,6 +133,7 @@ env:
     .replicas
   values:
     default: 4
+    dev: 1
     uat: 11
     prod: 21
 
@@ -133,6 +143,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -142,6 +153,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -151,6 +163,7 @@ env:
     .resources.requests.cpu
   values:
     default: 1754m
+    dev: 2
     uat: 1946m
     prod: 1947m
 
@@ -163,6 +176,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -172,6 +186,7 @@ env:
     .resources.requests.memory
   values:
     default: 2174Mi
+    dev: 2Gi
     uat: 2210Mi
     prod: 2308Mi
 
@@ -181,6 +196,7 @@ env:
     .resources.limits.memory
   values:
     default: 2174Mi
+    dev: 2Gi
     uat: 2210Mi
     prod: 2308Mi
 
@@ -190,6 +206,7 @@ env:
     .resources.requests.cpu
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -202,6 +219,7 @@ env:
     .replicas
   values:
     default: 4
+    dev: 1
     uat: 11
     prod: 21
 
@@ -211,6 +229,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -220,6 +239,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 4917Mi
 
@@ -229,6 +249,7 @@ env:
     .resources.requests.cpu
   values:
     default: 1754m
+    dev: 2
     uat: 1946m
     prod: 1947m
 
@@ -241,6 +262,7 @@ env:
     .replicas
   values:
     default: 4
+    dev: 1
     uat: 11
     prod: 21
 
@@ -250,6 +272,7 @@ env:
     .resources.requests.memory
   values:
     default: 2210Mi
+    dev: 2Gi
     uat: 2451Mi
     prod: 2459Mi
 
@@ -259,6 +282,7 @@ env:
     .resources.limits.memory
   values:
     default: 2210Mi
+    dev: 2Gi
     uat: 2451Mi
     prod: 2459Mi
 
@@ -268,6 +292,7 @@ env:
     .resources.requests.cpu
   values:
     default: 877m
+    dev: 1
     uat: 973m
     prod: 973m
 

@@ -16,6 +16,7 @@ env:
     .spec.resourceProfile
   values:
     default: small
+    dev: strenv(resource_profile)
     uat: large
     prod: strenv(resource_profile)
 
@@ -105,6 +106,7 @@ env:
     .spec.storageConfigs.rawSpans.pvcConfig.resources.requests.storage
   values:
     default: 50Gi
+    dev: 50Gi
     uat: 100Gi
     prod: 200Gi
 
@@ -125,6 +127,7 @@ env:
     .spec.storageConfigs.synthetics.pvcConfig.resources.requests.storage
   values:
     default: 50Gi
+    dev: 50Gi
     uat: 50Gi
     prod: 50Gi
 
@@ -145,6 +148,7 @@ env:
     .spec.storageConfigs.syntheticsKeystore.pvcConfig.resources.requests.storage
   values:
     default: 50Gi
+    dev: 50Gi
     uat: 50Gi
     prod: 50Gi
 
@@ -165,6 +169,7 @@ env:
     .spec.storageConfigs.eumSourceMaps.pvcConfig.resources.requests.storage
   values:
     default: 1Gi
+    dev: 1Gi
     uat: 1Gi
     prod: 1Gi
 
@@ -191,6 +196,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -200,6 +206,7 @@ env:
     .resources.requests.memory
   values:
     default: 7124Mi
+    dev: 8Gi
     uat: 7274Mi
     prod: 7564Mi
 
@@ -209,6 +216,7 @@ env:
     .resources.limits.memory
   values:
     default: 7124Mi
+    dev: 8Gi
     uat: 7274Mi
     prod: 7564Mi
 
@@ -218,6 +226,7 @@ env:
     .resources.requests.cpu
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -230,6 +239,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 2
     prod: 3
 
@@ -238,6 +248,7 @@ env:
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.requests.memory
   default: 4348Mi
+  dev: 4Gi
   uat: 6631Mi
   prod: 8464Mi
 
@@ -246,6 +257,7 @@ env:
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.limits.memory
   default: 4348Mi
+  dev: 4Gi
   uat: 6631Mi
   prod: 8464Mi
 
@@ -254,6 +266,7 @@ env:
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.requests.cpu
   default: 351m
+  dev: 500m
   uat: 535m
   prod: 681m
 
@@ -266,6 +279,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -275,6 +289,7 @@ env:
     .resources.requests.memory 
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -284,6 +299,7 @@ env:
     .resources.limits.memory 
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -293,6 +309,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -305,6 +322,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 5
     prod: 9
 
@@ -314,6 +332,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -323,6 +342,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -332,6 +352,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 856m
     prod: 908m
 
@@ -344,6 +365,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -353,6 +375,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -362,6 +385,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -371,6 +395,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -383,6 +408,7 @@ env:
     .replicas
   values:
     default: 4
+    dev: 1
     uat: 11
     prod: 21
 
@@ -392,6 +418,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 8192Mi
 
@@ -401,6 +428,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4903Mi
     prod: 8192Mi
 
@@ -410,6 +438,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 1316m
+    dev: 2
     uat: 1459m
     prod: 1460m
 
@@ -422,6 +451,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 2
     prod: 3
 
@@ -431,6 +461,7 @@ env:
     .resources.requests.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 6631Mi
     prod: 8464Mi
 
@@ -440,6 +471,7 @@ env:
     .resources.limits.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 6631Mi
     prod: 8464Mi
 
@@ -449,6 +481,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 351m
+    dev: 500m
     uat: 535m
     prod: 681m
 
@@ -461,6 +494,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -470,6 +504,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -479,6 +514,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -488,6 +524,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -500,6 +537,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -509,6 +547,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -518,6 +557,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -527,6 +567,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -539,6 +580,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -548,6 +590,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -557,6 +600,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -566,6 +610,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -578,6 +623,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 5
     prod: 9
 
@@ -587,6 +633,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -596,6 +643,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -605,6 +653,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 856m
     prod: 908m
 
@@ -617,6 +666,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 5
     prod: 9
 
@@ -626,6 +676,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -635,6 +686,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -644,6 +696,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 856m
     prod: 908m
 
@@ -656,6 +709,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 3
     prod: 5
 
@@ -665,6 +719,7 @@ env:
     .resources.requests.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 5078Mi
 
@@ -674,6 +729,7 @@ env:
     .resources.limits.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 5078Mi
 
@@ -683,6 +739,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 713m
     prod: 818m
 
@@ -695,6 +752,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 3
     prod: 5
 
@@ -704,6 +762,7 @@ env:
     .resources.requests.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 5078Mi
 
@@ -713,6 +772,7 @@ env:
     .resources.limits.memory
   values:
     default: 4348Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 5078Mi
 
@@ -722,6 +782,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 713m
     prod: 818m
 
@@ -734,6 +795,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 6
     prod: 11
 
@@ -743,6 +805,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -752,6 +815,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 4494Mi
     prod: 4694Mi
 
@@ -761,6 +825,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 877m
+    dev: 1
     uat: 892m
     prod: 929m
 
@@ -773,6 +838,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 4
     prod: 8
 
@@ -782,6 +848,7 @@ env:
     .resources.requests.memory
   values:
     default: 2899Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 4232Mi
 
@@ -791,6 +858,7 @@ env:
     .resources.limits.memory
   values:
     default: 2899Mi
+    dev: 4Gi
     uat: 4421Mi
     prod: 4232Mi
 
@@ -800,6 +868,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 614m
+    dev: 1
     uat: 936m
     prod: 894m
 
@@ -812,6 +881,7 @@ env:
     .replicas
   values:
     default: 2
+    dev: 1
     uat: 5
     prod: 9
 
@@ -821,6 +891,7 @@ env:
     .resources.requests.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -830,6 +901,7 @@ env:
     .resources.limits.memory
   values:
     default: 4421Mi
+    dev: 4Gi
     uat: 5393Mi
     prod: 5737Mi
 
@@ -839,6 +911,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 702m
+    dev: 1
     uat: 856m
     prod: 908m
 
@@ -851,6 +924,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 2
     prod: 3
 
@@ -860,6 +934,7 @@ env:
     .resources.requests.memory
   values:
     default: 955Mi
+    dev: 1Gi
     uat: 1457Mi
     prod: 1859Mi
 
@@ -869,6 +944,7 @@ env:
     .resources.limits.memory
   values:
     default: 955Mi
+    dev: 1Gi
     uat: 1457Mi
     prod: 1859Mi
 
@@ -878,6 +954,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 351m
+    dev: 500m
     uat: 535m
     prod: 681m
 
@@ -890,6 +967,7 @@ env:
     .replicas
   values:
     default: 1
+    dev: 1
     uat: 1
     prod: 1
 
@@ -899,6 +977,7 @@ env:
     .resources.requests.memory
   values:
     default: 4500Mi
+    dev: 4Gi
     uat: 9000Mi
     prod: 12000Mi
 
@@ -908,6 +987,7 @@ env:
     .resources.limits.memory
   values:
     default: 4500Mi
+    dev: 4Gi
     uat: 9000Mi
     prod: 12000Mi
 
@@ -917,6 +997,7 @@ env:
     .resources.requests.cpu 
   values:
     default: 1
+    dev: 1
     uat: 1
     prod: 1
 
@@ -964,7 +1045,7 @@ env:
 - name: feature.vsphere.enabled
   path: .spec.featureFlags.[]|select(.name == "feature.vsphere.enabled")|.enabled
   values:
-    default: true
+    default: false
 
 - name: feature.openstack.enabled
   path: .spec.featureFlags.[]|select(.name == "feature.openstack.enabled")|.enabled
@@ -989,7 +1070,7 @@ env:
 - name: feature.business.observability.enabled
   path: .spec.featureFlags.[]|select(.name == "feature.business.observability.enabled")|.enabled
   values:
-    default: true
+    default: false
 
 - name: feature.assistme.enabled
   path: .spec.featureFlags.[]|select(.name == "feature.assistme.enabled")|.enabled

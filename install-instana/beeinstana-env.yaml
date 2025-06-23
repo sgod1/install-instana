@@ -7,6 +7,7 @@ env:
     .spec.ingestor.cpu
   values:
     default: 4
+    dev: 4
     # 250k metrics
     small: 4
     # 250k - 750k metrics
@@ -21,6 +22,7 @@ env:
     .spec.ingestor.memory
   values:
     default: 4Gi
+    dev: 4Gi
     # 250k metrics
     small: 3Gi
     # 250k - 750k metrics
@@ -35,6 +37,7 @@ env:
     .spec.ingestor.replicas
   values:
     default: 1
+    dev: 1
     # 250k metrics
     small: 1
     # 250k - 750k metrics
@@ -52,6 +55,7 @@ env:
     .spec.aggregator.cpu
   values:
     default: 4
+    dev: 4
     # 250k metrics
     small: 4
     # 250k - 750k metrics
@@ -66,6 +70,7 @@ env:
     .spec.aggregator.memory
   values:
     default: 16Gi
+    dev: 16Gi
     # 250k metrics
     small: 16Gi
     # 250k - 750k metrics
@@ -80,6 +85,7 @@ env:
     .spec.aggregator.shards
   values:
     default: 1
+    dev: 1
     # 250k metrics
     small: 1
     # 250k - 750k metrics
@@ -97,18 +103,21 @@ env:
     .spec.config.cpu
   values:
     default: 200m
+    dev: 200m
 
 - name: config-memory
   path: >
     .spec.config.memory
   values:
     default: 200Mi
+    dev: 200Mi
 
 - name: config-replicas
   path: >
     .spec.config.replicas
   values:
     default: 1
+    dev: 1
 
 #
 # volume sizes
@@ -118,6 +127,7 @@ env:
     .spec.aggregator.volumes.live.size
   values:
     default: 1000Gi
+    dev: 500Gi
     # 250k metrics
     small: 1000Gi
     # 250k - 750k metrics

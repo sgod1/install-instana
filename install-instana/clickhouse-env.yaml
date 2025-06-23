@@ -9,6 +9,7 @@ env:
     .resources.requests.cpu
   values:
     default: 1500m
+    dev: 2
     uat: 11
     prod: 23
     #small:
@@ -22,6 +23,7 @@ env:
     .resources.requests.memory
   values:
     default: 4Gi
+    dev: 4Gi
     uat: 44Gi
     prod: 92Gi
     #small:
@@ -37,6 +39,7 @@ env:
     .spec.resources.requests.storage
   values:
     default: 500Gi
+    dev: 100Gi
     uat: 750Gi
     #prod: 2950Gi
     # reducing, must monitor
@@ -51,6 +54,7 @@ env:
     .spec.resources.requests.storage
   values:
     default: 500Gi
+    dev: 100Gi
     uat: 750Gi
     #prod: 2950Gi
     # reducing, must monitor
@@ -65,6 +69,7 @@ env:
     .spec.resources.requests.storage
   values:
     default: 500Gi
+    dev: 10Gi
     uat: 750Gi
     #prod: 2950Gi
     # reducing, must monitor
@@ -83,6 +88,7 @@ env:
     .layout.shardsCount
   values:
     default: 1
+    dev: 1
     uat: 4
     prod: 10
     #small:
