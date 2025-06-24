@@ -190,7 +190,7 @@ check_for_key "core_config_raw_spans_s3_prefix" "${core_config_raw_spans_s3_pref
 check_for_key "core_config_raw_spans_s3_storage_class" "${core_config_raw_spans_s3_storage_class:-$missingval}"
 check_for_key "core_config_raw_spans_s3_bucket_long_term" "${core_config_raw_spans_s3_bucket_long_term:-$missingval}"
 check_for_key "core_config_raw_spans_s3_storage_class_long_term" "${core_config_raw_spans_s3_storage_class_long_term:-$missingval}"
-check_for_key "core_config_raw_spans_s3_forcePathStyle" "${core_config_raw_spans_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_raw_spans_s3_force_path_style" "${core_config_raw_spans_s3_force_path_style:-$missingval}"
 check_for_key "core_config_raw_spans_s3_access_key_id" "${core_config_raw_spans_s3_access_key_id:-$missingval}"
 check_for_key "core_config_raw_spans_s3_secret_access_key" "${core_config_raw_spans_s3_secret_access_key:-$missingval}"
 fi
@@ -212,7 +212,7 @@ check_for_key "core_config_synthetics_s3_prefix" "${core_config_synthetics_s3_pr
 check_for_key "core_config_synthetics_s3_storage_class" "${core_config_synthetics_s3_storage_class:-$missingval}"
 check_for_key "core_config_synthetics_s3_bucket_long_term" "${core_config_synthetics_s3_bucket_long_term:-$missingval}"
 check_for_key "core_config_synthetics_s3_storage_class_long_term" "${core_config_synthetics_s3_storage_class_long_term:-$missingval}"
-check_for_key "core_config_synthetics_s3_forcePathStyle" "${core_config_synthetics_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_synthetics_s3_force_path_style" "${core_config_synthetics_s3_force_path_style:-$missingval}"
 check_for_key "core_config_synthetics_s3_access_key_id" "${core_config_synthetics_s3_access_key_id:-$missingval}"
 check_for_key "core_config_synthetics_s3_secret_access_key" "${core_config_synthetics_s3_secret_access_key:-$missingval}"
 fi
@@ -234,7 +234,7 @@ check_for_key "core_config_synthetics_kstore_s3_prefix" "${core_config_synthetic
 check_for_key "core_config_synthetics_kstore_s3_storage_class" "${core_config_synthetics_keystore_s3_storage_class:-$missingval}"
 check_for_key "core_config_synthetics_kstore_s3_bucket_long_term" "${core_config_synthetics_keystore_s3_bucket_long_term:-$missingval}"
 check_for_key "core_config_synthetics_kstore_s3_storage_class_long_term" "${core_config_synthetics_keystore_s3_storage_class_long_term:-$missingval}"
-check_for_key "core_config_synthetics_kstore_s3_forcePathStyle" "${core_config_synthetics_keystore_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_force_path_style" "${core_config_synthetics_keystore_s3_force_path_style:-$missingval}"
 check_for_key "core_config_synthetics_kstore_s3_access_key_id" "${core_config_synthetics_keystore_s3_access_key_id:-$missingval}"
 check_for_key "core_config_synthetics_kstore_s3_secret_access_key" "${core_config_synthetics_keystore_s3_secret_access_key:-$missingval}"
 fi
@@ -256,7 +256,7 @@ check_for_key "core_config_eum_source_maps_s3_prefix" "${core_config_eum_source_
 check_for_key "core_config_eum_source_maps_s3_storage_class" "${core_config_eum_source_maps_s3_storage_class:-$missingval}"
 check_for_key "core_config_eum_source_maps_s3_bucket_long_term" "${core_config_eum_source_maps_s3_bucket_long_term:-$missingval}"
 check_for_key "core_config_eum_source_maps_s3_storage_class_long_term" "${core_config_eum_source_maps_s3_storage_class_long_term:-$missingval}"
-check_for_key "core_config_eum_source_maps_s3_forcePathStyle" "${core_config_eum_source_maps_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_force_path_style" "${core_config_eum_source_maps_s3_force_path_style:-$missingval}"
 check_for_key "core_config_eum_source_maps_s3_access_key_id" "${core_config_eum_source_maps_s3_access_key_id:-$missingval}"
 check_for_key "core_config_eum_source_maps_s3_secret_access_key" "${core_config_eum_source_maps_s3_secret_access_key:-$missingval}"
 fi
