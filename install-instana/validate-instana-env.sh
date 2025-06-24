@@ -149,8 +149,6 @@ display_header "resource profile"
 check_for_key "CORE_RESOURCE_PROFILE" "${CORE_RESOURCE_PROFILE:-$missingval}"
 
 display_header "core config"
-check_for_key "CORE_CONFIG_RAW_SPANS_TYPE" "${CORE_CONFIG_RAW_SPANS_TYPE:-$missingval}"
-
 check_for_opt_key "CORE_CONFIG_EMAIL_SMTP_ENABLE" "${CORE_CONFIG_EMAIL_SMTP_ENABLE:-$missingval}"
 if test "$CORE_CONFIG_EMAIL_SMTP_ENABLE"; then
 check_for_key "CORE_CONFIG_EMAIL_SMTP_USER" "{$CORE_CONFIG_EMAIL_SMTP_USER:-$missingval}"
@@ -174,6 +172,103 @@ fi
 check_for_key "CORE_CONFIG_TOKEN_SECRET" "${CORE_CONFIG_TOKEN_SECRET:-$missingval}"
 
 check_for_key "CORE_CONFIG_SP_KEY_PASSWORD" "${CORE_CONFIG_SP_KEY_PASSWORD:-$missingval}"
+
+#check_for_key "CORE_CONFIG_RAW_SPANS_TYPE" "${CORE_CONFIG_RAW_SPANS_TYPE:-$missingval}"
+
+display_header "core storage config"
+check_for_key "CORE_CONFIG_RAW_SPANS_STORAGE" "${CORE_CONFIG_RAW_SPANS_STORAGE:-$missingval}"
+check_for_key "CORE_CONFIG_SYNTHETICS_STORAGE" "${CORE_CONFIG_SYNTHETICS_STORAGE:-$missingval}"
+check_for_key "CORE_CONFIG_SYNTHETICS_KSTORE_STORAGE" "${CORE_CONFIG_SYNTHETICS_KEYSTORE_STORAGE:-$missingval}"
+check_for_key "CORE_CONFIG_EUM_SOURCE_MAPS_STORAGE" "${CORE_CONFIG_EUM_SOURCE_MAPS_STORAGE:-$missingval}"
+
+if [[ $CORE_CONFIG_RAW_SPANS_STORAGE == "s3" ]]; then
+display_header "raw spans s3 storage"
+check_for_key "core_config_raw_spans_s3_endpoint" "${core_config_raw_spans_s3_endpoint:-$missingval}"
+check_for_key "core_config_raw_spans_s3_region" "${core_config_raw_spans_s3_region:-$missingval}"
+check_for_key "core_config_raw_spans_s3_bucket" "${core_config_raw_spans_s3_bucket:-$missingval}"
+check_for_key "core_config_raw_spans_s3_prefix" "${core_config_raw_spans_s3_prefix:-$missingval}"
+check_for_key "core_config_raw_spans_s3_storage_class" "${core_config_raw_spans_s3_storage_class:-$missingval}"
+check_for_key "core_config_raw_spans_s3_bucket_long_term" "${core_config_raw_spans_s3_bucket_long_term:-$missingval}"
+check_for_key "core_config_raw_spans_s3_storage_class_long_term" "${core_config_raw_spans_s3_storage_class_long_term:-$missingval}"
+check_for_key "core_config_raw_spans_s3_forcePathStyle" "${core_config_raw_spans_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_raw_spans_s3_access_key_id" "${core_config_raw_spans_s3_access_key_id:-$missingval}"
+check_for_key "core_config_raw_spans_s3_secret_access_key" "${core_config_raw_spans_s3_secret_access_key:-$missingval}"
+fi
+#if [[ $CORE_CONFIG_RAW_SPANS_STORAGE == "gcloud" ]]; then
+#core_config_raw_spans_gcloud_bucket=""
+#core_config_raw_spans_gcloud_prefix=""
+#core_config_raw_spans_gcloud_storage_class=""
+#core_config_raw_spans_gcloud_bucket_long_term=""
+#core_config_raw_spans_gcloud_prefix_long_term=""
+#core_config_raw_spans_gcloud_storage_class_long_term=""
+#core_config_raw_spans_gcloud_service_account_key=""
+#fi
+if [[ $CORE_CONFIG_SYNTHETICS_STORAGE == "s3" ]]; then
+display_header "synthetics s3 storage"
+check_for_key "core_config_synthetics_s3_endpoint" "${core_config_synthetics_s3_endpoint:-$missingval}"
+check_for_key "core_config_synthetics_s3_region" "${core_config_synthetics_s3_region:-$missingval}"
+check_for_key "core_config_synthetics_s3_bucket" "${core_config_synthetics_s3_bucket:-$missingval}"
+check_for_key "core_config_synthetics_s3_prefix" "${core_config_synthetics_s3_prefix:-$missingval}"
+check_for_key "core_config_synthetics_s3_storage_class" "${core_config_synthetics_s3_storage_class:-$missingval}"
+check_for_key "core_config_synthetics_s3_bucket_long_term" "${core_config_synthetics_s3_bucket_long_term:-$missingval}"
+check_for_key "core_config_synthetics_s3_storage_class_long_term" "${core_config_synthetics_s3_storage_class_long_term:-$missingval}"
+check_for_key "core_config_synthetics_s3_forcePathStyle" "${core_config_synthetics_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_synthetics_s3_access_key_id" "${core_config_synthetics_s3_access_key_id:-$missingval}"
+check_for_key "core_config_synthetics_s3_secret_access_key" "${core_config_synthetics_s3_secret_access_key:-$missingval}"
+fi
+#if [[ $CORE_CONFIG_SYNTHETICS_STORAGE == "gcloud" ]]; then
+#core_config_synthetics_gcloud_bucket=""
+#core_config_synthetics_gcloud_prefix=""
+#core_config_synthetics_gcloud_storage_class=""
+#core_config_synthetics_gcloud_bucket_long_term=""
+#core_config_synthetics_gcloud_prefix_long_term=""
+#core_config_synthetics_gcloud_storage_class_long_term=""
+#core_config_synthetics_gcloud_service_account_key=""
+#fi
+if [[ $CORE_CONFIG_SYNTHETICS_KEYSTORE_STORAGE == "s3" ]]; then
+display_header "synthetics s3 storage"
+check_for_key "core_config_synthetics_kstore_s3_endpoint" "${core_config_synthetics_keystore_s3_endpoint:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_region" "${core_config_synthetics_keystore_s3_region:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_bucket" "${core_config_synthetics_keystore_s3_bucket:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_prefix" "${core_config_synthetics_keystore_s3_prefix:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_storage_class" "${core_config_synthetics_keystore_s3_storage_class:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_bucket_long_term" "${core_config_synthetics_keystore_s3_bucket_long_term:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_storage_class_long_term" "${core_config_synthetics_keystore_s3_storage_class_long_term:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_forcePathStyle" "${core_config_synthetics_keystore_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_access_key_id" "${core_config_synthetics_keystore_s3_access_key_id:-$missingval}"
+check_for_key "core_config_synthetics_kstore_s3_secret_access_key" "${core_config_synthetics_keystore_s3_secret_access_key:-$missingval}"
+fi
+#if [[ $CORE_CONFIG_SYNTHETICS_KEYSTORE_STORAGE == "gcloud" ]]; then
+#core_config_synthetics_keystore_gcloud_bucket=""
+#core_config_synthetics_keystore_gcloud_prefix=""
+#core_config_synthetics_keystore_gcloud_storage_class=""
+#core_config_synthetics_keystore_glcoud_bucket_long_term=""
+#core_config_synthetics_keystore_gcloud_prefix_long_term=""
+#core_config_synthetics_keystore_gcloud_storage_class_long_term=""
+#core_config_synthetics_keystore_gcloud_service_account_key=""
+#fi
+if [[ $CORE_CONFIG_EUM_SOURCE_MAPS_STORAGE == "s3" ]]; then
+display_header "eum source maps s3 storage"
+check_for_key "core_config_eum_source_maps_s3_endpoint" "${core_config_eum_source_maps_s3_endpoint:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_region" "${core_config_eum_source_maps_s3_region:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_bucket" "${core_config_eum_source_maps_s3_bucket:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_prefix" "${core_config_eum_source_maps_s3_prefix:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_storage_class" "${core_config_eum_source_maps_s3_storage_class:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_bucket_long_term" "${core_config_eum_source_maps_s3_bucket_long_term:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_storage_class_long_term" "${core_config_eum_source_maps_s3_storage_class_long_term:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_forcePathStyle" "${core_config_eum_source_maps_s3_forcePathStyle:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_access_key_id" "${core_config_eum_source_maps_s3_access_key_id:-$missingval}"
+check_for_key "core_config_eum_source_maps_s3_secret_access_key" "${core_config_eum_source_maps_s3_secret_access_key:-$missingval}"
+fi
+#if [[ $CORE_CONFIG_EUM_SOURCE_MAPS_STORAGE == "gcloud" ]]; then
+#core_config_eum_source_maps_gcloud_bucket=""
+#core_config_eum_source_maps_gcloud_prefix=""
+#core_config_eum_source_maps_gcloud_storage_class=""
+#core_config_eum_source_maps_gcloud_bucket_long_term=""
+#core_config_eum_source_maps_gcloud_prefix_long_term=""
+#core_config_eum_source_maps_gcloud_storage_class_long_term=""
+#core_config_eum_source_maps_gcloud_service_account_key=""
+#fi
 
 display_header "openssl"
 check_for_key "OPENSSL_KEYPASS_ARG" "${OPENSSL_KEYPASS_ARG:-$missingval}" "-nodes|-noenc"

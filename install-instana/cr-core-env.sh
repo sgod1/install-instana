@@ -98,6 +98,10 @@ MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_CORE $profile $INSTANA_V
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
+# core storage
+cr-core-storage.sh $MANIFEST
+check_return_code $?
+
 # tolerations
 idx=$(./gen/bin/yq '.spec.componentConfigs.[]|select(.name=="acceptor")|path|.[-1]' $MANIFEST)
 tolpaths=".spec.componentConfigs[$idx].tolerations"

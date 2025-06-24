@@ -95,13 +95,15 @@ env:
     default: instana-registry
 
 #
-# storage requests and storage class
+# pvc storage requests and storage class
+#
+# comment out if using s3 or gcloud storage
 #
 
 #
-# raw spans storage request
+# raw spans pvc storage request
 #
-- name: raw-spans-storage-request
+- name: raw-spans-pvc-storage-request
   path: >
     .spec.storageConfigs.rawSpans.pvcConfig.resources.requests.storage
   values:
@@ -111,18 +113,18 @@ env:
     prod: 200Gi
 
 #
-# raw spans storage class
+# raw spans pvc storage class
 #
-- name: raw-spans-storage-class
+- name: raw-spans-pvc-storage-class
   path: >
     .spec.storageConfigs.rawSpans.pvcConfig.storageClassName
   values:
     default: strenv(rwx_storageclass)
 
 #
-# synthetics storage request
+# synthetics pvc storage request
 #
-- name: synthetics-storage-request
+- name: synthetics-pvc-storage-request
   path: >
     .spec.storageConfigs.synthetics.pvcConfig.resources.requests.storage
   values:
@@ -132,18 +134,18 @@ env:
     prod: 50Gi
 
 #
-# synthetics storage class
+# synthetics pvc storage class
 #
-- name: synthetics-storage-class
+- name: synthetics-pvc-storage-class
   path: >
     .spec.storageConfigs.synthetics.pvcConfig.storageClassName
   values:
     default: strenv(rwx_storageclass)
 
 #
-# synthetics keystore storage request
+# synthetics keystore pvc storage request
 #
-- name: synthetics-keystore-storage-request
+- name: synthetics-keystore-pvc-storage-request
   path: >
     .spec.storageConfigs.syntheticsKeystore.pvcConfig.resources.requests.storage
   values:
@@ -153,18 +155,18 @@ env:
     prod: 50Gi
 
 #
-# synthetics keystore storage class
+# synthetics keystore pvc storage class
 #
-- name: synthetics-keystore-storage-class
+- name: synthetics-keystore-pvc-storage-class
   path: >
     .spec.storageConfigs.syntheticsKeystore.pvcConfig.storageClassName
   values:
     default: strenv(rwx_storageclass)
 
 #
-# eum source maps storage request
+# eum source maps pvc storage request
 #
-- name: eum-source-maps-storage-request
+- name: eum-source-maps-pvc-storage-request
   path: >
     .spec.storageConfigs.eumSourceMaps.pvcConfig.resources.requests.storage
   values:
@@ -174,9 +176,9 @@ env:
     prod: 1Gi
 
 #
-# eum source maps storage class
+# eum source maps pvc storage class
 #
-- name: eum-source-maps-storage-class
+- name: eum-source-maps-pvc-storage-class
   path: >
     .spec.storageConfigs.eumSourceMaps.pvcConfig.storageClassName
   values:
