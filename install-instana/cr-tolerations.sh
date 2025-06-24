@@ -55,3 +55,5 @@ for tolpath in ${args[@]:3}; do
 
 done
 
+# delete toldef
+rm $toldef

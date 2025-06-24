@@ -46,8 +46,7 @@ $INSTANA_KUBECTL operator template --namespace instana-operator --values $VALUES
 # tolerations operator
 MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator.yaml
 
-idx=$(./gen/bin/yq '.spec.template.spec.containers.[]|select(.name=="instana-enterprise-operator")|path|.[-1]' $MANIFEST)
-tolpaths=".spec.template.spec.containers.[$idx].tolerations"
+tolpaths=".spec.template.spec.tolerations"
 
 instana_toleration_key=${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
 instana_toleration_value=${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
@@ -57,9 +56,6 @@ check_return_code $?
 
 # tolerations operator webhook
 MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator-webhook.yaml
-
-idx=$(./gen/bin/yq '.spec.template.spec.containers.[]|select(.name=="instana-enterprise-operator-webhook")|path|.[-1]' $MANIFEST)
-tolpaths=".spec.template.spec.containers.[$idx].tolerations"
 
 cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
 check_return_code $?
