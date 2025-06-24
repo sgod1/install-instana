@@ -165,6 +165,8 @@ function write_storage_config() {
    local storage_config=$2 # pvc|raw_spans|gcloud
    local config_yaml=$3
 
+   echo cr-core-storage: $storage, $storage_config
+
    if [[ $storage_config == "pvc" ]]; then
       write_pvc_storage_config $storage $config_yaml
 
@@ -184,17 +186,16 @@ function write_storage_config() {
 cr_yaml=$1
 
 if [[ -z $cr_yaml ]]; then
-   echo input core file required...
+   echo cr-core-storage: core file parameter required
    exit 1
 fi
 
 if [[ ! -f $cr_yaml ]]; then
-   echo core storage configs: file $cr_yaml not found...
+   echo cr-core-storage: input core file $cr_yaml not found...
    exit 1
 fi
 
 config_yaml="./gen/core_storage_configs.yaml"
-echo writing core storage configs to $config_yaml
 
 cat <<EOF > $config_yaml
 storageConfigs:
@@ -217,4 +218,4 @@ write_storage_config "$_eum_source_maps" $CORE_CONFIG_EUM_SOURCE_MAPS_STORAGE $c
 ./gen/bin/yq -i ".spec += (load(\"$config_yaml\"))" $cr_yaml
 
 # delete config_yaml
-
+rm $config_yaml
