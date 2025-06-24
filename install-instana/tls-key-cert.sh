@@ -138,7 +138,7 @@ fi
 
 openssl req -newkey rsa:2048 \
    -keyout $key_file -out $csr_file \
-   -days 365 $keypass -config $csr_config_file 2>/dev/null
+   -days 365 $keypass -config $csr_config_file 2> ./gen/tls/${qual}-openssl-newkey.err
 check_return_code $?
 
 #
@@ -157,7 +157,7 @@ root_ca_subject=$ROOT_CA_SUBJECT
 #
 echo ... creating root ca private key, file $root_ca_key_file
 echo 
-openssl genrsa -out $root_ca_key_file 2048 2> /dev/null
+openssl genrsa -out $root_ca_key_file 2048 2> ./gen/tls/${qual}-openssl-rootca-key.err
 check_return_code $?
 
 #
@@ -166,7 +166,7 @@ check_return_code $?
 echo ... creating root ca cert, file $root_ca_cert_file
 echo
 openssl req -new -x509 -days 365 -key $root_ca_key_file -subj "$root_ca_subject" \
-   -out $root_ca_cert_file 2> /dev/null
+   -out $root_ca_cert_file 2> ./gen/tls/${qual}-openssl-rootca-ss-cert.err
 check_return_code $?
 
 #
