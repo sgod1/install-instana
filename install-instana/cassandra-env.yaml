@@ -5,7 +5,7 @@ env:
 - name: cpu-requests
   path: >
     .spec.resources.requests.cpu
-  valuesu
+  values:
     default: 4
     dev: 4
     uat: 10
