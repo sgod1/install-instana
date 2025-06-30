@@ -125,16 +125,16 @@ echo ... csr config $csr_config_file
 cat $csr_config_file
 echo
 
-echo ... generating csr, config file $csr_config_file, csr file $csr_file, key file $key_file
-echo
-
 if test "$passfile" && test -f "$passfile"; then
-   echo "... reading password file $passfile"
+   echo "... reading key password file $passfile"
    keypass="-passout file:$passfile"
 else
-   echo "... no password file, key unencrypted"
+   echo "... no key password file, key is unencrypted"
    keypass="${OPENSSL_KEYPASS_ARG}"
 fi
+
+echo ... generating csr, config file $csr_config_file, csr file $csr_file, key file $key_file
+echo
 
 openssl req -newkey rsa:2048 \
    -keyout $key_file -out $csr_file \
@@ -142,7 +142,7 @@ openssl req -newkey rsa:2048 \
 check_return_code $?
 
 #
-# use internal ca to issue cert
+# use internal ca to issue cert - deprecated
 #
 root_ca_key_file_name="${qual}-${ROOT_CA_KEY_FILE_NAME}"
 root_ca_key_file=$(prefix_file_name $root_ca_key_file_name $prof)
@@ -153,7 +153,7 @@ root_ca_cert_file=$(prefix_file_name $root_ca_cert_file_name $prof)
 root_ca_subject=$ROOT_CA_SUBJECT
 
 #
-# root ca private key
+# root ca private key - deprecated
 #
 #echo ... creating root ca private key, file $root_ca_key_file
 #echo 
@@ -185,8 +185,10 @@ for san in ${__ingress_alt_subj_names[@]}; do
   fi
 done
 
-echo ... issuing certificate, csr $csr_file, cert $cert_file
-echo
+sanlist_file="./gen/tls/${qual}-sanlist.ext"
+
+echo ... writing sanlist to $sanlist_file
+echo $sanlist > $sanlist_file
 
 #openssl x509 -req -days 365 -in $csr_file \
 #   -extfile <(printf $sanlist) \
@@ -195,16 +197,19 @@ echo
 #check_return_code $?
 
 if test "$passfile" && test -f "$passfile"; then
-   echo "... reading password file $passfile"
+   echo "... reading key password file $passfile"
    keypassin="-passin file:$passfile"
 else
-   echo "... no password file, key unencrypted"
+   echo "... no key password file, key is unencrypted"
    keypassin=""
 fi
 
+echo ... issuing certificate, csr $csr_file, cert $cert_file
+echo
+
 openssl x509 -req -days 365 -in $csr_file \
-   -extfile <(printf $sanlist) \
-   -key $key_file $keypassin \
+   -signkey $key_file $keypassin \
+   -extfile $sanlist_file \
    -out $cert_file 2> ./gen/tls/${qual}-openssl-ss-cert.err
 check_return_code $?
 
