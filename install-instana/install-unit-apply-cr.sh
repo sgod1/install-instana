@@ -51,7 +51,7 @@ initialAdminPassword: ${INSTANA_ADMIN_PASSWORD:-"adminpass"}
 # license: mylicensestring # This would also work: '["mylicensestring"]'
 # A list of Instana licenses. Multiple licenses may be specified.
 # licenses: [ "license1", "license2" ]
-licenses: `cat $LICENSE_JSON`
+licenses: `cat $LICENSE_JSON | xargs`
 
 # A list of agent keys. Specifying multiple agent keys enables gradually rotating agent keys.
 agentKeys:
