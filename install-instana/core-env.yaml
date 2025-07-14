@@ -1084,32 +1084,31 @@ env:
 #
 - name: retention.metrics.rollup5
   path: .spec.properties.[]|select(.name == "retention.metrics.rollup5")|.value
+  # 15 days * 24 hours * 60 min * 60 sec
   values:
-    # 15 days * 24 hours * 60 min * 60 sec
-    default: 1296000
+    default: 1296000 
 
 - name: retention.metrics.rollup60
   path: .spec.properties.[]|select(.name == "retention.metrics.rollup60")|.value
+  # 15 days * 24 hours * 60 min * 60 sec
   values:
-    # 15 days * 24 hours * 60 min * 60 sec
     default: 1296000
 
 - name: retention.metrics.rollup300
   path: .spec.properties.[]|select(.name == "retention.metrics.rollup300")|.value
+  # 30 days * 24 hours * 60 min * 60 sec, coarse metrics
   values:
-    # 30 days * 24 hours * 60 min * 60 sec, coarse metrics
     default: 2592000
 
 - name: retention.metrics.rollup3600
   path: .spec.properties.[]|select(.name == "retention.metrics.rollup3600")|.value
+  # 60 days * 24 hours * 60 min * 60 sec, long-term visualization
   values:
-    # 60 days * 24 hours * 60 min * 60 sec, long-term visualization
     default: 5184000
 
 - name: retention.metrics.rawPayload
   path: .spec.properties.[]|select(.name == "retention.metrics.rawPayload")|.value
   values:
-    # 15 days * 24 hours * 60 min * 60 sec, tracing metadata
     default: 1296000
 
 - name: config.appdata.shortterm.retention.days
@@ -1121,6 +1120,7 @@ env:
   path: .spec.properties.[]|select(.name == "config.synthetics.retention.days")|.value
   values:
     default: 15
+
 #
 # tolerations
 #
