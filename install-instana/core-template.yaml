@@ -357,7 +357,21 @@ spec:
 
   #env:
 
-  #properties:
+  properties:
+    - name: retention.metrics.rollup5
+      value: 1
+    - name: retention.metrics.rollup60
+      value: 1
+    - name: retention.metrics.rollup300
+      value: 1
+    - name: retention.metrics.rollup3600
+      value: 1
+    - name: retention.metrics.rawPayload
+      value: 1
+    - name: config.appdata.shortterm.retention.days
+      value: 1
+    - name: config.synthetics.retention.days
+      value: 1
 
   #nodeSelector:
 
