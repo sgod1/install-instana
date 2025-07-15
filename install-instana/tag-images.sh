@@ -15,9 +15,9 @@ fi
 # tag images
 #
 
-ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g'`
-tr=`echo "$PRIVATE_REGISTRY" | sed 's/[.]/\\\\./g'`
-pr=`echo "${INSTANA_REGISTRY_PROXY:-$INSTANA_REGISTRY}" | sed 's/[.]/\\\\./g'`
+ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
+tr=`echo "$PRIVATE_REGISTRY" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g' `
+pr=`echo "${INSTANA_REGISTRY_PROXY:-$INSTANA_REGISTRY}" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
 
 log=${imglist}_tag.log
 cat /dev/null > $log

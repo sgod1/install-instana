@@ -28,8 +28,8 @@ cat /dev/null > $log
 echo logged into container registry $__registry, username $__username >> $log
 cat $log
 
-ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g'`
-tr=`echo "$PRIVATE_REGISTRY" | sed 's/[.]/\\\\./g'`
+ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
+tr=`echo "$PRIVATE_REGISTRY" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
 
 cat $imglist | while read image 
 do 

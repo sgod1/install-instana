@@ -44,8 +44,8 @@ cat $log
 #
 # pull images
 #
-ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g'`
-pr=`echo "$__registry" | sed 's/[.]/\\\\./g'`
+ir=`echo "$INSTANA_REGISTRY" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
+pr=`echo "$__registry" | sed 's/[.]/\\\\./g' | sed 's/\//\\\\\//g'`
 
 cat $imglist | while read image
 do 
