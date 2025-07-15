@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../instana.env
+source ./release.env
 source ./install.env
 source ./help-functions.sh
 source ./certmgr-images.env
@@ -13,13 +14,14 @@ mkdir -p ${MIRROR_HOME}
 
 OUTFILE="${MIRROR_HOME}/${CERT_MGR_IMAGE_LIST_FILE}"
 
-IMG_PLATFORM="--platform $(podman_image_platform $PODMAN_IMG_PLATFORM)"
+# instana semantic version
+semver=${__instana_sem_version[${INSTANA_VERSION}]}
 
-echo writing cert manager image list to ${OUTFILE}
+echo writing cert manager image list to ${OUTFILE}, instana version $semver
 
-echo "# Certmgr images, Instana version: $INSTANA_VERSION" > ${OUTFILE}
+echo "# Certmgr images, Instana version: $semver" > ${OUTFILE}
 
 for img in ${__certmgr_image_list[@]}
 do
-   echo "${IMG_PLATFORM} ${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
+   echo "${ARTIFACT_PUBLIC}/${img}" >> ${OUTFILE}
 done
