@@ -26,7 +26,23 @@ else
    __registry="$INSTANA_REGISTRY"
 fi
 
-$PODMAN login $PODMAN_TLS_VERIFY --username $__username --password $__password  $__registry
+if [[ -z $__registry ]]; then
+   echo pull images: $PODMAN login registry undefined...
+   exit 1
+fi
+
+if [[ -z $__username ]]; then
+   echo pull images: $PODMAN login username undefined...
+   exit 1
+fi
+
+if [[ -z $__password ]]; then
+   __password_arg=""
+else
+   __password_arg="--password $__password"
+fi
+
+$PODMAN login $PODMAN_TLS_VERIFY --username $__username $__password_arg  $__registry
 rc=$?
 if [[ $rc > 0 ]]; then 
    echo error: failed to login into container registry $__registry, rc=$rc
