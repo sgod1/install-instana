@@ -20,10 +20,12 @@ if [[ $INSTANA_REGISTRY_PROXY ]]; then
    __username="$INSTANA_REGISTRY_PROXY_USER"
    __password="$INSTANA_REGISTRY_PROXY_PASSWORD"
    __registry="$INSTANA_REGISTRY_RPOXY"
+   echo pull images: logging into registry proxy... $__registry
 else
    __username="_"
    __password="$DOWNLOAD_KEY"
    __registry="$INSTANA_REGISTRY"
+   echo pull images: logging into instana registry... $__registry
 fi
 
 if [[ -z $__registry ]]; then
@@ -54,7 +56,12 @@ set -x
 log=${imglist}_pull.log
 cat /dev/null > $log
 
-echo logged into container registry $__registry, username $__username >> $log
+if [[ ! -z $INSTANA_REGISTRY_PROXY ]]; then
+   echo logged into container registry proxy $__registry, username $__username >> $log
+else
+   echo logged into container registry $__registry, username $__username >> $log
+fi
+
 cat $log
 
 #
