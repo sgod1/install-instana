@@ -9,7 +9,14 @@ bin_home=$(get_bin_home)
 
 # ingress alt subject names
 #__ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN" "agent-acceptor.$INSTANA_BASE_DOMAIN" "otlp-grpc.$INSTANA_BASE_DOMAIN" "otlp-http.$INSTANA_BASE_DOMAIN" "$INSTANA_TENANT_DOMAIN")
-__ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN" "$(instana_agent_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_otlp_grpc_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_otlp_http_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_tenant_domain $INSTANA_UNIT_NAME $INSTANA_TENANT_NAME $INSTANA_BASE_DOMAIN)")
+__ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN" "$(instana_agent_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_otlp_grpc_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_otlp_http_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_tenant_domain $INSTANA_UNIT_NAME $INSTANA_TENANT_NAME $INSTANA_BASE_DOMAIN)" "$(instana_oem_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_serverless_acceptor $INSTANA_BASE_DOMAIN)" "$(instana_synthetics_acceptor $INSTANA_BASE_DOMAIN)")
+
+# subdomain or single_ingress
+ingress=${INSTANA_INGRESS:-"subdomain"}
+
+if [[ $ingress == single_ingress ]]; then
+   __ingress_alt_subj_names=("$INSTANA_BASE_DOMAIN")
+fi
 
 # csr env
 csr_env_yaml=$CSR_ENV_FILE_NAME

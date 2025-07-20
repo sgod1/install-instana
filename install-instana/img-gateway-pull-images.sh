@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ../instana.env
+source ./help-functions.sh
+source ./install.env
+
+export PATH=".:$PATH"
+
+MIRROR_HOME=$(get_make_mirror_home $INSTANA_VERSION)
+
+image_list="${MIRROR_HOME}/gateway-image-list.list"
+
+pull-images.sh $image_list
+check_return_code $?

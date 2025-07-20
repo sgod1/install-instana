@@ -98,15 +98,33 @@ function cr_env () {
    local env_file=$2
    local out_file=$3
    local profile=$4
+   local version=${5:-0}
 
    # truncate error file
    > ${out_file}.err
 
    local path_names=`./gen/bin/yq ".env[] | .name" $env_file`
 
+   local is_digit="(^[0-9]+)([0-9]*$)"
+
    for path_name in $path_names; do
       echo ===
       echo path name $path_name, env file $env_file
+
+      # not_before, not_after, if_true
+      not_before=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .not_before" $env_file | tr -d " "`
+      not_after=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .not_after" $env_file | tr -d " "`
+      if_true=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .if_true" $env_file | tr -d " "`
+
+      if [[ $not_after =~ $is_digit ]] && [[ $version =~ $is_digit ]] && (( $version > $not_after )); then 
+         echo "path name $path_name is not applicable after version $not_after, version $version, env file $env_file"
+	 continue
+      fi
+
+      if [[ $not_before =~ $is_digit ]] && [[ $version =~ $is_digit ]] && (( $version < $not_before )); then 
+         echo "path name $path_name is not applicable before version $not_before, version $version, env file $env_file"
+	 continue
+      fi
 
       update_path_for_key $path_name $profile $env_file $out_file
       key_match=$?

@@ -5,6 +5,7 @@ source ./install.env
 source ./help-functions.sh
 source ./cr-env.sh
 source ./release.env
+source ./gateway-images.env
 
 export PATH=".:$PATH"
 
@@ -78,16 +79,48 @@ function update_clickhouse_hosts() {
 
 replace_manifest=${1:-"noreplace"}
 
+# subdomain / single_ingress
+subdomain="subdomain"
+
 export instana_base_domain=${INSTANA_BASE_DOMAIN}
 export private_registry=${PRIVATE_REGISTRY}
 export core_image_tag=${__instana_sem_version["${INSTANA_VERSION}"]}
 export resource_profile=$CORE_RESOURCE_PROFILE
-export agent_acceptor_host=$(instana_agent_acceptor $INSTANA_BASE_DOMAIN)
+
+export agent_acceptor_host=$(instana_agent_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export agent_acceptor_port=${SINGLE_INGRESS_AGENT_ACCEPTOR_PORT:-"443"}
+
+export eum_acceptor_host=$(instana_eum_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export eum_acceptor_port=${SINGLE_INGRESS_EUM_PORT:-"443"}
+
+export otlp_grpc_acceptor_host=$(instana_otlp_grpc_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export otlp_grpc_acceptor_port=${SINGLE_INGRESS_OTLP_GRPC_PORT:-"443"}
+
+export otlp_http_acceptor_host=$(instana_otlp_http_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export otlp_http_acceptor_port=${SINGLE_INGRESS_OTLP_HTTP_PORT:-"443"}
+
+export serverless_acceptor_host=$(instana_serverless_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export serverless_acceptor_port=${SINGLE_INGRESS_SERVERLESS_PORT:-"443"}
+
+export synthetics_acceptor_host=$(instana_synthetics_acceptor $INSTANA_BASE_DOMAIN $subdomain)
+export synthetics_acceptor_port=${SINGLE_INGRESS_SYNTHETICS_PORT:-"443"}
+
+export envoy_gateway_image_tag=${ENVOY_GATEWAY_IMAGE_TAG}
+export envoy_gateway_controller_image_tag=${ENVOY_GATEWAY_CONTROLLER_IMAGE_TAG}
 
 export rwo_storageclass=${RWO_STORAGECLASS}
 export rwx_storageclass=${RWX_STORAGECLASS}
 
+#
+# core template depends on version
+# incompatable release introduce new template version
+#
 template_cr=$CR_TEMPLATE_FILENAME_CORE
+
+if (( $INSTANA_VERSION >= 293 )); then
+   template_cr="core-template-293.yaml"
+fi
+
 env_file=$CR_ENV_FILENAME_CORE
 profile=${INSTANA_INSTALL_PROFILE}
 
@@ -173,7 +206,7 @@ cr-tolerations.sh $MANIFEST $core_toleration_key $core_toleration_value $tolpath
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile ${INSTANA_VERSION}
 check_return_code $?
 
 # postprocess manifest with dynamic clickhouse host list

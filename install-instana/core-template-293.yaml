@@ -18,9 +18,28 @@ spec:
 
   #priorityClassName:
 
-  agentAcceptorConfig:
-    host: agent-acceptor.base-domain
-    port: 443
+  acceptors:
+    agent:
+      host: agent-acceptor.base-domain
+      port: 443
+    eum:
+      host: eum.base-domain
+      port: 443
+    otlp:
+      grpc:
+        host: otlp-grpc.base-domain
+        port: 443
+      http:
+        host: otlp-http.base-domain
+        port: 443
+    serverless:
+      host: serverless.base-domain
+      port: 443
+    synthetics:
+      host: synthetics.base-domain
+      port: 443
+
+  autoscalingEnabled: false
 
   baseDomain: baseDomain
 
@@ -145,6 +164,35 @@ spec:
         #properties:
         authEnabled: true
         #databases: []
+
+  gatewayConfig:
+    controller:
+      config: {}
+      imageConfig:
+        registry: artifact-public.instana.io
+        repository: infrastructure
+        tag: tag
+      replicas: 1
+      tlsCipherSuites: []
+    disableTLS: false
+    enabled: true
+    gateway:
+      adminListener: 0.0.0.0
+      circuitBreakers:
+        maxConnections: 50000
+        maxPendingRequests: 50000
+        maxRequests: 50000
+        maxRetries: 4
+      config: {}
+      imageConfig:
+        registry: artifact-public.instana.io
+        repository: self-hosted-images/k8s
+        tag: tag
+      loadBalancerConfig:
+        enabled: true
+        externalTrafficPolicy: Local
+      logLevel: error
+      replicas: 1
 
   componentConfigs:
   - name: acceptor
@@ -325,7 +373,6 @@ spec:
 
   #geoDbUrl:
 
-
   featureFlags:
     - name: feature.logging.enabled
       enabled: false
@@ -373,6 +420,8 @@ spec:
       value: 1
     - name: config.synthetics.retention.days
       value: 1
+    - name: config.url.format.pathStyle
+      value: "false"
 
   #nodeSelector:
 

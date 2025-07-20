@@ -183,22 +183,80 @@ function instana_tenant_domain() {
    local unit_name=$1
    local tenant_name=$2
    local base_domain=$3
+   local path_style=${4:-"single-path"}
    echo "${unit_name}-${tenant_name}.${base_domain}"
 }
 
 function instana_agent_acceptor() {
    local base_domain=$1
-   echo "agent-acceptor.${base_domain}"
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="agent-acceptor.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
+}
+
+function instana_eum_acceptor() {
+   local base_domain=$1
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="eum.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
 }
 
 function instana_otlp_grpc_acceptor() {
    local base_domain=$1
-   echo "otlp-grpc.${base_domain}"
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="otlp-grpc.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
 }
 
 function instana_otlp_http_acceptor() {
    local base_domain=$1
-   echo "otlp-http.${base_domain}"
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="otlp-http.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
+}
+
+function instana_serverless_acceptor() {
+   local base_domain=$1
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="serverless.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
+}
+
+function instana_synthetics_acceptor() {
+   local base_domain=$1
+   local subdomain={$2:-"subdomain"}
+
+   local acceptor="synthetics.${base_domain}"
+   if [[ $subdomain == single_ingress ]]; then
+      acceptor=${base_domain}
+   fi
+
+   echo ${acceptor}
 }
 
 function private_registry() {

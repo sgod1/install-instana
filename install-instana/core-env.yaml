@@ -21,6 +21,58 @@ env:
     prod: strenv(resource_profile)
 
 #
+# envoy gateway 
+#
+- name: envoy-gateway-enabled
+  not_before: 293
+  path: .spec.gatewayConfig.enabled
+  values:
+    default: true
+
+- name: envoy-gateway-image-registry
+  not_before: 293
+  path: .spec.gatewayConfig.gateway.imageConfig.registry
+  values:
+    default: strenv(private_registry)
+
+- name: envoy-gateway-image-tag
+  not_before: 293
+  path: .spec.gatewayConfig.gateway.imageConfig.tag
+  values:
+    default: strenv(envoy_gateway_image_tag)
+
+- name: envoy-gateway-controller-image-registry
+  not_before: 293
+  path: .spec.gatewayConfig.controller.imageConfig.registry
+  values: 
+    default: strenv(private_registry)
+
+- name: envoy-gateway-controller-image-tag
+  not_before: 293
+  path: .spec.gatewayConfig.controller.imageConfig.tag
+  values: 
+    default: strenv(envoy_gateway_controller_image_tag)
+
+#
+# geo db url
+# https://artifact-public.instana.io/artifactory/rel-generic-instana-virtual/geodb/geolite2-city.tar.gz
+#
+#- name: geo-db-url
+#  not_before: 293
+#  path: .spec.geoDbUrl
+#  values:
+#    default: strenv(core_geodb_url)
+
+#
+# autoscaling
+#
+- name: autoscaling
+  not_before: 293
+  path: .spec.autoscalingEnabled
+  values:
+    default: true
+
+#
 # beeinstana config
 #
 
@@ -185,13 +237,99 @@ env:
     default: strenv(rwx_storageclass)
 
 #
-# agent acceptor
+# acceptors
 #
 - name: agent-acceptor-host
+  not_after: 291
   path: .spec.agentAcceptorConfig.host
   values:
     default: strenv(agent_acceptor_host)
 
+- name: acceptors-acceptor-host
+  not_before: 293
+  path: .spec.acceptors.agent.host
+  values:
+    default: strenv(agent_acceptor_host)
+
+- name: acceptors-acceptor-port
+  not_before: 293
+  path: .spec.acceptors.agent.port
+  values:
+    default: strenv(agent_acceptor_port)
+
+- name: acceptors-eum-host
+  not_before: 293
+  path: .spec.acceptors.eum.host
+  values:
+    default: strenv(eum_acceptor_host)
+
+- name: acceptors-eum-port
+  not_before: 293
+  path: .spec.acceptors.eum.port
+  values:
+    default: strenv(eum_acceptor_port)
+
+- name: acceptors-otlp-grpc-host
+  not_before: 293
+  path: .spec.acceptors.otlp.grpc.host
+  values:
+    default: strenv(otlp_grpc_acceptor_host)
+
+- name: acceptors-otlp-grpc-port
+  not_before: 293
+  path: .spec.acceptors.otlp.grpc.port
+  values:
+    default: strenv(otlp_grpc_acceptor_port)
+
+- name: acceptors-otlp-http-host
+  not_before: 293
+  path: .spec.acceptors.otlp.http.host
+  values:
+    default: strenv(otlp_http_acceptor_host)
+
+- name: acceptors-otlp-http-port
+  not_before: 293
+  path: .spec.acceptors.otlp.http.port
+  values:
+    default: strenv(otlp_http_acceptor_port)
+
+- name: acceptors-serverless-host
+  not_before: 293
+  path: .spec.acceptors.serverless.host
+  values:
+    default: strenv(serverless_acceptor_host)
+
+- name: acceptors-serverless-port
+  not_before: 293
+  path: .spec.acceptors.serverless.port
+  values:
+    default: strenv(serverless_acceptor_port)
+
+- name: acceptors-synthetics-host
+  not_before: 293
+  path: .spec.acceptors.synthetics.host
+  values:
+    default: strenv(synthetics_acceptor_host)
+
+- name: acceptors-synthetics-port
+  not_before: 293
+  path: .spec.acceptors.synthetics.port
+  values:
+    default: strenv(synthetics_acceptor_port)
+
+#
+# single ingress path style
+#
+- name: url-format-pathstyle
+  not_before: 293
+  #if_true: subdomain single_ingress
+  path: .spec.properties.[]|select(.name == "config.url.format.pathStyle")|.value
+  values:
+    default: "false"
+
+#
+# agent acceptor
+#
 - name: acceptor-replicas
   path: >
     .spec.componentConfigs.[]|select(.name == "acceptor")
@@ -249,28 +387,31 @@ env:
   path: >
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.requests.memory
-  default: 4348Mi
-  dev: 4Gi
-  uat: 6631Mi
-  prod: 8464Mi
+  values:
+    default: 4348Mi
+    dev: 4Gi
+    uat: 6631Mi
+    prod: 8464Mi
 
 - name: accountant-lim-mem
   path: >
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.limits.memory
-  default: 4348Mi
-  dev: 4Gi
-  uat: 6631Mi
-  prod: 8464Mi
+  values:
+    default: 4348Mi
+    dev: 4Gi
+    uat: 6631Mi
+    prod: 8464Mi
 
 - name: accountant-req-cpu
   path: >
     .spec.componentConfigs.[]|select(.name == "accountant")
     .resources.requests.cpu
-  default: 351m
-  dev: 500m
-  uat: 535m
-  prod: 681m
+  values:
+    default: 351m
+    dev: 500m
+    uat: 535m
+    prod: 681m
 
 #
 # appdata health aggregator
@@ -1125,6 +1266,7 @@ env:
 # tolerations
 #
 - name: acceptor-pod-toleration-key
+  #if_true: core_tolerations_enabled
   path: >
     .spec.componentConfigs.[]|select(.name=="acceptor")|
     .tolerations[0].key
