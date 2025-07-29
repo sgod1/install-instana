@@ -1,5 +1,5 @@
 #
-# updated to instana version 289
+# updated to instana version 293
 #
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
@@ -12,9 +12,10 @@ spec:
     - name: default
       count: 3
       config:
-        node.master: true
-        node.data: true
-        node.ingest: true
+        node.roles:
+          - master
+          - data
+          - ingest
         node.store.allow_mmap: false
       podTemplate:
         spec:
