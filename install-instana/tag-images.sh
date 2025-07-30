@@ -39,7 +39,7 @@ do
    $PODMAN tag $image $ti
 
    rc=$?
-   if [[ $rc > 0 ]]; then 
+   if (( $rc > 0 )); then 
       echo "error: image tag failed... $PODMAN tag $image $ti, rc=$rc"
       exit $rc; 
    fi

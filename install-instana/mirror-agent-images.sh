@@ -47,7 +47,7 @@ do
    $PODMAN pull ${IMG_PLATFORM} ${ICR_IO}/${img}
    rc=$?
 
-   if [[ $rc > 0 ]]; then echo error: image pull ${IMG_PLATFORM} ${ICR_IO}/${img} failed, rc=$rc; exit $rc; fi
+   if (( $rc > 0 )); then echo error: image pull ${IMG_PLATFORM} ${ICR_IO}/${img} failed, rc=$rc; exit $rc; fi
 done
 
 #
@@ -63,7 +63,7 @@ do
    $PODMAN tag ${ICR_IO}/${img} ${PRIVATE_REGISTRY}/${img}
    rc=$?
 
-   if [[ $rc > 0 ]]; then echo error: image tag ${ICR_IO}/${img} ${PRIVATE_REGISTRY}/${img} failed, rc=$rc; exit $rc; fi
+   if (( $rc > 0 )); then echo error: image tag ${ICR_IO}/${img} ${PRIVATE_REGISTRY}/${img} failed, rc=$rc; exit $rc; fi
 done
 
 echo ""
@@ -77,14 +77,14 @@ echo ""
 
 $PODMAN login $PODMAN_TLS_VERIFY --username $PRIVATE_REGISTRY_USER --password $PRIVATE_REGISTRY_PASSWORD $PRIVATE_DOCKER_SERVER
 rc=$?
-if [[ $rc > 0 ]]; then echo error: Login to private registry $PRIVATE_REGISTRY failed, rc=$rc; exit $rc; fi
+if (( $rc > 0 )); then echo error: Login to private registry $PRIVATE_REGISTRY failed, rc=$rc; exit $rc; fi
 
 for img in ${__agent_image_list[@]}
 do
    $PODMAN push ${PRIVATE_REGISTRY}/${img}
    rc=$?
 
-   if [[ $rc > 0 ]]; then echo error: image tag ${ICR_IO}/${img} ${PRIVATE_REGISTRY}/${img} failed, rc=$rc; exit $rc; fi
+   if (( $rc > 0 )); then echo error: image tag ${ICR_IO}/${img} ${PRIVATE_REGISTRY}/${img} failed, rc=$rc; exit $rc; fi
 done
 
 cat $OUTFILE

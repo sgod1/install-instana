@@ -46,7 +46,7 @@ fi
 
 $PODMAN login $PODMAN_TLS_VERIFY --username $__username $__password_arg  $__registry
 rc=$?
-if [[ $rc > 0 ]]; then 
+if (( $rc > 0 )); then 
    echo error: failed to login into container registry $__registry, rc=$rc
    exit $rc; 
 fi
@@ -82,7 +82,7 @@ do
 
    $PODMAN pull $IMG_PLATFORM $image
    rc=$?
-   if [[ $rc > 0 ]]; then 
+   if (( $rc > 0 )); then 
       echo error: image pull $IMG_PLATFORM $image failed, rc=$rc
       exit $rc; 
    fi

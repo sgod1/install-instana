@@ -5,7 +5,7 @@ compare_values() {
 }
 
 check_return_code() {
-   if [[ $1 > 0 ]]; then echo "exit on script error, rc $1"; exit $1; fi
+	if (( $1 > 0 )); then echo "exit on script error, rc $1"; exit $1; fi
 }
 
 check_replace_manifest() {

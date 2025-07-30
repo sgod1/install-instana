@@ -148,7 +148,7 @@ function cr_env () {
    cat ${out_file}.err
 
    errc=`cat ${out_file}.err | wc -l`
-   if [[ $errc > 0 ]]; then
+   if (( $errc > 0 )); then
       return 1
    else
       rm ${out_file}.err
