@@ -29,6 +29,37 @@ VALUES_FILE="$INSTALL_HOME/instana-operator-values-${INSTANA_VERSION}.yaml"
 echo Generating Instana operator values file $VALUES_FILE
 echo ""
 
+if (( $INSTANA_VERSION >= 293 )); then
+
+cat << EOF > $VALUES_FILE
+operator:
+  image:
+    registry: $PRIVATE_REGISTRY
+    tag: $INSTANA_PLUGIN_VERSION
+
+  tolerations:
+    - effect: NoSchedule
+      key: ${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+      operator: Equal
+      value: ${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+webhook:
+  image:
+    registry: $PRIVATE_REGISTRY
+    tag: $INSTANA_PLUGIN_VERSION
+
+  tolerations:
+    - effect: NoSchedule
+      key: ${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+      operator: Equal
+      value: ${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+
+imagePullSecrets:
+- name: instana-registry
+EOF
+
+else
+
 cat << EOF > $VALUES_FILE
 image:
   registry: $PRIVATE_REGISTRY
@@ -37,25 +68,28 @@ imagePullSecrets:
 - name: instana-registry
 EOF
 
+fi
+
 echo Generating Instana operator manifests in $MANIFEST_DIR directory
 echo ""
 
 #set -x
 $INSTANA_KUBECTL operator template --namespace instana-operator --values $VALUES_FILE --output-dir $MANIFEST_DIR
+check_return_code $?
 
 # tolerations operator
-MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator.yaml
+#MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator.yaml
 
-tolpaths=".spec.template.spec.tolerations"
+#tolpaths=".spec.template.spec.tolerations"
 
-instana_toleration_key=${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
-instana_toleration_value=${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
+#instana_toleration_key=${INSTANA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
+#instana_toleration_value=${INSTANA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
 
-cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
-check_return_code $?
+#cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
+#check_return_code $?
 
 # tolerations operator webhook
-MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator-webhook.yaml
+#MANIFEST=${MANIFEST_DIR}/deployment_instana-operator_instana-operator-webhook.yaml
 
-cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
-check_return_code $?
+#cr-tolerations.sh $MANIFEST $instana_toleration_key $instana_toleration_value $tolpaths
+#check_return_code $?
