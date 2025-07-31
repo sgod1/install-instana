@@ -174,7 +174,6 @@ spec:
         tag: tag
       replicas: 1
       tlsCipherSuites: []
-    disableTLS: false
     enabled: true
     gateway:
       adminListener: 0.0.0.0
@@ -188,9 +187,6 @@ spec:
         registry: artifact-public.instana.io
         repository: self-hosted-images/k8s
         tag: tag
-      loadBalancerConfig:
-        enabled: true
-        externalTrafficPolicy: Local
       logLevel: error
       replicas: 1
 
