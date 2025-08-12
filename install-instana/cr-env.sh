@@ -2,10 +2,17 @@
 
 export PATH=./gen/bin:$PATH
 
+__key_match=0
+__key_no_match=1
+
+__yq_path_found=2
+__yq_path_not_found=3
+
 function y() {
    local f=$1
    local p=$2
    local v1=$3
+   local yqrc=0
 
    if [[ "$v1" =~ ^strenv* ]]; then
       ev=`./gen/bin/yq --null-input ".a = $v1"`
@@ -21,8 +28,8 @@ function y() {
       echo ... file is $f ...
 
       ./gen/bin/yq -i "setpath($p|path; $v)" $f
-      rc=$?
-      echo yq return... $rc
+      yqrc=$?
+      echo yq return... $yqrc
 
       #./gen/bin/yq -i "($p) = $v" $f
 
@@ -32,8 +39,8 @@ function y() {
       echo ... file is $f ...
 
       ./gen/bin/yq -i "setpath($p|path; $v)" $f
-      rc=$?
-      echo yq return... $rc
+      yqrc=$?
+      echo yq return... $yqrc
 
    else
       echo ... value $v is a string ...
@@ -41,15 +48,18 @@ function y() {
       echo ... file is $f ...
 
       ./gen/bin/yq -i "setpath($p|path; \"$v\")" $f
-      rc=$?
-      echo yq return... $rc
+      yqrc=$?
+      echo yq return... $yqrc
 
       #./gen/bin/yq -i "($p) = \"$v\"" $f
    fi
 
-   if test $rc -eq 1; then
+   if test $yqrc -eq 1; then
       echo $f, path not found: $p >> $f.err
+      return $__yq_path_not_found
    fi
+
+   return $__yq_path_found
 }
 
 function update_path_for_key() {
@@ -71,7 +81,7 @@ function update_path_for_key() {
    do
       echo key... $key, profile-key... $profile_key
 
-      if test "$key" = "$profile_key"
+      if [[ $key == $profile_key ]]
       then
 
          val=`./gen/bin/yq ".env[] | select(.name == \"$path_name\") | .values.$key" $env_file | tr -d " "`
@@ -79,18 +89,24 @@ function update_path_for_key() {
          echo updating path $path with value $val in $out_file
 
          y "$out_file" "$path" "$val"
+	 yrc=$?
 
-	 return 0
+	 if (( $yrc == $__yq_path_not_found )); then
+	   return $__yq_path_not_found
+	 fi
+
+	 return $__key_match
       fi
    done
 
-   return 1
+   return $__key_no_match
 }
 
 function display_match_code() {
    local match_code=$1
-   if test $match_code -eq 0; then echo -n "0 - match"; fi
-   if test $match_code -eq 1; then echo -n "1 - no match"; fi
+   if test $match_code -eq $__key_match; then echo -n "$__key_match - match"; fi
+   if test $match_code -eq $__key_no_match; then echo -n "$__key_no_match - no match"; fi
+   if test $match_code -eq $__yq_path_not_found; then echo -n "$__yq_path_not_found -  yq path not found"; fi
 }
 
 function cr_env () {
@@ -129,15 +145,15 @@ function cr_env () {
       update_path_for_key $path_name $profile $env_file $out_file
       key_match=$?
 
-      echo ... key_match: $(display_match_code $key_match), path_name $path_name, profile $profile
+      echo ... profile-match: $(display_match_code $key_match), path_name $path_name, profile $profile
 
-      if test $key_match -eq 1; then
+      if test $key_match -eq $__key_no_match; then
          update_path_for_key $path_name "default" $env_file $out_file
          key_match=$?
 
-	 echo ... key_match: $(display_match_code $key_match), path_name $path_name, profile "default"
+	 echo ... default-match: $(display_match_code $key_match), path_name $path_name, profile "default"
 
-         if test $key_match -eq 1; then
+         if test $key_match -eq $__key_no_match; then
             echo no $profile key or default for the path name $path_name, env file $env_file, template cr $template_cr, using template value
          fi
       fi
