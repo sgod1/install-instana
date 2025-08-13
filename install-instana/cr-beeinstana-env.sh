@@ -37,6 +37,25 @@ export beeinstana_toleration_value=${BEEINSTANA_TOLERATION_VALUE:-${TOLERATION_V
 cr-tolerations.sh $MANIFEST $beeinstana_toleration_key $beeinstana_toleration_value $tolpaths
 check_return_code $?
 
+# retention
+addyaml="./gen/beret.yaml"
+cat <<EOF > $addyaml
+- name: "FLAGS_retention_10s"
+  value: 1
+- name: "FLAGS_retention_60s"
+  value: 1
+- name: "FLAGS_retention_300s"
+  value: 1
+- name: "FLAGS_retention_3600s"
+  value: 1
+EOF
+
+addpath=".spec.aggregator.environmentOverrides"
+./yq-add-path.sh $addpath $addyaml $MANIFEST
+check_return_code $?
+
+if [[ -f $addyaml ]]; then rm $addyaml; fi
+
 # env
 cr_env $template_cr $env_file $MANIFEST $profile
 check_return_code $?

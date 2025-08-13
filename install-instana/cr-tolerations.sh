@@ -1,5 +1,9 @@
 #!/bin/bash
 
+source "./help-functions.sh"
+
+export PATH=".:$PATH"
+
 # args:
 # tolyaml
 # tolkey
@@ -38,20 +42,24 @@ cat <<EOF > $toldef
   value: $tolvalue
 EOF
 
-echo
-echo "==="
-echo "Injecting tolerations from $toldef"
-echo
+#echo
+#echo "==="
+#echo "Injecting tolerations from $toldef"
+#echo
 
 for tolpath in ${args[@]:3}; do
 
-  if [[ `./gen/bin/yq eval "$tolpath" $tolyaml` == null ]]; then
-    echo adding toleration key $tolkey, value $tolvalue at $tolpath
-    ./gen/bin/yq -i "$tolpath += (load(\"$toldef\"))" $tolyaml
+  #echo adding toleration key $tolkey, value $tolvalue at $tolpath
+  yq-add-path.sh "$tolpath" "$toldef" "$tolyaml"
+  check_return_code $?
 
-  else
-    echo file $tolyaml already contains tolerations at $tolpath, skip...
-  fi
+  #if [[ `./gen/bin/yq eval "$tolpath" $tolyaml` == null ]]; then
+  #  echo adding toleration key $tolkey, value $tolvalue at $tolpath
+  #  ./gen/bin/yq -i "$tolpath += (load(\"$toldef\"))" $tolyaml
+  #
+  #else
+  #  echo file $tolyaml already contains tolerations at $tolpath, skip...
+  #fi
 
 done
 

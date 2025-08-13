@@ -226,3 +226,47 @@ env:
     default: strenv(beeinstana_toleration_value)
     #uat: appng
     #prod: appng
+
+#
+# data retention
+#
+- name: retention_10s
+  path: >
+    .spec.aggregator.environmentOverrides.[] | select(.name == "FLAGS_retention_10s") |
+    .value
+  values:
+    # 1 day
+    default: "86400"
+    uat: "86400"
+    prod: "86400"
+
+- name: retention_60s
+  path: >
+    .spec.aggregator.environmentOverrides.[] | select(.name == "FLAGS_retention_60s") |
+    .value
+  values:
+    # 30 days
+    default: "2592000"
+    uat: "2592000"
+    prod: "2592000"
+
+- name: retention_300s
+  path: >
+    .spec.aggregator.environmentOverrides.[] | select(.name == "FLAGS_retention_300s") |
+    .value
+  values:
+    # 90 days
+    default: "7776000"
+    uat: "7776000"
+    prod: "7776000"
+
+- name: retention_3600s
+  path: >
+    .spec.aggregator.environmentOverrides.[] | select(.name == "FLAGS_retention_3600s") |
+    .value
+  values:
+    # 395 days
+    default: "34128000"
+    uat: "34128000"
+    prod: "34128000"
+

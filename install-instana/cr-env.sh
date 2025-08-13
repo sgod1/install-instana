@@ -104,9 +104,9 @@ function update_path_for_key() {
 
 function display_match_code() {
    local match_code=$1
-   if test $match_code -eq $__key_match; then echo -n "$__key_match - match"; fi
-   if test $match_code -eq $__key_no_match; then echo -n "$__key_no_match - no match"; fi
-   if test $match_code -eq $__yq_path_not_found; then echo -n "$__yq_path_not_found -  yq path not found"; fi
+   if test $match_code -eq $__key_match; then echo -n "match"; fi
+   if test $match_code -eq $__key_no_match; then echo -n "no match"; fi
+   if test $match_code -eq $__yq_path_not_found; then echo -n "yq path not found"; fi
 }
 
 function cr_env () {
