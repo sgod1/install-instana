@@ -139,7 +139,8 @@ function get_make_tls_home() {
 
 function snapshot_name() {
    local instana_version=$1
-   echo pre-${instana_version}-upgrade-`date +%F-%H-%M-%S`
+   #echo pre-${instana_version}-upgrade-`date +%F-%H-%M-%S`
+   echo "snapshot"
 }
 
 function write_install_profile_header() {
