@@ -8,7 +8,7 @@ env:
     .spec.containers.[] | select(.name == "instana-clickhouse") |
     .resources.requests.cpu
   values:
-    default: 1500m
+    default: 2
     dev: 2
     uat: 11
     prod: 23
