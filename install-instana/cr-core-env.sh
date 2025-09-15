@@ -5,7 +5,7 @@ source ./install.env
 source ./help-functions.sh
 source ./cr-env.sh
 source ./release.env
-source ./gateway-images.env
+#source ./gateway-images.env
 
 export PATH=".:$PATH"
 
@@ -104,6 +104,12 @@ export serverless_acceptor_port=${SINGLE_INGRESS_SERVERLESS_PORT:-"443"}
 
 export synthetics_acceptor_host=$(instana_synthetics_acceptor $INSTANA_BASE_DOMAIN $subdomain)
 export synthetics_acceptor_port=${SINGLE_INGRESS_SYNTHETICS_PORT:-"443"}
+
+ENVOY_GATEWAY_IMAGE_TAG=`cat ./gen/mirror/${INSTANA_VERSION}/backend-image-list.list | grep envoy | cut -d ":" -f 2`
+ENVOY_GATEWAY_IMAGE="self-hosted-images/k8s/envoy:${ENVOY_GATEWAY_IMAGE_TAG}"
+
+ENVOY_GATEWAY_CONTROLLER_IMAGE_TAG=`cat ./gen/mirror/${INSTANA_VERSION}/backend-image-list.list | grep gateway-controller | cut -d ":" -f 2`
+ENVOY_GATEWAY_CONTROLLER_IMAGE="infrastructure/gateway-controller:${ENVOY_GATEWAY_CONTROLLER_IMAGE_TAG}"
 
 export envoy_gateway_image_tag=${ENVOY_GATEWAY_IMAGE_TAG}
 export envoy_gateway_controller_image_tag=${ENVOY_GATEWAY_CONTROLLER_IMAGE_TAG}
