@@ -244,10 +244,18 @@ datastores:
     - instana: 303
       CLICKHOUSE_OPERATOR_CHART_VERSION: "1.2.0"
 
-      CLICKHOUSE_OPERATOR_VERSION: "v1.2.10"
-      CLICKHOUSE_OPERATOR_IMG: "clickhouse-operator:v1.2.10"
+      CLICKHOUSE_OPERATOR_VERSION: "v1.2.2"
+      CLICKHOUSE_OPERATOR_IMG: "clickhouse-operator:v1.2.2"
 
-      CLICKHOUSE_OPENSSL_IMG: "clickhouse-openssl:25.3.6.56-3-lts-ibm"
+      CLICKHOUSE_OPENSSL_IMG: "clickhouse-openssl:24.8.12.28-5-lts-ibm"
+
+    #- instana: 303
+    #  CLICKHOUSE_OPERATOR_CHART_VERSION: "1.2.0"
+
+    #  CLICKHOUSE_OPERATOR_VERSION: "v1.2.10"
+    #  CLICKHOUSE_OPERATOR_IMG: "clickhouse-operator:v1.2.10"
+
+    #  CLICKHOUSE_OPENSSL_IMG: "clickhouse-openssl:25.3.6.56-3-lts-ibm"
 
     - instana: 301
       CLICKHOUSE_OPERATOR_CHART_VERSION: "1.2.0"
