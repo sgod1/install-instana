@@ -25,30 +25,35 @@ env:
 #
 - name: envoy-gateway-enabled
   not_before: 293
+  not_after: 293
   path: .spec.gatewayConfig.enabled
   values:
     default: true
 
 - name: envoy-gateway-image-registry
   not_before: 293
+  not_after: 293
   path: .spec.gatewayConfig.gateway.imageConfig.registry
   values:
     default: strenv(private_registry)
 
 - name: envoy-gateway-image-tag
   not_before: 293
+  not_after: 293
   path: .spec.gatewayConfig.gateway.imageConfig.tag
   values:
     default: strenv(envoy_gateway_image_tag)
 
 - name: envoy-gateway-controller-image-registry
   not_before: 293
+  not_after: 293
   path: .spec.gatewayConfig.controller.imageConfig.registry
   values: 
     default: strenv(private_registry)
 
 - name: envoy-gateway-controller-image-tag
   not_before: 293
+  not_after: 293
   path: .spec.gatewayConfig.controller.imageConfig.tag
   values: 
     default: strenv(envoy_gateway_controller_image_tag)
@@ -90,6 +95,13 @@ env:
 #    .spec.datastoreConfigs.cassandraConfigs[0].replicationFactor
 #  values:
 #    default: 1
+
+- name: cassandra-strategy
+  not_before: 303
+  path: >
+    .spec.datastoreConfigs.cassandraConfigs[0].strategy
+  values:
+    default: SimpleStrategy
 
 #
 # elasticsearch config

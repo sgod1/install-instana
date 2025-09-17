@@ -104,6 +104,7 @@ spec:
         #keyspaces: []
         datacenter: cassandra
         #replicationFactor: 1
+        strategy: SimpleStrategy
 
     clickhouseConfigs:
       - hosts: []
@@ -164,31 +165,6 @@ spec:
         #properties:
         authEnabled: true
         #databases: []
-
-  gatewayConfig:
-    controller:
-      config: {}
-      imageConfig:
-        registry: artifact-public.instana.io
-        repository: infrastructure
-        tag: tag
-      replicas: 1
-      tlsCipherSuites: []
-    enabled: true
-    gateway:
-      adminListener: 0.0.0.0
-      circuitBreakers:
-        maxConnections: 50000
-        maxPendingRequests: 50000
-        maxRequests: 50000
-        maxRetries: 4
-      config: {}
-      imageConfig:
-        registry: artifact-public.instana.io
-        repository: self-hosted-images/k8s
-        tag: tag
-      logLevel: error
-      replicas: 1
 
   componentConfigs:
   - name: acceptor
