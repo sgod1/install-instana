@@ -22,6 +22,7 @@ profile=${INSTANA_INSTALL_PROFILE}
 OUT_DIR=$(get_make_manifest_home)
 
 MANIFEST=$(format_file_path $OUT_DIR $MANIFEST_FILENAME_KAFKA $profile $INSTANA_VERSION)
+KAFKA_MANIFEST=$MANIFEST
 
 check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
@@ -36,7 +37,7 @@ cr-tolerations.sh $MANIFEST $kafka_toleration_key $kafka_toleration_value $tolpa
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 # platform-specific
@@ -49,7 +50,7 @@ fi
 #
 # write kafka user
 #
-cat <<EOF >> $MANIFEST
+cat <<EOF >> $KAFKA_MANIFEST
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -77,4 +78,55 @@ spec:
         host: "*"
 EOF
 
-echo updated kafka manifest $MANIFEST, profile $profile
+if (( $INSTANA_VERSION > 293 )); then
+  #
+  # node-pool controller
+  #
+  manifest_file_name="kafka-npc.yaml"
+  template_cr="kafka-npc-template.yaml"
+  env_file="kafka-npc-env.yaml"
+
+  MANIFEST=$(format_file_path $OUT_DIR $manifest_file_name $profile $INSTANA_VERSION)
+
+  check_replace_manifest $MANIFEST $replace_manifest
+  copy_template_manifest $template_cr $MANIFEST $profile
+  check_return_code $?
+
+  if [[ ! -f $env_file ]]; then echo "env file $env_file not found..., template cr $template_cr"; exit 1; fi
+  echo "applying env $env_file to template_cr $template_cr..., output $MANIFEST"
+
+  cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
+  check_return_code $?
+
+cat <<EOF >> $KAFKA_MANIFEST
+---
+`cat $MANIFEST`
+EOF
+
+  #
+  # node-pool broker
+  #
+  manifest_file_name="kafka-npb.yaml"
+  template_cr="kafka-npb-template.yaml"
+  env_file="kafka-npb-env.yaml"
+
+  MANIFEST=$(format_file_path $OUT_DIR $manifest_file_name $profile $INSTANA_VERSION)
+
+  check_replace_manifest $MANIFEST $replace_manifest
+  copy_template_manifest $template_cr $MANIFEST $profile
+  check_return_code $?
+
+  if [[ ! -f $env_file ]]; then echo "env file $env_file not found..., template cr $template_cr"; exit 1; fi
+  echo "applying env $env_file to template_cr $template_cr..., outout $MANIFEST"
+
+  cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
+  check_return_code $?
+
+cat <<EOF >> $KAFKA_MANIFEST
+---
+`cat $MANIFEST`
+EOF
+
+fi
+
+echo updated kafka manifest $KAFKA_MANIFEST, profile $profile

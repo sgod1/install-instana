@@ -1,78 +1,42 @@
 #
-# updated to instana version 303
+# kafka 391, instana 303
 #
-#
-# kafka broker
-#
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaNodePool
-metadata:
-  name: kafka
-  labels:
-    strimzi.io/cluster: instana
-spec:
-  replicas: 3
-  roles:
-     - broker
-  storage:
-    type: jbod
-    volumes:
-      - id: 0
-        type: persistent-claim
-        size: 50Gi
-        deleteClaim: true
-  template:
-    pod:
-      tmpDirSizeLimit: 500Mi
-      # Add the following Affinity snippet to schedule each pod on a different node. 
-      # affinity:
-      #   podAntiAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       - labelSelector:
-      #           matchLabels:
-      #             strimzi.io/pool-name: kafka
-      #         topologyKey: "kubernetes.io/hostname"
----
-#
-# kafka controller
-#
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaNodePool
-metadata:
-  name: controller
-  labels:
-    strimzi.io/cluster: instana
-spec:
-  replicas: 3
-  roles:
-    - controller
-  storage:
-    type: persistent-claim
-    size: 50Gi
-    deleteClaim: true
-  template:
-    pod:
-      tmpDirSizeLimit: 500Mi
-      # Add the following Affinity snippet to schedule each pod on a different node.
-      # affinity:
-      #   podAntiAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       - labelSelector:
-      #           matchLabels:
-      #             strimzi.io/pool-name: controller
-      #         topologyKey: "kubernetes.io/hostname"
----
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
+
 metadata:
   name: instana
+
   labels:
     strimzi.io/cluster: instana
+
+  annotations:
+    strimzi.io/node-pools: enabled
+    strimzi.io/kraft:  enabled
+
 spec:
   kafka:
-    version: 3.8.1
-    image: <internal-image-registry>/self-hosted-images/3rd-party/datastore/kafka:0.45.0-kafka-3.8.1_v0.14.0
-    replicas: 3
+    version: 3.9.1
+    image: kafka-image
+
+    replicas: 1
+
+    resources:
+      requests:
+        cpu: 1
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 1Gi
+
+    storage:
+      type: jbod
+      volumes:
+        - id: 0
+          type: persistent-claim
+          size: 50Gi
+          deleteClaim: true
+
     listeners:
       - name: scram
         port: 9092
@@ -82,32 +46,32 @@ spec:
           type: scram-sha-512
         configuration:
           useServiceDnsDomain: true
+
     authorization:
       type: simple
       superUsers:
         - strimzi-kafka-user
-    resources:
-      limits:
-        cpu: 4
-        memory: 8Gi
-      requests:
-        cpu: 4
-        memory: 8Gi
-    storage:
-      type: jbod
-      volumes:
-        - id: 0
-          type: persistent-claim
-          size: 50Gi
-          deleteClaim: true
 
-  zookeeper:
-    replicas: 3
-    storage:
-      class: ro_storage_class
-      type: persistent-claim
-      size: 5Gi
-      deleteClaim: true
+    config:
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      max.message.bytes: 52428800
+      replica.fetch.max.bytes: 52428800
+
+    template:
+      pod:
+        tmpDirSizeLimit: 100Mi
+
+  #zookeeper:
+  #  replicas: 3
+  #  storage:
+  #    class: ro_storage_class
+  #    type: persistent-claim
+  #    size: 5Gi
+  #    deleteClaim: true
 
   entityOperator:
     template:

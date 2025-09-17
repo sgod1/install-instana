@@ -32,7 +32,9 @@ env:
 - name: kafka-version
   path: .spec.kafka.version
   values:
-    default: 3.8.1
+    default: 3.9.1
+    uat: 3.9.1
+    prod: 3.9.1
 
 #
 # kafka replicas
@@ -117,6 +119,7 @@ env:
 # zookeeper replicas
 #
 - name: zookeeper-replicas
+  not_after: 291
   path: .spec.zookeeper.replicas
   values:
     default: 1
@@ -131,6 +134,7 @@ env:
 # zookeeper storage class
 #
 - name: zookeeper-storage-class
+  not_after: 293
   path: .spec.zookeeper.storage.class
   values:
     default: strenv(rwo_storage_class)
@@ -139,6 +143,7 @@ env:
 # zookeeper storage volumes
 #
 - name: zookeeper-storage-volume
+  not_after: 293
   path: .spec.zookeeper.storage.size
   values:
     default: 100Gi

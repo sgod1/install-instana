@@ -1,0 +1,24 @@
+env:
+#
+# kafka node pools controller replicas
+#
+- name: kafka-node-pools-controller-replicas
+  path: .spec.replicas
+  values:
+    default: 3
+
+#
+# kafka node pools controller volume size
+#
+- name: kafka-node-pools-controller-volume-size
+  path: .spec.storage.size
+  values:
+    default: 50Gi
+
+#
+# kafka node pools controller temp dir size limit
+#
+- name: kafka-node-pools-controller-temp-dir-size
+  path: .spec.template.pod.tmpDirSizeLimit
+  values:
+    default: 500Mi

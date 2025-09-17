@@ -1,0 +1,24 @@
+env:
+#
+# kafka node pools broker replicas
+#
+- name: kafka-node-pools-broker-replicas
+  path: .spec.replicas
+  values:
+    default: 3
+
+#
+# kafka node pools broker volume size
+#
+- name: kafka-node-pools-broker-volume-size
+  path: .spec.storage.volumes[0].size
+  values:
+    default: 50Gi
+
+#
+# kafka node pools broker temp dir size limit
+#
+- name: kafka-node-pools-broker-temp-dir-size
+  path: .spec.template.pod.tmpDirSizeLimit
+  values:
+    default: 500Mi
