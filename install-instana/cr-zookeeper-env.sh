@@ -37,7 +37,7 @@ cr-tolerations.sh $MANIFEST $zookeeper_toleration_key $zookeeper_toleration_valu
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 # post gen update, delete pod security context for ocp

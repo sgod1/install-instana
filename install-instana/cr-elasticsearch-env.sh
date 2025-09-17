@@ -36,7 +36,7 @@ cr-tolerations.sh $MANIFEST $elasticsearch_toleration_key $elasticsearch_tolerat
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 # post gen

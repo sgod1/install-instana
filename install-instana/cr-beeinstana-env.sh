@@ -57,7 +57,7 @@ check_return_code $?
 if [[ -f $addyaml ]]; then rm $addyaml; fi
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 echo updated beeinstana manifest $MANIFEST, profile $profile

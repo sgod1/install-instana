@@ -52,7 +52,7 @@ cr-tolerations.sh $manifest $unit_toleration_key $unit_toleration_value $tolpath
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $manifest $profile
+cr_env $template_cr $env_file $manifest $profile $INSTANA_VERSION
 check_return_code $?
 
 echo updated unit manifest $manifest, profile $profile

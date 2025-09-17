@@ -34,7 +34,7 @@ cr-tolerations.sh $MANIFEST $postgres_toleration_key $postgres_toleration_value 
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 echo updated postgres manifest $MANIFEST, profile $profile

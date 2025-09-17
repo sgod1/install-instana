@@ -40,7 +40,7 @@ cr-tolerations.sh $MANIFEST $clickhouse_toleration_key $clickhouse_toleration_va
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 echo updated clickhouse manifest $MANIFEST

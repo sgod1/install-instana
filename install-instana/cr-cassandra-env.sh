@@ -38,7 +38,7 @@ cr-tolerations.sh $MANIFEST $cassandra_toleration_key $cassandra_toleration_valu
 check_return_code $?
 
 # env
-cr_env $template_cr $env_file $MANIFEST $profile
+cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
 echo updated cassandra manifest $MANIFEST, profile $profile
