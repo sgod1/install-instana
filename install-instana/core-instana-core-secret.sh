@@ -228,7 +228,10 @@ EOF
 echo
 echo deleting instana-core secret, namespace instana-core
 
-$KUBECTL delete secret instana-core --namespace instana-core
+$KUBECTL get secret instana-core --namespace instana-core
+if (( $? == 0 )); then
+   $KUBECTL delete secret instana-core --namespace instana-core
+fi
 
 echo
 echo creating instana-core secret from $outpath, namespace instana-core

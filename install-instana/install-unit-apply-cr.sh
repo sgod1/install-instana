@@ -65,7 +65,10 @@ UNIT_SECRET="${INSTANA_TENANT_NAME}-${INSTANA_UNIT_NAME}"
 echo "(re) creating unit secret $UNIT_SECRET, namespace instana-units"
 echo
 
-${KUBECTL} delete secret $UNIT_SECRET --namespace instana-units
+${KUBECTL} get secret $UNIT_SECRET --namespace instana-units
+if (( $? == 0 )); then
+   ${KUBECTL} delete secret $UNIT_SECRET --namespace instana-units
+fi
 ${KUBECTL} create secret generic $UNIT_SECRET --namespace instana-units --from-file=config.yaml=$UNIT_CONFIG
 check_return_code $?
 

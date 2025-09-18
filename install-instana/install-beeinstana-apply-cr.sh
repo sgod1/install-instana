@@ -16,12 +16,22 @@ if test ! -f $MANIFEST; then
 fi
 
 # create kafka creds secret
+${KUBECTL} get secret beeinstana-kafka-creds -n beeinstana
+if (( $? == 0 )); then
+   ${KUBECTL} delete secret beeinstana-kafka-creds -n beeinstana
+fi
+
 ${KUBECTL} create secret generic beeinstana-kafka-creds -n beeinstana \
   --from-literal=username=strimzi-kafka-user \
   --from-literal=password=`${KUBECTL} get secret strimzi-kafka-user  -n instana-kafka --template='{{index .data.password | base64decode}}'`
 check_return_code $?
 
 # create beeinstana admin secret
+${KUBECTL} get secret beeinstana-admin-creds -n beeinstana
+if (( $? == 0 )); then
+   ${KUBECTL} delete secret beeinstana-admin-creds -n beeinstana
+fi
+
 ${KUBECTL} create secret generic beeinstana-admin-creds -n beeinstana \
   --from-literal=username=beeinstana-user \
   --from-literal=password=${BEEINSTANA_ADMIN_PASS}

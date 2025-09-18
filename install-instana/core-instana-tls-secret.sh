@@ -21,8 +21,11 @@ tls_home=$(get_tls_home)
 tls-key-cert.sh "$qualifier" "$profile" 
 check_return_code $?
 
-log_msg0 $0 "deleting tls secret instana-tls"
-$KUBECTL delete secret instana-tls --namespace instana-core
+$KUBECTL get secret instana-tls --namespace instana-core
+if (( $? == 0 )); then
+   log_msg0 $0 "deleting tls secret instana-tls"
+   $KUBECTL delete secret instana-tls --namespace instana-core
+fi
 
 log_msg0 $0 "creating tls secret instana-tls"
 key_file=$(format_file_path $tls_home "${qualifier}-${KEY_FILE_NAME}" $profile)
