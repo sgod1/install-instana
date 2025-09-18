@@ -218,4 +218,11 @@ check_return_code $?
 # postprocess manifest with dynamic clickhouse host list
 update_clickhouse_hosts $MANIFEST $profile
 
+# quote numeric values
+cat $MANIFEST | sed 's/value: \([0-9].*\)/value: \"\1\"/' \
+	| sed 's/value: \(false\)/value: \"\1\"/' \
+	| sed 's/value: \(true\)/value: \"\1\"/' \
+	> "${MANIFEST}-1"
+mv "${MANIFEST}-1" "$MANIFEST"
+
 echo updated core manifest $MANIFEST, profile $profile
