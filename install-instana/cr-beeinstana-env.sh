@@ -60,4 +60,10 @@ if [[ -f $addyaml ]]; then rm $addyaml; fi
 cr_env $template_cr $env_file $MANIFEST $profile $INSTANA_VERSION
 check_return_code $?
 
+# quote retention values
+cat $MANIFEST | sed 's/value: \([0-9].*\)/value: \"\1\"/' \
+	> "${MANIFEST}-1"
+mv "${MANIFEST}-1" "$MANIFEST"
+
+
 echo updated beeinstana manifest $MANIFEST, profile $profile
