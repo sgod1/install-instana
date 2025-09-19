@@ -28,7 +28,7 @@ check_replace_manifest $MANIFEST $replace_manifest
 copy_template_manifest $template_cr $MANIFEST $profile
 
 # tolerations
-tolpaths=".spec.kafka.template.pod.tolerations .spec.zookeeper.template.pod.tolerations .spec.entityOperator.template.pod.tolerations"
+tolpaths=".spec.kafka.template.pod.tolerations .spec.entityOperator.template.pod.tolerations"
 
 export kafka_toleration_key=${KAFKA_TOLERATION_KEY:-${TOLERATION_KEY:-"nokey"}}
 export kafka_toleration_value=${KAFKA_TOLERATION_VALUE:-${TOLERATION_VALUE:-"novalue"}}
