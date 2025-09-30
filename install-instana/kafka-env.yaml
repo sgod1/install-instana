@@ -172,6 +172,7 @@ env:
     #prod: appng
 
 - name: zookeeper-pod-toleration-key
+  not_after: 293
   path: .spec.zookeeper.template.pod.tolerations[0].key
   values:
     default: strenv(kafka_toleration_key)
@@ -179,6 +180,7 @@ env:
     #prod: dedicated
 
 - name: zookeeper-pod-toleration-value
+  not_after: 293
   path: .spec.zookeeper.template.pod.tolerations[0].value
   values:
     default: strenv(kafka_toleration_value)
