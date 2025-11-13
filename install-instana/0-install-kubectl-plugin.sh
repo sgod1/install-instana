@@ -1,6 +1,13 @@
 #!/bin/bash
 
 source ../instana.env
+
+# need instana plugin version...
+if [[ -z $INSTANA_PLUGIN_VERSION ]]; then
+   echo INSTANA_PLUGIN_VERSION undefined... check instana.env in parent directory...
+   exit 1
+fi
+
 #source ./release.env
 source ./plugin.env
 

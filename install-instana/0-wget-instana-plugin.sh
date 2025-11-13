@@ -1,6 +1,19 @@
 #!/bin/bash
 
 source ../instana.env
+
+# need instana plugin version...
+if [[ -z $INSTANA_PLUGIN_VERSION ]]; then
+   echo INSTANA_PLUGIN_VERSION required, set value in ../instana.env
+   exit 1
+fi
+
+# need download key...
+if [[ -z $DOWNLOAD_KEY ]]; then
+   echo DOWNLOAD_KEY required, set value in ../instana.env
+   exit 1
+fi
+
 source ./plugin.env
 
 source ./help-functions.sh
