@@ -1251,6 +1251,11 @@ env:
   values:
     default: true
 
+- name: feature.custom.dashboard.top.level.filters.enabled
+  path: .spec.featureFlags.[]|select(.name == "feature.custom.dashboard.top.level.filters.enabled")|.enabled
+  values:
+    default: true
+
 #
 # retention
 #
